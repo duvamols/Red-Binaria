@@ -43,12 +43,13 @@
             border: none;
             margin-left: 7px;
             cursor: pointer;
+            transition: transform 0.1s, background 0.2s, box-shadow 0.2s;
         }
         button:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 6px #2563eb33;
-    background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
-}
+            transform: scale(0.97);
+            box-shadow: 0 2px 6px #2563eb33;
+            background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
+        }
         .arbol {
             display: flex;
             flex-direction: column;
@@ -171,7 +172,7 @@
             return registros.find(x => limpiarTexto(x['Código Asignado']) === limpiarTexto(codigo));
         }
 
-        // NUEVO: función recursiva para contar todos los nodos ocupados de la red, hasta 5 niveles
+        // Cuenta todos los nodos ocupados de la red, hasta 5 niveles
         function contarRed(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return 0;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
@@ -182,50 +183,19 @@
             return total;
         }
 
-            function generarArbol() {
-    document.getElementById('mensajeError').innerText = '';
-    document.getElementById('infoRed').innerText = '';
-    let codigo = document.getElementById('codigo').value.trim();
-    const btn = document.querySelector('button');
-    if (!codigo) {
-        document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
-        return;
-    }
-    // Feedback: botón cargando
-    btn.disabled = true;
-    let textoOriginal = btn.innerText;
-    btn.innerText = "Buscando...";
-    fetch(SHEET_CSV_URL)
-        .then(r => r.text())
-        .then(csv => {
-            const filas = csv.split('\n');
-            const encabezados = filas[0].split(',').map(x => limpiarTexto(x));
-            registros = filas.slice(1).map(f => {
-                const cols = f.split(',');
-                let obj = {};
-                encabezados.forEach((k, i) => obj[k] = limpiarTexto(cols[i]));
-                return obj;
-            });
-
-            const raiz = getPorCodigo(codigo);
-            if (!raiz) {
-                document.getElementById('arbolRed').innerHTML = "";
-                document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
-                btn.disabled = false; btn.innerText = textoOriginal;
+        function generarArbol() {
+            document.getElementById('mensajeError').innerText = '';
+            document.getElementById('infoRed').innerText = '';
+            let codigo = document.getElementById('codigo').value.trim();
+            const btn = document.querySelector('button');
+            if (!codigo) {
+                document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
                 return;
             }
-            let total = contarRed(raiz, 1, 5);
-            document.getElementById('infoRed').innerHTML =
-                `<div class="contador-red">Total personas en tu red (hasta 5 niveles): <b>${total}</b></div>`;
-            document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
-            btn.disabled = false; btn.innerText = textoOriginal;
-        })
-        .catch(err => {
-            document.getElementById('mensajeError').innerText = "No se pudo consultar la base de datos.";
-            btn.disabled = false; btn.innerText = textoOriginal;
-        });
-}
-       
+            // Feedback: botón cargando
+            btn.disabled = true;
+            let textoOriginal = btn.innerText;
+            btn.innerText = "Buscando...";
             fetch(SHEET_CSV_URL)
                 .then(r => r.text())
                 .then(csv => {
@@ -242,17 +212,18 @@
                     if (!raiz) {
                         document.getElementById('arbolRed').innerHTML = "";
                         document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
+                        btn.disabled = false; btn.innerText = textoOriginal;
                         return;
                     }
-                    // Mostrar total de la red (sin incluir al usuario, solo a sus descendientes)
                     let total = contarRed(raiz, 1, 5);
                     document.getElementById('infoRed').innerHTML =
                         `<div class="contador-red">Total personas en tu red (hasta 5 niveles): <b>${total}</b></div>`;
-
                     document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
+                    btn.disabled = false; btn.innerText = textoOriginal;
                 })
                 .catch(err => {
                     document.getElementById('mensajeError').innerText = "No se pudo consultar la base de datos.";
+                    btn.disabled = false; btn.innerText = textoOriginal;
                 });
         }
 
