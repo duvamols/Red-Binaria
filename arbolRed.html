@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Árbol Binario de Red</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f1f5f9;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 32px rgba(60,90,200,0.13);
+            padding: 2rem 1rem 2.5rem 1rem;
+        }
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+        #input-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #codigo {
+            font-size: 1.05rem;
+            padding: 7px 13px;
+            border-radius: 8px;
+            border: 1px solid #b6c6e3;
+            width: 220px;
+        }
+        button {
+            background: linear-gradient(90deg, #2563eb 75%, #4ade80 130%);
+            color: #fff;
+            font-weight: bold;
+            padding: 8px 25px;
+            border-radius: 8px;
+            border: none;
+            margin-left: 7px;
+            cursor: pointer;
+        }
+        .arbol {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 25px;
+        }
+        .nivel {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .nodo {
+            background: #fff;
+            border: 2px solid #2563eb;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #4ade8022;
+            min-width: 140px;
+            margin: 0 18px;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 1.02rem;
+            position: relative;
+        }
+        .nodo.raiz {
+            background: linear-gradient(90deg, #2563eb 80%, #4ade80 130%);
+            color: #fff;
+            font-weight: bold;
+            border: 2px solid #4ade80;
+            font-size: 1.17rem;
+        }
+        .nodo .codigo {
+            font-size: 0.95rem;
+            color: #2563eb;
+        }
+        .nodo .telefono {
+            font-size: 0.93rem;
+            color: #64748b;
+        }
+        .nodo.vacio {
+            color: #a3a3a3;
+            background: #f1f5f9;
+            border-style: dashed;
+            border-color: #b6c6e3;
+            font-style: italic;
+        }
+        .conectores {
+            width: 100%;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+        }
+        .linea {
+            border-top: 2px solid #2563eb;
+            margin: 0 10px;
+            width: 40px;
+            height: 18px;
+        }
+        @media (max-width: 800px) {
+            .nivel { flex-wrap: wrap; }
+            .nodo { min-width: 90px; margin: 5px; font-size: 0.98rem; }
+            .container { padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Árbol Binario de tu Red (hasta 5 niveles)</h1>
+        <div id="input-section">
+            <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
+            <button onclick="generarArbol()">Ver Árbol</button>
+        </div>
+        <div id="arbolRed" class="arbol"></div>
+        <div id="mensajeError" style="color:#e11d48;text-align:center;margin-top:1rem;"></div>
+    </div>
+    <script>
+        // Tu URL CSV de Google Sheets:
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjyo0onjsHYOS3kG4EvvtisMSPBWg6ROKZEQnPoNsrizKHZP3n8k7qkygB3hFWgY-IK9K74zWjJ7nu/pub?gid=0&single=true&output=csv';
+
+        let registros = [];
+
+        function limpiarTexto(text) {
+            return (text || '').replace(/"/g, '').trim();
+        }
+
+        function buscarPorPatrocinador(patrocinador) {
+            // Solo devuelve los primeros dos hijos (binario puro)
+            return registros.filter(x => limpiarTexto(x.Patrocinador) === limpiarTexto(patrocinador)).slice(0, 2);
+        }
+
+        function getPorCodigo(codigo) {
+            return registros.find(x => limpiarTexto(x['Código Asignado']) === limpiarTexto(codigo));
+        }
+
+        function generarArbol() {
+            document.getElementById('mensajeError').innerText = '';
+            let codigo = document.getElementById('codigo').value.trim();
+            if (!codigo) {
+                document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
+                return;
+            }
+            fetch(SHEET_CSV_URL)
+                .then(r => r.text())
+                .then(csv => {
+                    const filas = csv.split('\n');
+                    const encabezados = filas[0].split(',').map(x => limpiarTexto(x));
+                    registros = filas.slice(1).map(f => {
+                        const cols = f.split(',');
+                        let obj = {};
+                        encabezados.forEach((k, i) => obj[k] = limpiarTexto(cols[i]));
+                        return obj;
+                    });
+
+                    // Encontrar el nodo raíz (el usuario)
+                    const raiz = getPorCodigo(codigo);
+                    if (!raiz) {
+                        document.getElementById('arbolRed').innerHTML = "";
+                        document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
+                        return;
+                    }
+                    // Generar el árbol HTML
+                    document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
+                })
+                .catch(err => {
+                    document.getElementById('mensajeError').innerText = "No se pudo consultar la base de datos.";
+                });
+        }
+
+        function crearNivelHTML(nodos, nivel, maxNivel) {
+            if (nivel > maxNivel) return "";
+            let html = `<div class="nivel">`;
+            let siguientes = [];
+            nodos.forEach(nodo => {
+                if (!nodo) {
+                    html += `<div class="nodo vacio">Patrocinar aquí</div>`;
+                    siguientes.push(null, null);
+                } else {
+                    html += `<div class="nodo ${nivel === 1 ? "raiz" : ""}">
+                        <div><b>${nodo.Nombre || 'Sin nombre'}</b></div>
+                        <div class="codigo">${nodo['Código Asignado']}</div>
+                        <div class="telefono">${nodo['Teléfono'] || nodo['Telefono']}</div>
+                    </div>`;
+                    // Buscar hijos
+                    const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+                    siguientes.push(hijos[0] || null, hijos[1] || null);
+                }
+            });
+            html += `</div>`;
+            // Dibujar conectores
+            if (nivel < maxNivel) {
+                html += `<div class="conectores">`;
+                for (let i = 0; i < nodos.length; i++) {
+                    html += `<div class="linea"></div><div class="linea"></div>`;
+                }
+                html += `</div>`;
+            }
+            // Llamada recursiva al siguiente nivel
+            if (nivel < maxNivel) {
+                html += crearNivelHTML(siguientes, nivel + 1, maxNivel);
+            }
+            return html;
+        }
+    </script>
+</body>
+</html>
