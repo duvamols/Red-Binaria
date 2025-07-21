@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red de Mercadeo | Preinscripción</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --accent: #4ade80;
+            --bg: #f1f5f9;
+            --surface: #fff;
+            --text: #0f172a;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0; padding: 0;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background: var(--surface);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            padding: 0.7rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        .logo::before {
+            content: '';
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .main-content {
+            background: var(--surface);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60,90,200,0.09);
+            padding: 2.5rem 2rem;
+            min-width: 320px;
+            max-width: 450px;
+            width: 100%;
+            min-height: 320px;
+            text-align: center;
+        }
+        .main-content h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+        }
+        .main-content p {
+            color: var(--text-light);
+            margin-bottom: 1.8rem;
+        }
+        footer {
+            background: var(--surface);
+            color: var(--text-light);
+            font-size: 0.98rem;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 -1px 8px rgba(60,90,200,0.03);
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .main-content {
+                padding: 1.2rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Red de Accion Masiva</div>
+        <div class="nav-links">
+            <a href="#" class="active">Inicio</a>
+            <a href="Index.html">Preinscripción</a>
+            <a href="#">Contacto</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="main-content">
+            <h1>Bienvenido</h1>
+            <p>
+                Únete a una red de mercadeo moderna, confiable y diseñada para tu éxito.<br>
+                Descubre oportunidades y sé parte de nuestro equipo.
+            </p>
+            <!-- Aquí se insertará el contenido específico de cada página -->
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Red de Mercadeo | Creado para crecer juntos 🚀
+    </footer>
+</body>
+</html>
