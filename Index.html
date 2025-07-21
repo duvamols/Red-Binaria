@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red de Mercadeo | Preinscripción</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #60a5fa;
+            --accent: #4ade80;
+            --bg: #f1f5f9;
+            --surface: #fff;
+            --text: #0f172a;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0; padding: 0;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background: var(--surface);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            padding: 0.7rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        .logo::before {
+            content: '';
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .form-container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 6px 32px rgba(60,90,200,0.10);
+            max-width: 420px;
+            width: 100%;
+            margin: 48px auto;
+            padding: 2.2rem 1.5rem 2.2rem 1.5rem;
+            text-align: center;
+        }
+        .form-container h1 {
+            color: #2563eb;
+            margin-bottom: 1.6rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .form-container label {
+            font-size: 1.05rem;
+            color: #0f172a;
+            font-weight: 500;
+            display: block;
+            text-align: left;
+            margin-bottom: 4px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            margin-top: 6px;
+            margin-bottom: 18px;
+            font-size: 1rem;
+            background: #f8fafc;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .form-container input[type="text"]:focus,
+        .form-container input[type="tel"]:focus {
+            border-color: #60a5fa;
+            background: #f1f5f9;
+        }
+        .form-container button[type="submit"] {
+            background: linear-gradient(90deg, #2563eb 80%, #4ade80 120%);
+            color: #fff;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+            box-shadow: 0 2px 10px #4ade8022;
+        }
+        .form-container button[type="submit"]:hover {
+            background: linear-gradient(90deg, #1d4ed8 80%, #22d3ee 120%);
+        }
+        #codigoGenerado {
+            display: none;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        #codigoGenerado h2 {
+            color: #2563eb;
+        }
+        #codigo {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #4ade80;
+            margin-top: 1rem;
+        }
+        footer {
+            background: var(--surface);
+            color: var(--text-light);
+            font-size: 0.98rem;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 -1px 8px rgba(60,90,200,0.03);
+        }
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .form-container {
+                max-width: 96vw;
+                padding: 1rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Pre Inscripcion Red de Acción Masiva</div>
+    </nav>
+    <div class="container">
+        <div class="form-container">
+            <h1>Preinscripción</h1>
+            <form id="preForm" autocomplete="off">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+
+                <label for="telefono">Teléfono (WhatsApp)</label>
+                <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{7,15}" placeholder="Ej: 3121234567">
+
+                <label for="patrocinador">Código de tu patrocinador</label>
+                <input type="text" id="patrocinador" name="patrocinador" required placeholder="Ej: INVITADO123">
+
+                <button type="submit">Enviar Preinscripción</button>
+            </form>
+            <div id="codigoGenerado">
+                <h2>¡Inscripción exitosa!</h2>
+                <p>Tu código de acceso es:</p>
+                <div id="codigo"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Red de Mercadeo | Creado para crecer juntos 🚀
+    </footer>
+
+    <script>
+        document.getElementById('preForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const patrocinador = document.getElementById('patrocinador').value.trim();
+            if(nombre === '' || telefono === '' || patrocinador === ''){
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+            const codigoNuevo = 'RM-' + Math.floor(1000 + Math.random()*9000);
+
+            const data = {
+                nombre,
+                telefono,
+                patrocinador,
+                codigoAsignado: codigoNuevo
+            };
+
+            // Pega aquí tu URL de Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbxKd4jUUGw_EmaI77-gFbv1ROhiv1HVMvdZ8v9m7zwXTqFM9jJbfS08DKssbRJFayRO/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(() => {
+                document.getElementById('preForm').style.display = 'none';
+                document.getElementById('codigoGenerado').style.display = 'block';
+                document.getElementById('codigo').textContent = codigoNuevo;
+            }).catch(err => {
+                alert('Hubo un error enviando tu preinscripción, inténtalo más tarde.');
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>
+
