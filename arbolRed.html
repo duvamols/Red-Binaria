@@ -159,7 +159,7 @@
 <body>
     <div class="container">
         <h1>Así va tu red hasta el momento</h1>
-        <h3>Recuerda que esto es un proceso previo a antes inscribirse a Gano Excel</h3>
+        <center><h3>Recuerda que esto es un proceso previo antes de la inscripción a Gano Excel</h3></center>
         <div id="input-section">
             <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
             <button onclick="generarArbol()">Ver Árbol</button>
@@ -277,7 +277,7 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
 
                     // Mostrar info de red y puntos
                     document.getElementById('infoRed').innerHTML =
-                        `<div class="contador-red">Total personas en tu red (hasta 5 niveles): <b>${contarRed(raiz, 1, 5)}</b> | Niveles completos: <b>${niveles}</b></div>`;
+                        `<div class="contador-red">Total personas en tu red ---> <b>${contarRed(raiz, 1, 5)}</b> | Niveles completados: <b>${niveles}</b></div>`;
                     document.getElementById('infoPuntos').innerHTML =
                         `<div class="contador-puntos">Puntos<br>
                          <span>Izquierda: <b>${izq}</b></span>
