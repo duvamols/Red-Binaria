@@ -17,6 +17,7 @@
             border-radius: 16px;
             box-shadow: 0 6px 32px rgba(60,90,200,0.13);
             padding: 2rem 1rem 2.5rem 1rem;
+            position: relative;
         }
         h1 {
             text-align: center;
@@ -44,11 +45,12 @@
             margin: 7px 6px 0 0;
             cursor: pointer;
             font-size: 1rem;
-            transition: background .16s, transform .11s;
+            transition: background .16s, transform .11s, box-shadow .15s;
         }
         button:active, .nav-btn:active {
-            transform: scale(0.96);
+            transform: scale(0.97);
             background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
+            box-shadow: 0 2px 10px #2563eb20;
         }
         .arbol {
             display: flex;
@@ -57,6 +59,7 @@
             margin-top: 12px;
             width: 100%;
             overflow-x: auto;
+            padding-bottom: 80px;
         }
         .nivel {
             display: flex;
@@ -82,7 +85,6 @@
             justify-content: center;
             font-size: 0.94rem;
             position: relative;
-            transition: border 0.22s, box-shadow 0.18s;
         }
         .nodo .nombre {
             font-weight: 700;
@@ -165,17 +167,29 @@
             color: #2563eb;
             font-weight: 800;
         }
-        .nav-niveles {
+        /* --- BOTÓN FLOTANTE ABAJO DERECHA --- */
+        #navFloating {
+            position: fixed;
+            right: 26px;
+            bottom: 26px;
+            z-index: 500;
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 7px;
-            margin: 2px 0 7px 0;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            pointer-events: none;
         }
-        .nav-btn {
-            padding: 6px 16px;
-            font-size: 0.98rem;
-            margin-bottom: 0;
+        .nav-btn-float {
+            pointer-events: all;
+            box-shadow: 0 6px 30px #4ade8033;
+            opacity: 0.96;
+            font-size: 1.13rem;
+            padding: 14px 24px;
+        }
+        .nav-btn-float:hover {
+            opacity: 1;
+            background: linear-gradient(90deg, #1d4ed8 80%, #22d3ee 120%);
+            box-shadow: 0 6px 32px #2563eb20;
         }
         @media (max-width: 800px) {
             .container { padding: 0.6rem; }
@@ -183,6 +197,8 @@
             .nodo { min-width: 45px; min-height: 45px; width: 45px; height: 45px; font-size: 0.79rem;}
             .stats-box { font-size: 0.93rem; padding: 5px 7px;}
             .resultados-ganancia { font-size: 0.92rem; padding: 7px 5px;}
+            #navFloating { right: 8px; bottom: 14px;}
+            .nav-btn-float { font-size: 1.01rem; padding: 11px 13px;}
         }
     </style>
 </head>
@@ -194,17 +210,17 @@
             <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
             <button onclick="generarArbol()">Ver Árbol</button>
         </div>
-        <div class="nav-niveles" id="navNiveles" style="display:none"></div>
         <div class="stats" id="stats"></div>
         <div id="resultados" class="resultados-ganancia" style="display:none"></div>
         <div id="arbolRed" class="arbol"></div>
-        <div id="mensajeError" style="color:#e11d48;text-align:center;margin-top:1rem;"></div>
     </div>
+    <!-- Botones flotantes de navegación niveles -->
+    <div id="navFloating"></div>
+    <div id="mensajeError" style="color:#e11d48;text-align:center;margin-top:1rem;"></div>
     <script>
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-
         let registros = [];
-        let nivelActual = 3; // Por defecto, 3 niveles visibles (de 1 a 5)
+        let nivelActual = 3;
         let raizCache = null;
 
         function limpiarTexto(text) {
@@ -289,12 +305,12 @@
             return { binario, izq, der, menor, sobranteIzq, sobranteDer };
         }
         function mostrarNavegadorNiveles() {
-            const nav = document.getElementById('navNiveles');
+            const nav = document.getElementById('navFloating');
             nav.innerHTML = '';
-            if(nivelActual > 3) {
+            if (nivelActual > 3) {
                 let btnPrev = document.createElement('button');
-                btnPrev.className = "nav-btn";
-                btnPrev.innerText = "⬅ Ver nivel anterior";
+                btnPrev.className = "nav-btn-float";
+                btnPrev.innerText = "⬅ Nivel anterior";
                 btnPrev.onclick = function(){
                     if(nivelActual > 3) {
                         nivelActual--;
@@ -303,10 +319,10 @@
                 }
                 nav.appendChild(btnPrev);
             }
-            if(nivelActual < 5) {
+            if (nivelActual < 5) {
                 let btnNext = document.createElement('button');
-                btnNext.className = "nav-btn";
-                btnNext.innerText = "Ver siguiente nivel ➡";
+                btnNext.className = "nav-btn-float";
+                btnNext.innerText = "Siguiente nivel ➡";
                 btnNext.onclick = function(){
                     if(nivelActual < 5) {
                         nivelActual++;
@@ -315,15 +331,15 @@
                 }
                 nav.appendChild(btnNext);
             }
-            nav.style.display = "flex";
+            nav.style.display = (nivelActual !== 3 || nivelActual !== 5) ? "flex" : "none";
         }
         function generarArbol() {
             document.getElementById('mensajeError').innerText = '';
             document.getElementById('arbolRed').innerHTML = '';
             document.getElementById('stats').innerHTML = '';
             document.getElementById('resultados').style.display = "none";
-            document.getElementById('navNiveles').style.display = "none";
-            nivelActual = 3; // Reset al consultar nuevo código
+            nivelActual = 3;
+            raizCache = null;
             let codigo = document.getElementById('codigo').value.trim();
             const btn = document.querySelector('button');
             if (!codigo) {
@@ -356,7 +372,6 @@
 
                     mostrarArbol();
                     mostrarNavegadorNiveles();
-
                     btn.disabled = false; btn.innerText = textoOriginal;
                 })
                 .catch(err => {
@@ -387,9 +402,8 @@
                 `<div>Ganancia por <b>bonos directos</b>: <span>$${bonosDirectos.toLocaleString('es-CO')}</span></div>
                 <div>Ganancia por <b>binario</b>: <span>$${bin.binario.toLocaleString('es-CO')}</span></div>
                 <div><b>Total ganancias: </b><span>$${(bonosDirectos + bin.binario).toLocaleString('es-CO')}</span></div>
-                <div style="margin-top:7px;font-size:0.99em;color:#64748b;">Puntos sobrantes izquierda: ${bin.sobranteIzq} | derecha: ${bin.sobranteDer}</div>`;
+                <div style="margin-top:5px;color:#7c3aed;">* Cálculo sólo para red hasta el nivel mostrado. El binario sólo toma puntos de la pierna más corta.</div>`;
             document.getElementById('resultados').style.display = "";
-
             mostrarNavegadorNiveles();
         }
         function crearNivelHTML(nodos, nivel, maxNivel) {
@@ -426,4 +440,3 @@
     </script>
 </body>
 </html>
-
