@@ -11,24 +11,25 @@
             font-family: 'Inter', Arial, sans-serif;
         }
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
+            max-width: 1080px;
+            margin: 28px auto 32px auto;
             background: #fff;
-            border-radius: 16px;
+            border-radius: 20px;
             box-shadow: 0 6px 32px rgba(60,90,200,0.13);
-            padding: 2rem 1rem 2.5rem 1rem;
+            padding: 2rem 1rem 2.3rem 1rem;
+            position: relative;
         }
         h1 {
             text-align: center;
             color: #2563eb;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
         #input-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         #codigo {
-            font-size: 1.05rem;
+            font-size: 1.03rem;
             padding: 7px 13px;
             border-radius: 8px;
             border: 1px solid #b6c6e3;
@@ -38,17 +39,34 @@
             background: linear-gradient(90deg, #2563eb 75%, #4ade80 130%);
             color: #fff;
             font-weight: bold;
-            padding: 8px 25px;
+            padding: 8px 24px;
             border-radius: 8px;
             border: none;
             margin-left: 7px;
             cursor: pointer;
-            transition: background .18s, transform .13s;
+            transition: background .17s, transform .12s;
         }
         button:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 6px #2563eb33;
+            transform: scale(0.96);
             background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
+        }
+        .metrics-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 13px;
+            margin-top: 13px;
+        }
+        .metric-box {
+            background: #f1f5f9;
+            padding: 10px 22px;
+            border-radius: 14px;
+            color: #2563eb;
+            font-size: 1.02rem;
+            font-weight: 600;
+            box-shadow: 0 2px 6px #2563eb14;
+            text-align: center;
         }
         .arbol {
             display: flex;
@@ -61,51 +79,54 @@
         .nivel {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            margin: 12px 0;
+            align-items: flex-end;
+            margin: 9px 0;
             width: 100%;
         }
         .nodo {
-            background: #fff;
-            border: 2px solid #2563eb;
-            border-radius: 8px;
-            min-width: 120px;
-            max-width: 140px;
-            margin: 0 12px;
-            padding: 8px 6px;
-            text-align: center;
-            font-size: 0.98rem;
-            box-shadow: 0 1px 6px #4ade8022;
-            position: relative;
+            background: linear-gradient(120deg, #fff 80%, #e0f2fe 160%);
+            border: 2.5px solid #2563eb;
+            border-radius: 50%;
+            min-width: 54px;
+            max-width: 64px;
+            width: 54px;
+            height: 54px;
+            margin: 0 9px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            font-size: 0.98rem;
+            box-shadow: 0 1px 8px #4ade8028;
+            position: relative;
+            z-index: 2;
+            transition: box-shadow .2s;
         }
         .nodo .nombre {
-            font-weight: 700;
+            font-weight: 600;
             color: #2563eb;
-            font-size: 1.01rem;
-            margin-bottom: 1px;
+            font-size: 0.95rem;
+            line-height: 1.05;
+            margin-bottom: 0px;
         }
         .nodo .codigo {
             color: #64748b;
-            font-size: 0.93rem;
+            font-size: 0.8rem;
         }
         .nodo .paquete {
-            font-size: 0.87rem;
-            color: #6ee7b7;
+            font-size: 0.8rem;
+            color: #14b8a6;
+            font-weight: 700;
         }
         .nodo.raiz {
-            background: linear-gradient(90deg, #2563eb 85%, #4ade80 130%);
+            background: linear-gradient(135deg, #2563eb 82%, #4ade80 150%);
             color: #fff;
-            font-weight: bold;
-            border: 2px solid #4ade80;
-            font-size: 1.09rem;
-            box-shadow: 0 4px 18px #4ade8030;
+            border: 2.5px solid #4ade80;
+            font-size: 1.08rem;
+            box-shadow: 0 4px 18px #4ade8042;
         }
-        .nodo.raiz .nombre,
-        .nodo.raiz .codigo {
-            color: #fff;
+        .nodo.raiz .nombre, .nodo.raiz .codigo, .nodo.raiz .paquete {
+            color: #fff !important;
         }
         .nodo.vacio {
             color: #a3a3a3;
@@ -113,46 +134,94 @@
             border-style: dashed;
             border-color: #b6c6e3;
             font-style: italic;
+            font-size: 0.9rem;
         }
         .conectores {
             display: flex;
             justify-content: center;
             width: 100%;
             height: 12px;
+            z-index: 1;
         }
         .linea {
             border-top: 2px solid #b6c6e3;
-            margin: 0 6px;
-            width: 32px;
+            margin: 0 5px;
+            width: 28px;
             height: 12px;
         }
-        .contador-red, .contador-puntos {
-            font-size: 1.07rem;
-            font-weight: 600;
+        .simular-btn {
+            position: fixed;
+            top: 50%;
+            right: 36px;
+            transform: translateY(-50%);
+            background: linear-gradient(110deg, #4ade80 55%, #2563eb 130%);
+            color: #fff;
+            font-weight: bold;
+            padding: 13px 17px;
+            border-radius: 99px;
+            border: none;
+            box-shadow: 0 2px 16px #2563eb34;
+            font-size: 1.05rem;
+            cursor: pointer;
+            z-index: 20;
+            transition: background .15s;
+        }
+        .simular-btn:active {background: linear-gradient(120deg, #2563eb 80%, #4ade80 130%);}
+        .modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #0009;
+            z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 16px;
+            max-width: 425px;
+            width: 94vw;
+            padding: 2.2rem 1.2rem 2.2rem 1.2rem;
+            box-shadow: 0 8px 42px #2563eb25;
+            position: relative;
+        }
+        .modal h2 { color: #2563eb; margin-bottom: 1rem; }
+        .modal label { font-size: 1rem; font-weight: 600; color: #0f172a; }
+        .modal select {
+            width: 100%; padding: 7px 11px;
+            border: 1.2px solid #d1d5db; border-radius: 8px;
+            margin-bottom: 13px; margin-top: 7px; font-size: 1rem;
+            background: #f8fafc;
+        }
+        .modal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.9rem;
+            margin-bottom: 1.1rem;
+            font-size: 0.99rem;
+        }
+        .modal th, .modal td {
+            padding: 7px 6px;
             text-align: center;
-            margin: 12px auto 5px auto;
-            background: #f1f5f9;
-            padding: 7px 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .modal th {
+            background: #e0f2fe;
             color: #2563eb;
-            border-radius: 11px;
-            display: inline-block;
+            font-weight: bold;
         }
-        .contador-puntos span {
-            color: #22d3ee; font-weight: 700;
-            margin: 0 7px;
+        .close-modal {
+            position: absolute; top: 15px; right: 19px;
+            background: none; border: none; color: #64748b;
+            font-size: 2rem; font-weight: bold; cursor: pointer;
+            transition: color .17s;
         }
-        .puntos-totales {
-            color: #14b8a6;
-        }
-        @media (max-width: 900px) {
-            .container { padding: 0.5rem; }
-            .nivel { flex-wrap: wrap; }
-            .nodo { min-width: 80px; max-width: 110px; margin: 6px 2px; font-size: 0.9rem; }
-        }
-        @media (max-width: 600px) {
-            .nodo { min-width: 62px; max-width: 80px; font-size: 0.8rem; padding: 6px 2px; }
-            .arbol { padding: 0 1px; }
-            .container { max-width: 98vw;}
+        .close-modal:hover { color: #e11d48;}
+        @media (max-width: 700px) {
+            .container { padding: 0.7rem; }
+            .metrics-panel { gap: 7px; }
+            .simular-btn { right: 8px; padding: 10px 11px; font-size: .99rem;}
+            .modal { padding: 1.2rem 0.5rem 1.5rem 0.5rem;}
+            .nodo, .nodo.raiz {min-width:38px; max-width:46px; width:38px; height:38px; font-size:0.77rem;}
         }
     </style>
 </head>
@@ -164,15 +233,42 @@
             <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
             <button onclick="generarArbol()">Ver Árbol</button>
         </div>
-        <div id="infoRed"></div>
-        <div id="infoPuntos"></div>
+        <div class="metrics-panel" id="metricsPanel"></div>
         <div id="arbolRed" class="arbol"></div>
         <div id="mensajeError" style="color:#e11d48;text-align:center;margin-top:1rem;"></div>
     </div>
+    <!-- Botón para simular ganancias -->
+    <button class="simular-btn" onclick="abrirModal()">Simular Ganancias 💸</button>
+
+    <!-- Modal de Simulación -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal">
+            <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            <h2>Simula tus Ganancias Binarias y Bonos</h2>
+            <label for="paqueteSim">Selecciona tu paquete actual:</label>
+            <select id="paqueteSim" onchange="actualizarSimulacion()">
+                <option value="ESP 3">ESP 3</option>
+                <option value="ESP 2">ESP 2</option>
+                <option value="ESP 1">ESP 1</option>
+            </select>
+            <div id="simulacionTabla"></div>
+        </div>
+    </div>
+
     <script>
-        // URL de tu Google Sheet en CSV
-    
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
+        // ----------------- PARÁMETROS -----------------
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
+        const DOLAR = 4500; // Tasa oficial Gano Excel
+        // Bonos por paquete y generación (en COP)
+        const BONOS = {
+            'ESP 1': [112500, 22500, 22500, 22500, 45000],
+            'ESP 2': [337500, 45000, 45000, 45000, 90000],
+            'ESP 3': [675000, 90000, 90000, 90000, 180000],
+        };
+        // % Binario por paquete
+        const BINARIO = { 'ESP 1': 0.10, 'ESP 2': 0.15, 'ESP 3': 0.17 };
+        // Puntos por paquete
+        const PUNTOS = { 'ESP 1': 100, 'ESP 2': 250, 'ESP 3': 500 };
 
         let registros = [];
 
@@ -181,13 +277,7 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
         }
 
         function puntosPorPaquete(paquete) {
-            // El paquete puede ser "ESP 1", "ESP 2" o "ESP 3"
-            switch(limpiarTexto(paquete).toUpperCase()) {
-                case "ESP 1": return 100;
-                case "ESP 2": return 250;
-                case "ESP 3": return 500;
-                default: return 0;
-            }
+            return PUNTOS[limpiarTexto(paquete).toUpperCase()] || 0;
         }
 
         function buscarPorPatrocinador(patrocinador) {
@@ -234,15 +324,13 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
 
         function generarArbol() {
             document.getElementById('mensajeError').innerText = '';
-            document.getElementById('infoRed').innerText = '';
-            document.getElementById('infoPuntos').innerText = '';
+            document.getElementById('metricsPanel').innerHTML = '';
             let codigo = document.getElementById('codigo').value.trim();
             const btn = document.querySelector('button');
             if (!codigo) {
                 document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
                 return;
             }
-            // Feedback: botón cargando
             btn.disabled = true;
             let textoOriginal = btn.innerText;
             btn.innerText = "Buscando...";
@@ -271,19 +359,17 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
                     let izq = hijos[0] ? contarPuntosRama(hijos[0], 1, 5) : 0;
                     let der = hijos[1] ? contarPuntosRama(hijos[1], 1, 5) : 0;
                     let total = izq + der;
-
                     // Niveles completos
                     let niveles = nivelesCompletos(raiz, 1, 5);
 
-                    // Mostrar info de red y puntos
-                    document.getElementById('infoRed').innerHTML =
-                        `<div class="contador-red">Total personas en tu red ---> <b>${contarRed(raiz, 1, 5)}</b> | Niveles completados: <b>${niveles}</b></div>`;
-                    document.getElementById('infoPuntos').innerHTML =
-                        `<div class="contador-puntos">Puntos<br>
-                         <span>Izquierda: <b>${izq}</b></span>
-                         <span>Derecha: <b>${der}</b></span>
-                         <span class="puntos-totales">Total: <b>${total}</b></span>
-                         </div>`;
+                    // Panel métricas arriba
+                    document.getElementById('metricsPanel').innerHTML = `
+                        <div class="metric-box">Personas en tu red: <b>${contarRed(raiz, 1, 5)}</b></div>
+                        <div class="metric-box">Niveles completos: <b>${niveles}</b></div>
+                        <div class="metric-box">Puntos izquierda: <b>${izq}</b></div>
+                        <div class="metric-box">Puntos derecha: <b>${der}</b></div>
+                        <div class="metric-box">Total puntos: <b>${total}</b></div>
+                    `;
 
                     document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
                     btn.disabled = false; btn.innerText = textoOriginal;
@@ -300,11 +386,11 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
             let siguientes = [];
             nodos.forEach(nodo => {
                 if (!nodo) {
-                    html += `<div class="nodo vacio">Patrocinar aquí</div>`;
+                    html += `<div class="nodo vacio">+</div>`;
                     siguientes.push(null, null);
                 } else {
                     html += `<div class="nodo ${nivel === 1 ? "raiz" : ""}">
-                        <div class="nombre">${nodo.Nombre || 'Sin nombre'}</div>
+                        <div class="nombre">${(nodo.Nombre || 'Sin nombre').split(' ')[0]}</div>
                         <div class="codigo">${nodo['Código Asignado']}</div>
                         <div class="paquete">${nodo.Paquete ? nodo.Paquete : ''}</div>
                     </div>`;
@@ -326,6 +412,96 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2Gco
                 html += crearNivelHTML(siguientes, nivel + 1, maxNivel);
             }
             return html;
+        }
+
+        // -------- SIMULADOR DE GANANCIAS ---------
+        function abrirModal() {
+            document.getElementById('modalBg').style.display = 'flex';
+            actualizarSimulacion();
+        }
+        function cerrarModal() {
+            document.getElementById('modalBg').style.display = 'none';
+        }
+
+        function actualizarSimulacion() {
+            // Simula GANANCIA hasta 5 niveles, binario y bonos directos, en dólares
+            let paquete = document.getElementById('paqueteSim').value;
+            // Usar la red cargada (último "generarArbol")
+            let codigo = document.getElementById('codigo').value.trim();
+            if (!codigo || registros.length === 0) {
+                document.getElementById('simulacionTabla').innerHTML =
+                    "<div style='color:#e11d48;'>Primero busca tu red con tu código asignado.</div>";
+                return;
+            }
+            let raiz = getPorCodigo(codigo);
+            if (!raiz) {
+                document.getElementById('simulacionTabla').innerHTML =
+                    "<div style='color:#e11d48;'>Código no encontrado.</div>";
+                return;
+            }
+            // Recoge directos y sus paquetes
+            let directos = buscarPorPatrocinador(raiz['Código Asignado']);
+            // BONO INICIO RÁPIDO (Gen 1): suma según paquete del inscrito directo
+            let bono_directo = 0, bono_directo_usd = 0;
+            let bonos_detalle = [];
+            for(let dir of directos){
+                if(!dir) continue;
+                let pk = (dir.Paquete || '').toUpperCase();
+                let bono = BONOS[pk] ? BONOS[pk][0] : 0;
+                bono_directo += bono;
+                bonos_detalle.push({
+                    nombre: dir.Nombre || 'Directo',
+                    paquete: pk,
+                    monto: bono,
+                    monto_usd: bono / DOLAR
+                });
+            }
+            bono_directo_usd = bono_directo / DOLAR;
+
+            // BINARIO: calcula puntos de cada pierna, toma la menor, aplica % de binario del PAQUETE SELECCIONADO
+            let izq = directos[0] ? contarPuntosRama(directos[0], 1, 5) : 0;
+            let der = directos[1] ? contarPuntosRama(directos[1], 1, 5) : 0;
+            let pierna_corta = Math.min(izq, der);
+            let ganancia_binaria = pierna_corta * BINARIO[paquete];
+            let ganancia_binaria_usd = ganancia_binaria;
+
+            // Convertimos puntos a USD
+            let binaria_cop = ganancia_binaria * DOLAR;
+            ganancia_binaria_usd = binaria_cop / DOLAR;
+
+            // TOTAL
+            let total_usd = bono_directo_usd + ganancia_binaria_usd;
+
+            // Tabla resumen
+            let tabla = `<table>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Bono</th>
+                    <th>USD</th>
+                </tr>`;
+            bonos_detalle.forEach(bd=>{
+                tabla += `<tr>
+                    <td>Bono directo (${bd.paquete})</td>
+                    <td>${bd.monto.toLocaleString('es-CO', {style:'currency', currency:'COP'})}</td>
+                    <td>${bd.monto_usd.toFixed(2)} USD</td>
+                </tr>`;
+            });
+            tabla += `<tr>
+                <td>Comisión binaria (${BINARIO[paquete]*100}% sobre ${pierna_corta} pts)</td>
+                <td>${binaria_cop.toLocaleString('es-CO', {style:'currency', currency:'COP'})}</td>
+                <td>${ganancia_binaria_usd.toFixed(2)} USD</td>
+            </tr>
+            <tr style="font-weight:bold;">
+                <td>Total estimado</td>
+                <td colspan="2" style="color:#22c55e;font-size:1.17rem;">${(binaria_cop+bono_directo).toLocaleString('es-CO', {style:'currency', currency:'COP'})} / ${(total_usd).toFixed(2)} USD</td>
+            </tr>
+            </table>
+            <div style="font-size:0.93rem;color:#64748b;">
+            *Solo se calculan directos (GEN 1) y binario.<br>
+            Los bonos generacionales adicionales aparecerán cuando completes estructura de 2, 4, 8, 16 y 32 inscritos por pierna.<br>
+            </div>
+            `;
+            document.getElementById('simulacionTabla').innerHTML = tabla;
         }
     </script>
 </body>
