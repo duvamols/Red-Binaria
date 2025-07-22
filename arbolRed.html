@@ -7,13 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --primary:#2563eb;--accent:#4ade80;--bg:#f1f5f9;--text:#0f172a;
-      --text-light:#64748b;--surface:#fff;--shadow:0 6px 32px rgba(60,90,200,.12);
+      --primary:#2563eb;--accent:#4ade80;--bg:#f1f5f9;--text:#0f172a;--text-light:#64748b;--surface:#fff;
     }
     body{background:var(--bg);font-family:'Inter',Arial,sans-serif;color:var(--text);}
     .container{
       max-width:1050px;margin:32px auto;background:var(--surface);border-radius:18px;
-      box-shadow:var(--shadow);padding:2.2rem 1rem 2.6rem;
+      box-shadow:0 6px 32px rgba(60,90,200,.12);padding:2.2rem 1rem 2.6rem;
     }
     h1{text-align:center;color:var(--primary);margin-bottom:6px;font-size:2rem;}
     .subtitle{text-align:center;color:var(--text-light);font-size:1.05rem;margin-bottom:22px;}
@@ -27,7 +26,8 @@
       transition:background .18s,transform .13s;font-size:1.04rem;
     }
     button:active{transform:scale(.96);background:linear-gradient(90deg,#1743b3 75%,#16a34a 130%);}
-    /* Resumen superior */
+
+    /* Resumen */
     .top-summary{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:14px 0 6px;}
     .summary-item{
       background:#f3f7fd;color:var(--primary);font-weight:600;font-size:1rem;
@@ -37,21 +37,19 @@
       text-align:center;background:#e0f2fe;color:#0ea5e9;font-weight:700;font-size:1.08rem;
       padding:7px 0;border-radius:10px;margin:10px 0 6px;
     }
-    /* Árbol */
+
+    /* Árbol (versión “anterior” con espacios fijos) */
     .arbol{display:flex;flex-direction:column;align-items:center;margin-top:16px;width:100%;}
     .nivel{
       display:flex;justify-content:center;align-items:flex-end;margin:16px 0 0;width:100%;
     }
-    .nodo-wrapper{
-      display:flex;flex-direction:column;align-items:center;flex:1 1 0;min-width:0;
-    }
     .nodo{
       background:#fff;border:2.3px solid var(--primary);border-radius:50%;
-      width:82px;height:82px;margin:0 6px;box-shadow:0 1px 8px #4ade8030;
+      width:82px;height:82px;margin:0 12px;box-shadow:0 1px 8px #4ade8030;
       display:flex;flex-direction:column;align-items:center;justify-content:center;
-      font-size:.95rem;position:relative;transition:all .18s;
+      font-size:.95rem;position:relative;
     }
-    .nodo .nombre{color:var(--primary);font-weight:700;font-size:.92rem;margin-bottom:1px;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .nodo .nombre{color:var(--primary);font-weight:700;font-size:.9rem;margin-bottom:1px;max-width:68px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
     .nodo .codigo{color:#64748b;font-size:.78rem;line-height:1;}
     .nodo .paquete{color:#06b6d4;font-size:.75rem;margin-top:1px;}
     .nodo.raiz{
@@ -59,31 +57,36 @@
       color:#fff;border:2.3px solid var(--accent);box-shadow:0 4px 18px #4ade8030;
     }
     .nodo.raiz .nombre,.nodo.raiz .codigo,.nodo.raiz .paquete{color:#fff;}
-    .nodo.vacio{color:#a3a3a3;background:#f7fafc;border-style:dashed;border-color:#b6c6e3;font-style:italic;}
+    .nodo.vacio{
+      color:#a3a3a3;background:#f7fafc;border-style:dashed;border-color:#b6c6e3;font-style:italic;
+    }
     .nodo.vacio .plus{font-size:2rem;color:#bae6fd;}
-    /* Botón flotante niveles */
+
+    /* Botón flotante */
     #toggleNivelesBtn{
       position:fixed;right:28px;bottom:32px;background:linear-gradient(90deg,#34d399 20%,var(--primary) 110%);
       color:#fff;border:none;border-radius:22px;padding:12px 26px;font-size:1.05rem;font-weight:700;
       box-shadow:0 6px 32px #2563eb22;cursor:pointer;display:none;align-items:center;gap:10px;z-index:99;
     }
     #toggleNivelesBtn:hover{background:linear-gradient(90deg,#22d3ee 0%,var(--primary) 110%);}
-    /* Tabla bonos (NO cambiar) */
+
+    /* Tabla bonos (sin cambios) */
     .tabla-bonos{margin-top:32px;overflow-x:auto;}
     .tabla-bonos table{width:100%;border-collapse:collapse;background:#f9fafb;font-size:.98rem;}
     .tabla-bonos th,.tabla-bonos td{border:1px solid #e2e8f0;padding:7px 6px;text-align:center;}
     .tabla-bonos th{background:var(--primary);color:#fff;font-weight:700;}
     .tabla-bonos .total-row td{background:#a7f3d0;font-weight:700;}
+
     #mensajeError{color:#e11d48;text-align:center;margin-top:1rem;font-size:1rem;}
-    /* Responsive */
+
     @media(max-width:900px){
       .container{padding:1rem .4rem 2rem;}
-      .nodo{width:62px;height:62px;font-size:.8rem;}
+      .nodo{width:62px;height:62px;font-size:.8rem;margin:0 6px;}
       .nodo .nombre{font-size:.73rem;max-width:48px;}
       #toggleNivelesBtn{right:12px;bottom:18px;font-size:.92rem;padding:10px 18px;}
     }
     @media(max-width:600px){
-      .nodo{width:45px;height:45px;font-size:.68rem;}
+      .nodo{width:45px;height:45px;font-size:.68rem;margin:0 4px;}
       .nodo .nombre{font-size:.6rem;max-width:38px;}
     }
   </style>
@@ -109,23 +112,18 @@
   </button>
 
   <script>
-    // ================== CONFIG ==================
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-    const COP_PER_USD = 4500;
-
-    // Bonos en COP (no toques esta parte si ya te funciona bien)
+    const COP = 4500;
     const BONO_DIRECTO_COP = { "ESP 1": 112500, "ESP 2": 337500, "ESP 3": 675000 };
     const BONO_GEN_COP     = { "ESP 1": 22500,  "ESP 2": 45000,  "ESP 3": 90000   };
-    const PORC_BIN = { "ESP 1": 0.10, "ESP 2": 0.15, "ESP 3": 0.17 };
+    const PORC_BIN         = { "ESP 1": 0.10,   "ESP 2": 0.15,   "ESP 3": 0.17    };
 
     let registros = [];
     let maxNivelRed = 5;
     let maxNivelMostrar = 3;
     let ultimoCodigo = '';
 
-    // ------------- Helpers -------------
-    const limpiarTexto = t => (t || '').replace(/"/g,'').trim();
-
+    const limpiarTexto = t => (t||'').replace(/"/g,'').trim();
     function puntosPorPaquete(p){
       switch(limpiarTexto(p).toUpperCase()){
         case 'ESP 1': return 100;
@@ -135,26 +133,22 @@
       }
     }
     function buscarPorPatrocinador(code){
-      return registros.filter(r => limpiarTexto(r.Patrocinador) === limpiarTexto(code)).slice(0,2);
+      return registros.filter(r => limpiarTexto(r.Patrocinador)===limpiarTexto(code)).slice(0,2);
     }
-    const getPorCodigo = code => registros.find(r => limpiarTexto(r['Código Asignado']) === limpiarTexto(code));
+    const getPorCodigo = code => registros.find(r => limpiarTexto(r['Código Asignado'])===limpiarTexto(code));
 
     function contarPuntosRama(nodo, nivel, maxN){
       if(!nodo || nivel>maxN) return 0;
       const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
       let total = puntosPorPaquete(nodo.Paquete);
-      for(const h of hijos){
-        total += contarPuntosRama(h, nivel+1, maxN);
-      }
+      for(const h of hijos){ total += contarPuntosRama(h, nivel+1, maxN); }
       return total;
     }
     function contarRed(nodo, nivel, maxN){
       if(!nodo || nivel>maxN) return 0;
       const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
       let tot = hijos.length;
-      for(const h of hijos){
-        tot += contarRed(h, nivel+1, maxN);
-      }
+      for(const h of hijos){ tot += contarRed(h, nivel+1, maxN); }
       return tot;
     }
     function nivelesCompletos(nodo, nivel, maxN){
@@ -162,90 +156,82 @@
       const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
       if(hijos.length<2) return nivel-1;
       return Math.min(
-        nivelesCompletos(hijos[0], nivel+1, maxN),
-        nivelesCompletos(hijos[1], nivel+1, maxN)
+        nivelesCompletos(hijos[0],nivel+1,maxN),
+        nivelesCompletos(hijos[1],nivel+1,maxN)
       );
     }
 
-    // BONOS
     function calcBonosDirectos(hijos){
-      let totalCOP = 0;
+      let total=0;
       hijos.forEach(h=>{
         if(!h) return;
-        totalCOP += BONO_DIRECTO_COP[limpiarTexto(h.Paquete).toUpperCase()] || 0;
+        total += BONO_DIRECTO_COP[limpiarTexto(h.Paquete).toUpperCase()]||0;
       });
-      return +(totalCOP/COP_PER_USD).toFixed(2);
+      return +(total/COP).toFixed(2);
     }
     function calcBonosGeneracionales(hijosLvl1){
-      // Solo nivel 2 (como acordaste). Si más niveles, ajusta aquí.
-      let totalCOP = 0;
+      let total=0;
       hijosLvl1.forEach(h=>{
         if(!h) return;
         const lvl2 = buscarPorPatrocinador(h['Código Asignado']);
         lvl2.forEach(n=>{
           if(!n) return;
-          totalCOP += BONO_GEN_COP[limpiarTexto(n.Paquete).toUpperCase()] || 0;
+          total += BONO_GEN_COP[limpiarTexto(n.Paquete).toUpperCase()]||0;
         });
       });
-      return +(totalCOP/COP_PER_USD).toFixed(2);
+      return +(total/COP).toFixed(2);
     }
     function calcBinario(izq, der, paquetePropio){
       const menor = Math.min(izq, der);
-      const pct = PORC_BIN[limpiarTexto(paquetePropio).toUpperCase()] || 0;
-      // binario en COP -> después paso a USD
-      const cop = menor * pct * COP_PER_USD;
-      return +(cop/COP_PER_USD).toFixed(2);
+      const pct = PORC_BIN[limpiarTexto(paquetePropio).toUpperCase()]||0;
+      const usd = (menor * pct); // pts * %  (ya está en USD porque 1 punto = 1 USD /4500? NO: según tu lógica: puntos*pct da USD, tú lo definiste así)
+      return +usd.toFixed(2);
     }
 
-    // ------------- Render Árbol -------------
     function crearNivelHTML(nodos, nivel, maxN){
-      if(nivel > maxN) return '';
+      if(nivel>maxN) return '';
       let html = `<div class="nivel">`;
       let siguientes = [];
       nodos.forEach(nodo=>{
-        html += `<div class="nodo-wrapper">`;
         if(!nodo){
-          // espacio vacío (patrocinar)
-          html += `<div class="nodo vacio nivel-${nivel}"><span class="plus">+</span></div>`;
+          html += `<div class="nodo vacio"><span class="plus">+</span></div>`;
           siguientes.push(null,null);
         }else{
-          html += `<div class="nodo ${nivel===1?'raiz':''} nivel-${nivel}">
-                      <div class="nombre">${nodo.Nombre || 'Sin nombre'}</div>
+          html += `<div class="nodo ${nivel===1?'raiz':''}">
+                      <div class="nombre">${nodo.Nombre||'Sin nombre'}</div>
                       <div class="codigo">${nodo['Código Asignado']||''}</div>
                       <div class="paquete">${nodo.Paquete||''}</div>
                    </div>`;
-          if(nivel < maxN){
+          if(nivel<maxN){
             const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
             if(hijos.length===0){ siguientes.push(null,null); }
-            else if(hijos.length===1){ siguientes.push(hijos[0], null); }
-            else { siguientes.push(hijos[0], hijos[1]); }
+            else if(hijos.length===1){ siguientes.push(hijos[0],null); }
+            else { siguientes.push(hijos[0],hijos[1]); }
           }
         }
-        html += `</div>`;
       });
       html += `</div>`;
-      if(nivel < maxN && siguientes.length>0 && nodos.some(n=>n)){
+      if(nivel<maxN && siguientes.length>0 && nodos.some(n=>n)){
         html += crearNivelHTML(siguientes, nivel+1, maxN);
       }
       return html;
     }
 
-    // ------------- Principal -------------
     function generarArbol(){
-      document.getElementById('mensajeError').innerText = '';
-      document.getElementById('arbolRed').innerHTML = '';
-      document.getElementById('topResumen').innerHTML = '';
-      document.getElementById('tablaBonos').innerHTML = '';
+      document.getElementById('mensajeError').innerText='';
+      document.getElementById('arbolRed').innerHTML='';
+      document.getElementById('topResumen').innerHTML='';
+      document.getElementById('tablaBonos').innerHTML='';
       const codigo = document.getElementById('codigo').value.trim();
       ultimoCodigo = codigo;
       if(!codigo){
-        document.getElementById('mensajeError').innerText = 'Debes ingresar tu código asignado.';
+        document.getElementById('mensajeError').innerText='Debes ingresar tu código asignado.';
         return;
       }
       const btn = document.querySelector('#input-section button');
-      btn.disabled = true;
+      btn.disabled=true;
       const txt = btn.innerText;
-      btn.innerText = 'Buscando...';
+      btn.innerText='Buscando...';
 
       fetch(SHEET_CSV_URL)
         .then(r=>r.text())
@@ -253,30 +239,26 @@
           const filas = csv.split('\n');
           const headers = filas[0].split(',').map(limpiarTexto);
           registros = filas.slice(1).map(row=>{
-            const cols = row.split(',');
-            const obj = {};
-            headers.forEach((k,i)=> obj[k]=limpiarTexto(cols[i]));
+            const c=row.split(',');
+            const obj={}; headers.forEach((k,i)=>obj[k]=limpiarTexto(c[i]));
             return obj;
           });
 
           const raiz = getPorCodigo(codigo);
           if(!raiz){
-            document.getElementById('mensajeError').innerText = 'No se encontró el código en la base de datos.';
-            btn.disabled=false; btn.innerText=txt;
-            return;
+            document.getElementById('mensajeError').innerText='No se encontró el código en la base de datos.';
+            btn.disabled=false;btn.innerText=txt;return;
           }
 
-          // Datos de puntos / bonos
           const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-          const izq = hijos[0]? contarPuntosRama(hijos[0],1,maxNivelRed):0;
-          const der = hijos[1]? contarPuntosRama(hijos[1],1,maxNivelRed):0;
-          const totalPuntos = izq+der;
+          const izq = hijos[0]?contarPuntosRama(hijos[0],1,maxNivelRed):0;
+          const der = hijos[1]?contarPuntosRama(hijos[1],1,maxNivelRed):0;
+          const total = izq+der;
 
-          const binUSD = calcBinario(izq, der, raiz.Paquete);
+          const binUSD = calcBinario(izq,der,raiz.Paquete);
           const dirUSD = calcBonosDirectos(hijos);
           const genUSD = calcBonosGeneracionales(hijos);
 
-          // Resumen
           document.getElementById('topResumen').innerHTML = `
             <div class="top-summary">
               <div class="summary-item">Personas en red: <b>${contarRed(raiz,1,maxNivelRed)}</b></div>
@@ -284,7 +266,7 @@
               <div class="summary-item">Puntos Izq: <b>${izq}</b></div>
               <div class="summary-item">Puntos Der: <b>${der}</b></div>
             </div>
-            <div class="summary-total">Total puntos: ${totalPuntos}</div>
+            <div class="summary-total">Total puntos: ${total}</div>
             <div class="top-summary" style="margin-bottom:16px;">
               <div class="summary-item" style="background:#f0fdf4;color:#047857;">
                 <b>Ganancias actuales</b><br>
@@ -296,20 +278,18 @@
             </div>
           `;
 
-          // Árbol
           document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz],1,maxNivelMostrar);
 
-          // Botón niveles
-          const btnToggle = document.getElementById('toggleNivelesBtn');
-          if(maxNivelMostrar === 3){
-            btnToggle.style.display = (contarRed(raiz,1,5)>0) ? 'flex':'none';
+          const btnT = document.getElementById('toggleNivelesBtn');
+          if(maxNivelMostrar===3){
+            btnT.style.display = (contarRed(raiz,1,5)>0)?'flex':'none';
             document.getElementById('iconoToggle').textContent = '+';
           }else{
-            btnToggle.style.display = 'flex';
+            btnT.style.display = 'flex';
             document.getElementById('iconoToggle').textContent = '-';
           }
 
-          // Tabla de bonos (igual a la que tenías)
+          // Tabla de bonos SIN CAMBIOS
           document.getElementById('tablaBonos').innerHTML = `
             <table>
               <tr>
@@ -331,7 +311,7 @@
           btn.disabled=false; btn.innerText=txt;
         })
         .catch(err=>{
-          document.getElementById('mensajeError').innerText = 'No se pudo consultar la base de datos.';
+          document.getElementById('mensajeError').innerText='No se pudo consultar la base de datos.';
           btn.disabled=false; btn.innerText=txt;
           console.error(err);
         });
@@ -344,5 +324,6 @@
   </script>
 </body>
 </html>
+
 
 
