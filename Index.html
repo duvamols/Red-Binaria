@@ -6,7 +6,6 @@
     <title>Red de Acción Masiva | Preinscripción</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ... (ESTILOS IGUAL QUE ANTES) ... */
         :root {
             --primary: #2563eb;
             --primary-light: #60a5fa;
@@ -199,9 +198,9 @@
                 <label for="paquete">¿Con qué paquete vas a hacer la inscripción?</label>
                 <select id="paquete" name="paquete" required>
                     <option value="">Selecciona un paquete</option>
-                    <option value="ESP 1 100 P">ESP 1</option>
-                    <option value="ESP 2 250 P">ESP 2</option>
-                    <option value="ESP 3 500 P">ESP 3</option>
+                    <option value="ESP 1|100">ESP 1 (100 puntos)</option>
+                    <option value="ESP 2|250">ESP 2 (250 puntos)</option>
+                    <option value="ESP 3|500">ESP 3 (500 puntos)</option>
                 </select>
 
                 <button type="submit" id="enviarBtn">Enviar Preinscripción</button>
@@ -237,7 +236,7 @@
                 return;
             }
 
-            // Separar nombre y puntos del paquete
+            // Separar nombre del paquete y puntos
             const [paquete, puntos] = paqueteRaw.split('|');
 
             // Prevenir doble envío
@@ -281,6 +280,7 @@
     </script>
 </body>
 </html>
+
 
 
 
