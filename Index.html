@@ -6,6 +6,7 @@
     <title>Red de Acción Masiva | Preinscripción</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* ... (ESTILOS IGUAL QUE ANTES) ... */
         :root {
             --primary: #2563eb;
             --primary-light: #60a5fa;
@@ -195,6 +196,14 @@
                     <option value="Venezuela">Venezuela</option>
                 </select>
 
+                <label for="paquete">¿Con qué paquete vas a hacer la inscripción?</label>
+                <select id="paquete" name="paquete" required>
+                    <option value="">Selecciona un paquete</option>
+                    <option value="Paquete Inicio|60">Inicio - 60 puntos</option>
+                    <option value="Paquete Empresario|120">Empresario - 120 puntos</option>
+                    <option value="Paquete Premium|240">Premium - 240 puntos</option>
+                </select>
+
                 <button type="submit" id="enviarBtn">Enviar Preinscripción</button>
             </form>
             <div id="codigoGenerado">
@@ -218,14 +227,19 @@
             const telefono = document.getElementById('telefono').value.trim();
             const patrocinador = document.getElementById('patrocinador').value.trim();
             const pais = document.getElementById('pais').value;
+            const paqueteRaw = document.getElementById('paquete').value;
             const btn = document.getElementById('enviarBtn');
             const msgError = document.getElementById('msgError');
             msgError.textContent = '';
 
-            if(nombre === '' || telefono === '' || patrocinador === '' || pais === ''){
+            if(nombre === '' || telefono === '' || patrocinador === '' || pais === '' || paqueteRaw === ''){
                 msgError.textContent = 'Por favor, completa todos los campos.';
                 return;
             }
+
+            // Separar nombre y puntos del paquete
+            const [paquete, puntos] = paqueteRaw.split('|');
+
             // Prevenir doble envío
             enviando = true;
             btn.disabled = true;
@@ -239,6 +253,8 @@
                 telefono,
                 patrocinador,
                 pais,
+                paquete,
+                puntos,
                 codigoAsignado: codigoNuevo
             };
 
@@ -265,6 +281,7 @@
     </script>
 </body>
 </html>
+
 
 
 
