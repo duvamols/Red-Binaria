@@ -21,11 +21,11 @@
         h1 {
             text-align: center;
             color: #2563eb;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         #input-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         #codigo {
             font-size: 1.05rem;
@@ -34,77 +34,83 @@
             border: 1px solid #b6c6e3;
             width: 220px;
         }
-        button {
+        button, .nav-btn {
             background: linear-gradient(90deg, #2563eb 75%, #4ade80 130%);
             color: #fff;
             font-weight: bold;
-            padding: 8px 25px;
+            padding: 8px 22px;
             border-radius: 8px;
             border: none;
-            margin-left: 7px;
+            margin: 7px 6px 0 0;
             cursor: pointer;
-            transition: background .18s, transform .13s;
+            font-size: 1rem;
+            transition: background .16s, transform .11s;
         }
-        button:active {
-            transform: scale(0.97);
-            box-shadow: 0 2px 6px #2563eb33;
+        button:active, .nav-btn:active {
+            transform: scale(0.96);
             background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
         }
         .arbol {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 15px;
+            margin-top: 12px;
             width: 100%;
             overflow-x: auto;
         }
         .nivel {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            margin: 12px 0;
+            align-items: flex-end;
+            margin: 8px 0;
             width: 100%;
+            min-height: 72px;
         }
         .nodo {
             background: #fff;
-            border: 2px solid #2563eb;
-            border-radius: 8px;
-            min-width: 120px;
-            max-width: 140px;
+            border: 3.5px solid #2563eb;
+            border-radius: 50%;
+            min-width: 65px;
+            min-height: 65px;
+            width: 65px;
+            height: 65px;
             margin: 0 12px;
-            padding: 8px 6px;
-            text-align: center;
-            font-size: 0.98rem;
-            box-shadow: 0 1px 6px #4ade8022;
-            position: relative;
+            box-shadow: 0 1.5px 7px #4ade8020;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            font-size: 0.94rem;
+            position: relative;
+            transition: border 0.22s, box-shadow 0.18s;
         }
         .nodo .nombre {
             font-weight: 700;
             color: #2563eb;
-            font-size: 1.01rem;
-            margin-bottom: 1px;
+            font-size: 0.89rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 55px;
         }
         .nodo .codigo {
             color: #64748b;
-            font-size: 0.93rem;
+            font-size: 0.75rem;
+            margin-top: 0;
+            line-height: 1.05;
         }
         .nodo .paquete {
-            font-size: 0.87rem;
+            font-size: 0.7rem;
             color: #6ee7b7;
         }
         .nodo.raiz {
-            background: linear-gradient(90deg, #2563eb 85%, #4ade80 130%);
+            background: linear-gradient(135deg, #2563eb 90%, #4ade80 160%);
             color: #fff;
-            font-weight: bold;
-            border: 2px solid #4ade80;
-            font-size: 1.09rem;
-            box-shadow: 0 4px 18px #4ade8030;
+            border: 3.5px solid #4ade80;
+            font-size: 1.01rem;
+            box-shadow: 0 4px 16px #4ade8030;
         }
-        .nodo.raiz .nombre,
-        .nodo.raiz .codigo {
+        .nodo.raiz .nombre, .nodo.raiz .codigo {
             color: #fff;
         }
         .nodo.vacio {
@@ -118,39 +124,40 @@
             display: flex;
             justify-content: center;
             width: 100%;
-            height: 12px;
+            height: 18px;
         }
         .linea {
             border-top: 2px solid #b6c6e3;
-            margin: 0 6px;
-            width: 32px;
-            height: 12px;
+            margin: 0 4px;
+            width: 24px;
+            height: 14px;
         }
         .stats {
             display: flex;
-            gap: 16px;
+            gap: 15px;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
         }
         .stats-box {
             background: #f3f5ff;
             color: #2563eb;
             border-radius: 9px;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 600;
-            padding: 7px 16px;
-            margin-bottom: 3px;
+            padding: 6px 13px;
+            margin-bottom: 2px;
         }
         .resultados-ganancia {
-            margin: 20px auto 10px auto;
-            max-width: 430px;
+            margin: 15px auto 8px auto;
+            max-width: 400px;
             background: #f0fdf4;
             border: 2px solid #bbf7d0;
-            border-radius: 15px;
-            padding: 18px 20px;
+            border-radius: 13px;
+            padding: 13px 14px;
             color: #047857;
             font-weight: 600;
-            font-size: 1.08rem;
+            font-size: 1.04rem;
             text-align: left;
             box-shadow: 0 2px 16px #4ade8025;
         }
@@ -158,11 +165,24 @@
             color: #2563eb;
             font-weight: 800;
         }
-        @media (max-width: 900px) {
-            .container { padding: 0.5rem; }
-            .nivel { flex-wrap: wrap; }
-            .nodo { min-width: 80px; max-width: 110px; margin: 6px 2px; font-size: 0.9rem; }
-            .stats { flex-direction: column; gap: 7px;}
+        .nav-niveles {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 7px;
+            margin: 2px 0 7px 0;
+        }
+        .nav-btn {
+            padding: 6px 16px;
+            font-size: 0.98rem;
+            margin-bottom: 0;
+        }
+        @media (max-width: 800px) {
+            .container { padding: 0.6rem; }
+            .nivel { flex-wrap: wrap; min-height: 60px;}
+            .nodo { min-width: 45px; min-height: 45px; width: 45px; height: 45px; font-size: 0.79rem;}
+            .stats-box { font-size: 0.93rem; padding: 5px 7px;}
+            .resultados-ganancia { font-size: 0.92rem; padding: 7px 5px;}
         }
     </style>
 </head>
@@ -174,6 +194,7 @@
             <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
             <button onclick="generarArbol()">Ver Árbol</button>
         </div>
+        <div class="nav-niveles" id="navNiveles" style="display:none"></div>
         <div class="stats" id="stats"></div>
         <div id="resultados" class="resultados-ganancia" style="display:none"></div>
         <div id="arbolRed" class="arbol"></div>
@@ -183,11 +204,12 @@
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
 
         let registros = [];
+        let nivelActual = 3; // Por defecto, 3 niveles visibles (de 1 a 5)
+        let raizCache = null;
 
         function limpiarTexto(text) {
             return (text || '').replace(/"/g, '').trim();
         }
-
         function puntosPorPaquete(paquete) {
             switch(limpiarTexto(paquete).toUpperCase()) {
                 case "ESP 1": return 100;
@@ -196,7 +218,6 @@
                 default: return 0;
             }
         }
-
         function bonoDirectoPorPaquete(paquete) {
             switch(limpiarTexto(paquete).toUpperCase()) {
                 case "ESP 1": return 135000;
@@ -205,7 +226,6 @@
                 default: return 0;
             }
         }
-
         function porcBinarioPorPaquete(paquete) {
             switch(limpiarTexto(paquete).toUpperCase()) {
                 case "ESP 1": return 0.10;
@@ -214,15 +234,12 @@
                 default: return 0;
             }
         }
-
         function buscarPorPatrocinador(patrocinador) {
             return registros.filter(x => limpiarTexto(x.Patrocinador) === limpiarTexto(patrocinador)).slice(0, 2);
         }
-
         function getPorCodigo(codigo) {
             return registros.find(x => limpiarTexto(x['Código Asignado']) === limpiarTexto(codigo));
         }
-
         function contarRed(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return 0;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
@@ -232,7 +249,6 @@
             }
             return total;
         }
-
         function nivelesCompletos(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return nivel-1;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
@@ -242,7 +258,6 @@
                 nivelesCompletos(hijos[1], nivel+1, maxNivel)
             );
         }
-
         function sumarPuntosRama(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return 0;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
@@ -252,9 +267,7 @@
             }
             return total;
         }
-
         function calcularBonosDirectos(nodo) {
-            // Solo los directos del usuario (GEN1)
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
             let total = 0;
             hijos.forEach(hijo => {
@@ -262,7 +275,6 @@
             });
             return total;
         }
-
         function calcularBinario(nodo) {
             if (!nodo) return { binario: 0, izq: 0, der: 0, sobranteIzq: 0, sobranteDer: 0 };
             let paquetePropio = nodo.Paquete;
@@ -270,20 +282,48 @@
             let izq = hijos[0] ? sumarPuntosRama(hijos[0], 1, 5) : 0;
             let der = hijos[1] ? sumarPuntosRama(hijos[1], 1, 5) : 0;
             let porcentaje = porcBinarioPorPaquete(paquetePropio);
-            // Compensar puntos y guardar sobrantes
             let menor = Math.min(izq, der);
             let sobranteIzq = izq - menor;
             let sobranteDer = der - menor;
-            // Cálculo exacto binario
-            let binario = menor * porcentaje * 4500; // Todo en pesos COP
+            let binario = menor * porcentaje * 4500;
             return { binario, izq, der, menor, sobranteIzq, sobranteDer };
         }
-
+        function mostrarNavegadorNiveles() {
+            const nav = document.getElementById('navNiveles');
+            nav.innerHTML = '';
+            if(nivelActual > 3) {
+                let btnPrev = document.createElement('button');
+                btnPrev.className = "nav-btn";
+                btnPrev.innerText = "⬅ Ver nivel anterior";
+                btnPrev.onclick = function(){
+                    if(nivelActual > 3) {
+                        nivelActual--;
+                        mostrarArbol();
+                    }
+                }
+                nav.appendChild(btnPrev);
+            }
+            if(nivelActual < 5) {
+                let btnNext = document.createElement('button');
+                btnNext.className = "nav-btn";
+                btnNext.innerText = "Ver siguiente nivel ➡";
+                btnNext.onclick = function(){
+                    if(nivelActual < 5) {
+                        nivelActual++;
+                        mostrarArbol();
+                    }
+                }
+                nav.appendChild(btnNext);
+            }
+            nav.style.display = "flex";
+        }
         function generarArbol() {
             document.getElementById('mensajeError').innerText = '';
             document.getElementById('arbolRed').innerHTML = '';
             document.getElementById('stats').innerHTML = '';
             document.getElementById('resultados').style.display = "none";
+            document.getElementById('navNiveles').style.display = "none";
+            nivelActual = 3; // Reset al consultar nuevo código
             let codigo = document.getElementById('codigo').value.trim();
             const btn = document.querySelector('button');
             if (!codigo) {
@@ -306,6 +346,7 @@
                     });
 
                     const raiz = getPorCodigo(codigo);
+                    raizCache = raiz;
                     if (!raiz) {
                         document.getElementById('arbolRed').innerHTML = "";
                         document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
@@ -313,31 +354,9 @@
                         return;
                     }
 
-                    // Estadísticas
-                    let hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-                    let izq = hijos[0] ? sumarPuntosRama(hijos[0], 1, 5) : 0;
-                    let der = hijos[1] ? sumarPuntosRama(hijos[1], 1, 5) : 0;
-                    let total = izq + der;
-                    let niveles = nivelesCompletos(raiz, 1, 5);
-                    let personasRed = contarRed(raiz, 1, 5);
-                    document.getElementById('stats').innerHTML =
-                        `<div class="stats-box">Personas en red: ${personasRed}</div>
-                         <div class="stats-box">Niveles completos: ${niveles}</div>
-                         <div class="stats-box">Puntos Izquierda: ${izq}</div>
-                         <div class="stats-box">Puntos Derecha: ${der}</div>`;
+                    mostrarArbol();
+                    mostrarNavegadorNiveles();
 
-                    document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
-
-                    // Mostrar ganancias reales:
-                    let bonosDirectos = calcularBonosDirectos(raiz);
-                    let bin = calcularBinario(raiz);
-
-                    document.getElementById('resultados').innerHTML =
-                        `<div>Ganancia por <b>bonos directos</b>: <span>$${bonosDirectos.toLocaleString('es-CO')}</span></div>
-                        <div>Ganancia por <b>binario</b>: <span>$${bin.binario.toLocaleString('es-CO')}</span></div>
-                        <div><b>Total ganancias: </b><span>$${(bonosDirectos + bin.binario).toLocaleString('es-CO')}</span></div>
-                        <div style="margin-top:7px;font-size:0.99em;color:#64748b;">Puntos sobrantes izquierda: ${bin.sobranteIzq} | derecha: ${bin.sobranteDer}</div>`;
-                    document.getElementById('resultados').style.display = "";
                     btn.disabled = false; btn.innerText = textoOriginal;
                 })
                 .catch(err => {
@@ -345,19 +364,46 @@
                     btn.disabled = false; btn.innerText = textoOriginal;
                 });
         }
+        function mostrarArbol() {
+            const raiz = raizCache;
+            let hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+            let izq = hijos[0] ? sumarPuntosRama(hijos[0], 1, 5) : 0;
+            let der = hijos[1] ? sumarPuntosRama(hijos[1], 1, 5) : 0;
+            let total = izq + der;
+            let niveles = nivelesCompletos(raiz, 1, 5);
+            let personasRed = contarRed(raiz, 1, 5);
+            document.getElementById('stats').innerHTML =
+                `<div class="stats-box">Personas en red: ${personasRed}</div>
+                 <div class="stats-box">Niveles completos: ${niveles}</div>
+                 <div class="stats-box">Puntos Izquierda: ${izq}</div>
+                 <div class="stats-box">Puntos Derecha: ${der}</div>`;
 
+            document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, nivelActual);
+
+            let bonosDirectos = calcularBonosDirectos(raiz);
+            let bin = calcularBinario(raiz);
+
+            document.getElementById('resultados').innerHTML =
+                `<div>Ganancia por <b>bonos directos</b>: <span>$${bonosDirectos.toLocaleString('es-CO')}</span></div>
+                <div>Ganancia por <b>binario</b>: <span>$${bin.binario.toLocaleString('es-CO')}</span></div>
+                <div><b>Total ganancias: </b><span>$${(bonosDirectos + bin.binario).toLocaleString('es-CO')}</span></div>
+                <div style="margin-top:7px;font-size:0.99em;color:#64748b;">Puntos sobrantes izquierda: ${bin.sobranteIzq} | derecha: ${bin.sobranteDer}</div>`;
+            document.getElementById('resultados').style.display = "";
+
+            mostrarNavegadorNiveles();
+        }
         function crearNivelHTML(nodos, nivel, maxNivel) {
             if (nivel > maxNivel) return "";
             let html = `<div class="nivel">`;
             let siguientes = [];
             nodos.forEach(nodo => {
                 if (!nodo) {
-                    html += `<div class="nodo vacio">Patrocinar aquí</div>`;
+                    html += `<div class="nodo vacio">+</div>`;
                     siguientes.push(null, null);
                 } else {
                     html += `<div class="nodo ${nivel === 1 ? "raiz" : ""}">
-                        <div class="nombre">${nodo.Nombre || 'Sin nombre'}</div>
-                        <div class="codigo">${nodo['Código Asignado']}</div>
+                        <div class="nombre">${(nodo.Nombre||"").split(" ")[0]}</div>
+                        <div class="codigo">${nodo['Código Asignado']||''}</div>
                         <div class="paquete">${nodo.Paquete ? nodo.Paquete : ''}</div>
                     </div>`;
                     const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
@@ -380,7 +426,4 @@
     </script>
 </body>
 </html>
-
-
-
 
