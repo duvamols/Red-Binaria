@@ -2,82 +2,100 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Árbol Binario de Red con Simulador</title>
+    <title>Así va tu red - Proceso previo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background: #f1f5f9;
             font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
         }
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
+            max-width: 980px;
+            margin: 32px auto 20px auto;
             background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 6px 32px rgba(60,90,200,0.13);
-            padding: 2rem 1rem 2.5rem 1rem;
+            border-radius: 22px;
+            box-shadow: 0 6px 32px rgba(60,90,200,0.12);
+            padding: 1.6rem 1rem 2.3rem 1rem;
+            min-height: 60vh;
         }
         h1 {
             text-align: center;
             color: #2563eb;
-            margin-bottom: 15px;
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 3px;
+            letter-spacing: 1px;
         }
-        h3 {
+        h2 {
             text-align: center;
-            color: #64748b;
-            margin-bottom: 24px;
+            color: #475569;
+            font-size: 1.16rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: .1px;
         }
         #input-section {
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 25px;
         }
         #codigo {
-            font-size: 1.05rem;
-            padding: 7px 13px;
-            border-radius: 8px;
-            border: 1px solid #b6c6e3;
-            width: 220px;
+            font-size: 1.09rem;
+            padding: 8px 13px;
+            border-radius: 9px;
+            border: 1.2px solid #b6c6e3;
+            width: 225px;
         }
-        button, .simulador-btn {
-            background: linear-gradient(90deg, #2563eb 75%, #4ade80 130%);
+        button {
+            background: linear-gradient(90deg, #2563eb 80%, #4ade80 130%);
             color: #fff;
             font-weight: bold;
-            padding: 8px 25px;
-            border-radius: 8px;
+            padding: 9px 28px;
+            border-radius: 9px;
             border: none;
             margin-left: 7px;
             cursor: pointer;
+            font-size: 1.06rem;
             transition: background .18s, transform .13s;
-            font-size: 1rem;
+            box-shadow: 0 1.5px 10px #2563eb12;
         }
-        button:active, .simulador-btn:active {
+        button:active {
             transform: scale(0.97);
-            box-shadow: 0 2px 6px #2563eb33;
-            background: linear-gradient(90deg, #1743b3 75%, #16a34a 130%);
         }
-        #panelContadores {
+        .stats-row {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 13px;
+            flex-wrap: wrap;
+            gap: 1.1rem;
+            margin-bottom: 7px;
         }
-        .contador-red {
-            font-size: 1.07rem;
-            font-weight: 600;
-            background: #f1f5f9;
-            padding: 7px 18px;
+        .stats-box {
+            font-size: 1.04rem;
+            font-weight: 700;
             color: #2563eb;
+            background: #e0f2fe;
             border-radius: 12px;
-            min-width: 140px;
+            padding: 7px 18px;
+            margin: 0 3px;
+            box-shadow: 0 1.5px 8px #2563eb13;
+        }
+        .tree-summary {
             text-align: center;
+            font-weight: 700;
+            font-size: 1.13rem;
+            background: #f1f5f9;
+            color: #0f172a;
+            margin: 15px auto 14px auto;
+            border-radius: 13px;
+            padding: 9px 20px;
+            width: fit-content;
         }
         .arbol {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 15px;
             width: 100%;
             overflow-x: auto;
         }
@@ -85,174 +103,154 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            margin: 10px 0;
+            margin: 15px 0;
             width: 100%;
         }
-        .nodo {
+        .nodo-circulo {
             background: #fff;
-            border: 2px solid #2563eb;
+            border: 2.3px solid #2563eb;
             border-radius: 50%;
-            min-width: 76px;
-            max-width: 88px;
-            min-height: 76px;
-            max-height: 88px;
-            margin: 0 7px;
-            padding: 7px 3px;
-            text-align: center;
-            font-size: 0.93rem;
-            box-shadow: 0 1px 6px #4ade8022;
-            position: relative;
+            width: 94px;
+            height: 94px;
+            margin: 0 13px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            transition: box-shadow .15s;
+            align-items: center;
+            box-shadow: 0 1.5px 8px #4ade8018;
+            text-align: center;
+            position: relative;
         }
-        .nodo .nombre {
-            font-weight: 700;
-            color: #2563eb;
-            font-size: 0.99rem;
-            margin-bottom: 2px;
-            line-height: 1.1;
-        }
-        .nodo .codigo {
-            color: #64748b;
-            font-size: 0.83rem;
-            margin-bottom: 0px;
-        }
-        .nodo .paquete {
-            font-size: 0.79rem;
-            color: #14b8a6;
-            margin-top: 2px;
-        }
-        .nodo.raiz {
-            background: linear-gradient(90deg, #2563eb 85%, #4ade80 130%);
+        .nodo-circulo.raiz {
+            background: linear-gradient(95deg, #2563eb 90%, #4ade80 120%);
+            border: 2.5px solid #4ade80;
             color: #fff;
             font-weight: bold;
-            border: 2px solid #4ade80;
-            font-size: 1.09rem;
-            box-shadow: 0 4px 18px #4ade8030;
+            box-shadow: 0 4px 24px #4ade8030;
         }
-        .nodo.raiz .nombre,
-        .nodo.raiz .codigo,
-        .nodo.raiz .paquete {
-            color: #fff;
+        .nodo-circulo .nombre {
+            font-weight: 800;
+            font-size: 1.01rem;
+            color: inherit;
+            margin-bottom: 1.5px;
         }
-        .nodo.vacio {
+        .nodo-circulo .codigo {
+            font-size: 0.92rem;
+            color: #64748b;
+        }
+        .nodo-circulo.raiz .codigo { color: #fff; }
+        .nodo-circulo .paquete {
+            font-size: 0.83rem;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+        .nodo-circulo.raiz .paquete { color: #bbf7d0; }
+        .nodo-circulo.vacio {
             color: #a3a3a3;
             background: #f7fafc;
             border-style: dashed;
             border-color: #b6c6e3;
             font-style: italic;
-            font-size: 1.2rem;
-            display: flex;
+            font-size: 1.27rem;
             justify-content: center;
             align-items: center;
-        }
-        .nodo.vacio:after {
-            content: "+";
-            font-size: 1.4rem;
-            color: #b6c6e3;
         }
         .conectores {
             display: flex;
             justify-content: center;
             width: 100%;
-            height: 10px;
+            height: 12px;
         }
         .linea {
-            border-top: 2px solid #b6c6e3;
-            margin: 0 3px;
-            width: 23px;
-            height: 10px;
+            border-top: 2.2px solid #b6c6e3;
+            margin: 0 4px;
+            width: 38px;
+            height: 12px;
         }
-        #mensajeError {
-            color:#e11d48;
-            text-align:center;
-            margin-top:1rem;
-            font-size:1.1rem;
+        .card-ganancias {
+            background: #f8fafc;
+            border-radius: 16px;
+            box-shadow: 0 2.5px 12px #14b8a61a;
+            max-width: 520px;
+            margin: 22px auto 0 auto;
+            padding: 20px 17px 16px 17px;
+            text-align: left;
         }
-        #simulador-container {
-            background: #f9fafb;
-            border-radius: 13px;
-            margin: 15px auto 0 auto;
-            padding: 17px 18px 8px 18px;
-            max-width: 510px;
-            box-shadow: 0 2px 18px #2563eb11;
-            border: 1.2px solid #cbd5e1;
-        }
-        #simulador-container h2 {
+        .card-ganancias .titulo {
             color: #2563eb;
-            font-size: 1.19rem;
-            margin-bottom: 13px;
-            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 11px;
         }
-        #simulador-container label {
+        .ganancia-linea {
+            margin-bottom: 5px;
+            font-size: 1.08rem;
+            color: #0f172a;
+        }
+        .ganancia-label {
             color: #2563eb;
+            font-weight: 700;
             font-size: 1.01rem;
-            margin-top: 2px;
         }
-        .simu-flex { display: flex; flex-wrap: wrap; gap:10px 16px; justify-content:center;}
-        .simu-flex > div { flex:1 1 110px; min-width:120px;}
-        .simulador-btn { margin: 10px 0 12px 0; }
-        .res-simulador {
-            background: #f0fdf4;
-            color: #065f46;
-            border-radius: 7px;
-            padding: 8px 14px;
-            margin: 8px 0 12px 0;
-            font-size: 1.02rem;
-            font-weight: 500;
+        .ganancia-total {
+            font-size: 1.15rem;
+            color: #22d3ee;
+            font-weight: bold;
+            margin-top: 7px;
+            margin-bottom: 0;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 700px) {
             .container { padding: 0.5rem; }
             .nivel { flex-wrap: wrap; }
-            .nodo { min-width: 46px; max-width: 66px; min-height: 46px; max-height: 66px; font-size: 0.83rem; }
-        }
-        @media (max-width: 600px) {
-            .nodo { min-width: 34px; max-width: 40px; min-height: 34px; max-height: 40px; font-size: 0.73rem; padding: 2px 1px; }
-            .arbol { padding: 0 1px; }
-            .container { max-width: 99vw;}
-            #simulador-container { padding: 8px 4px 5px 4px;}
+            .nodo-circulo { margin: 7px 2px; width: 65px; height: 65px; font-size: 0.90rem; }
+            .arbol { padding: 0 3px; }
+            .tree-summary { font-size: 0.99rem; }
+            .card-ganancias { padding: 12px 5px 10px 5px;}
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Así va tu red hasta el momento</h1>
-        <h3>Proceso previo a la inscripción en Gano Excel</h3>
+        <h1>Así va tu red</h1>
+        <h2>Proceso previo</h2>
         <div id="input-section">
             <input type="text" id="codigo" placeholder="Ingresa tu código asignado">
-            <button onclick="generarArbol()">Ver Árbol</button>
+            <button onclick="generarArbol()">Ver red</button>
         </div>
-        <div id="panelContadores"></div>
+        <div id="stats" class="stats-row"></div>
+        <div id="treeSummary" class="tree-summary"></div>
         <div id="arbolRed" class="arbol"></div>
-        <div id="mensajeError"></div>
-        <div id="simulador-container" style="display:none"></div>
+        <div class="card-ganancias" id="gananciasBox" style="display:none;">
+            <div class="titulo">Ganancias hasta el momento</div>
+            <div class="ganancia-linea"><span class="ganancia-label">Binario:</span> <span id="gananciaBinario"></span></div>
+            <div class="ganancia-linea"><span class="ganancia-label">Bonos directos:</span> <span id="gananciaDirectos"></span></div>
+            <div class="ganancia-linea"><span class="ganancia-label">Generacional:</span> <span id="gananciaGeneracional"></span></div>
+            <div class="ganancia-total">Total: <span id="gananciaTotal"></span></div>
+        </div>
+        <div id="mensajeError" style="color:#e11d48;text-align:center;margin-top:1.2rem;"></div>
     </div>
     <script>
+        // ---- CONFIGURACIÓN ----
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-        let registros = [];
-        let usuarioPaquete = "ESP 3";
-        let usuarioCodigo = "";
+        const DOLAR = 4500; // 1 USD = 4500 COP
 
-        // Bonos directos y generacionales (en dólares)
-        const BONOS = {
-            "ESP 1": {directo: 11, generacion: [0, 4, 2, 1.5, 1, 0.5]}, // index 0 no se usa
-            "ESP 2": {directo: 28, generacion: [0, 7, 4, 2, 1.5, 1]},
-            "ESP 3": {directo: 56, generacion: [0, 15, 7, 4, 2, 1.5]}
+        // Bonos por paquete (en COP)
+        const BONOS_DIRECTOS = { "ESP 1": 112500, "ESP 2": 337500, "ESP 3": 675000 };
+        const BONOS_GENERA = { // [gen1, gen2, gen3, gen4, gen5] en COP
+            "ESP 1": [112500, 22500, 22500, 22500, 45000],
+            "ESP 2": [337500, 45000, 45000, 45000, 90000],
+            "ESP 3": [675000, 90000, 90000, 90000, 180000]
         };
-        // Porcentajes binarios
-        const BINARIO = { "ESP 1": 0.10, "ESP 2": 0.15, "ESP 3": 0.17 };
+        const PORC_BINARIO = { "ESP 1": 0.10, "ESP 2": 0.15, "ESP 3": 0.17 };
+        const PUNTOS_PAQUETE = { "ESP 1": 100, "ESP 2": 250, "ESP 3": 500 };
 
-        function limpiarTexto(text) { return (text || '').replace(/"/g, '').trim(); }
-        function puntosPorPaquete(paquete) {
-            switch(limpiarTexto(paquete).toUpperCase()) {
-                case "ESP 1": return 100;
-                case "ESP 2": return 250;
-                case "ESP 3": return 500;
-                default: return 0;
-            }
+        let registros = [];
+        let nivelActual = 3; // Por defecto 3 niveles
+        let maxNivel = 5;
+        let raizGlobal = null;
+
+        function limpiarTexto(text) {
+            return (text || '').replace(/"/g, '').trim();
         }
         function buscarPorPatrocinador(patrocinador) {
             return registros.filter(x => limpiarTexto(x.Patrocinador) === limpiarTexto(patrocinador)).slice(0, 2);
@@ -260,209 +258,119 @@
         function getPorCodigo(codigo) {
             return registros.find(x => limpiarTexto(x['Código Asignado']) === limpiarTexto(codigo));
         }
-        // -- Binario puntos y niveles --
-        function contarPuntosRama(nodo, nivel, maxNivel) {
-            if (!nodo || nivel > maxNivel) return 0;
-            let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-            let total = puntosPorPaquete(nodo.Paquete);
-            for (let h of hijos) total += contarPuntosRama(h, nivel + 1, maxNivel);
-            return total;
+        function puntosPorPaquete(paquete) {
+            return PUNTOS_PAQUETE[limpiarTexto(paquete).toUpperCase()] || 0;
         }
+        function paqueteUsuario(nodo) {
+            let val = limpiarTexto(nodo.Paquete || "");
+            if (val.indexOf("ESP") !== -1) return val.toUpperCase();
+            if (val === "1") return "ESP 1";
+            if (val === "2") return "ESP 2";
+            if (val === "3") return "ESP 3";
+            return "";
+        }
+
+        // Recorrido binario puro (izq/der) para calcular nodos
+        function buscarDescendientes(nodo, nivel, maxNivel) {
+            if (!nodo || nivel > maxNivel) return [];
+            let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            let res = [];
+            for (let h of hijos) {
+                res.push(h);
+                res = res.concat(buscarDescendientes(h, nivel + 1, maxNivel));
+            }
+            return res;
+        }
+        // Nodos hijos de cada lado
+        function hijosBinarios(nodo) {
+            let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            return [hijos[0] || null, hijos[1] || null];
+        }
+        // Cuenta nodos en la red, descendientes (sin incluir raiz)
         function contarRed(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return 0;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
             let total = hijos.length;
-            for (let h of hijos) total += contarRed(h, nivel + 1, maxNivel);
+            for (let h of hijos) {
+                total += contarRed(h, nivel + 1, maxNivel);
+            }
             return total;
         }
+        // Niveles completos
         function nivelesCompletos(nodo, nivel, maxNivel) {
             if (!nodo || nivel > maxNivel) return nivel-1;
             let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
             if (hijos.length < 2) return nivel-1;
-            return Math.min(nivelesCompletos(hijos[0], nivel+1, maxNivel), nivelesCompletos(hijos[1], nivel+1, maxNivel));
+            return Math.min(
+                nivelesCompletos(hijos[0], nivel+1, maxNivel),
+                nivelesCompletos(hijos[1], nivel+1, maxNivel)
+            );
         }
-
-        // --- Mostrar hasta N niveles (y navegación) ---
-        let nivelMostrado = 1;
-        function crearNivelHTML(nodos, nivel, maxNivel) {
-            if (nivel > nivelMostrado) return "";
-            let html = `<div class="nivel">`;
-            let siguientes = [];
-            nodos.forEach(nodo => {
-                if (!nodo) {
-                    html += `<div class="nodo vacio" title="Patrocinar aquí"></div>`;
-                    siguientes.push(null, null);
-                } else {
-                    html += `<div class="nodo ${nivel === 1 ? "raiz" : ""}">
-                        <div class="nombre">${nodo.Nombre || 'Sin nombre'}</div>
-                        <div class="codigo">${nodo['Código Asignado']}</div>
-                        <div class="paquete">${nodo.Paquete ? nodo.Paquete : ''}</div>
-                    </div>`;
-                    const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-                    siguientes.push(hijos[0] || null, hijos[1] || null);
-                }
-            });
-            html += `</div>`;
-            if (nivel < nivelMostrado) {
-                html += `<div class="conectores">`;
-                for (let i = 0; i < nodos.length; i++) html += `<div class="linea"></div><div class="linea"></div>`;
-                html += `</div>`;
+        // Puntos por rama
+        function puntosRama(nodo, nivel, maxNivel) {
+            if (!nodo || nivel > maxNivel) return 0;
+            let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            let total = puntosPorPaquete(nodo.Paquete);
+            for (let h of hijos) {
+                total += puntosRama(h, nivel + 1, maxNivel);
             }
-            if (nivel < nivelMostrado) html += crearNivelHTML(siguientes, nivel + 1, maxNivel);
-            return html;
+            return total;
         }
-        function renderArbol(raiz, nivelLimite=3) {
-            nivelMostrado = nivelLimite;
-            document.getElementById('arbolRed').innerHTML = crearNivelHTML([raiz], 1, 5);
-            // Navegación de niveles
-            let nav = '';
-            if (nivelMostrado > 3) nav += `<button class="simulador-btn" onclick="renderArbolPorNivel(${nivelMostrado-1})">⬅️ Nivel anterior</button>`;
-            if (nivelMostrado < 5) nav += `<button class="simulador-btn" onclick="renderArbolPorNivel(${nivelMostrado+1})">Ver más nivel ➡️</button>`;
-            if (nav) document.getElementById('arbolRed').innerHTML += `<div style="text-align:center; margin:14px 0;">${nav}</div>`;
-        }
-        function renderArbolPorNivel(n) {
-            let raiz = getPorCodigo(usuarioCodigo);
-            renderArbol(raiz, n);
-        }
-
-        // ------ Simulador de ganancias ------
-        function calcularGananciaBinaria(paquete, izq, der) {
-            const porc = BINARIO[paquete] || 0.17;
-            const puntosPagados = Math.min(izq, der);
-            const ganancia = (puntosPagados * porc);
-            return { pagados: puntosPagados, ganancia };
-        }
-        function calcularBonosDirectos(paquete, directos) {
-            return directos.reduce((sum, dir) => sum + (BONOS[paquete]?.directo || 0), 0);
-        }
-        // Bonos generacionales reales: hasta 5 niveles hacia abajo, según paquete del inscrito
-        function calcularBonosGeneracionales(paquete, raiz) {
+        // Bonos directos: solo nivel 1 (ambos lados, si existen)
+        function calcularBonosDirectos(raiz) {
+            let hijos = buscarPorPatrocinador(raiz['Código Asignado']);
             let total = 0;
-            let resumen = [];
+            hijos.forEach(hijo => {
+                if (hijo && BONOS_DIRECTOS[paqueteUsuario(hijo)]) total += BONOS_DIRECTOS[paqueteUsuario(hijo)];
+            });
+            return total;
+        }
+        // Bonos generacionales reales (según estructura y paquete de cada quien)
+        function calcularBonosGeneracionales(raiz, paquetePropio) {
+            let total = 0;
+            let bonos = BONOS_GENERA[paquetePropio] || [0,0,0,0,0];
             let nivel = 1;
-            let actual = [raiz];
-            while (nivel <= 5) {
-                let siguientes = [];
-                let bonoNivel = 0;
-                actual.forEach(nodo => {
-                    if (!nodo) return;
+            let queue = [[raiz, 0]]; // [nodo, nivel]
+            while (queue.length > 0 && nivel <= 5) {
+                let next = [];
+                for (let [nodo, lvl] of queue) {
                     let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-                    hijos.forEach(h => {
-                        let paqH = h?.Paquete?.toUpperCase() || "ESP 1";
-                        // Bono es el del paquete del HIJO en este nivel
-                        bonoNivel += BONOS[paqH]?.generacion[nivel] || 0;
-                        siguientes.push(h);
-                    });
-                });
-                resumen.push(bonoNivel);
-                total += bonoNivel;
-                actual = siguientes;
+                    for (let h of hijos) {
+                        if (h) {
+                            if (nivel <= 5 && bonos[nivel-1]) total += bonos[nivel-1];
+                            next.push([h, nivel]);
+                        }
+                    }
+                }
+                queue = next;
                 nivel++;
             }
-            return { resumen, total };
+            return total;
+        }
+        // Ganancia binaria
+        function calcularGananciaBinaria(raiz, paquetePropio) {
+            let hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+            let izq = hijos[0] ? puntosRama(hijos[0], 1, maxNivel) : 0;
+            let der = hijos[1] ? puntosRama(hijos[1], 1, maxNivel) : 0;
+            let piernaCorta = Math.min(izq, der);
+            let porcentaje = PORC_BINARIO[paquetePropio] || 0;
+            return { usd: (piernaCorta * porcentaje / DOLAR), pts: piernaCorta };
         }
 
-        // Simulador hipótetico (por paquete, personas, niveles)
-        function simuladorGanancias(paquete, personasIzq, personasDer) {
-            let ptsIzq = personasIzq * puntosPorPaquete(paquete);
-            let ptsDer = personasDer * puntosPorPaquete(paquete);
-            let binario = calcularGananciaBinaria(paquete, ptsIzq, ptsDer);
-            let bonoDirecto = BONOS[paquete]?.directo || 0;
-            // Generacionales (solo ejemplo, todos mismo paquete):
-            let bonoGen = [0, 0, 0, 0, 0];
-            let totalGen = 0;
-            let gPorNivel = BONOS[paquete]?.generacion || [0,0,0,0,0,0];
-            for(let i=1; i<=5; i++) {
-                let countNivel = Math.pow(2, i); // Red binaria: 2,4,8,16,32...
-                bonoGen[i-1] = countNivel * gPorNivel[i];
-                totalGen += bonoGen[i-1];
-            }
-            return {
-                ptsIzq, ptsDer,
-                binario: binario.ganancia,
-                bonoDirecto: bonoDirecto * 2, // solo 2 directos ejemplo
-                bonoGeneracional: totalGen,
-                detalleGeneracional: bonoGen
-            };
-        }
-
-        // -- Renderizar simulador --
-        function renderSimulador(raiz, izq, der) {
-            let paquete = raiz.Paquete || "ESP 3";
-            let bin = calcularGananciaBinaria(paquete, izq, der);
-            let directos = buscarPorPatrocinador(raiz['Código Asignado']);
-            let bonoDirecto = 0;
-            directos.forEach(dir => {
-                bonoDirecto += BONOS[dir?.Paquete?.toUpperCase()]?.directo || 0;
-            });
-            let gener = calcularBonosGeneracionales(paquete, raiz);
-
-            let html = `<h2>Simulador de Ganancias</h2>
-            <div class="res-simulador">Ganancias **reales** con tu red:<br>
-                <b>Binario:</b> $${bin.ganancia.toFixed(2)} USD (sobre <b>${bin.pagados}</b> puntos de pierna corta)<br>
-                <b>Bonos Directos:</b> $${bonoDirecto.toFixed(2)} USD<br>
-                <b>Generacional:</b> $${gener.total.toFixed(2)} USD<br>
-                <small>(No incluye otros bonos o incentivos extra)</small>
-            </div>
-            <div style="margin-top:8px;">
-            <b>Simula tus ganancias potenciales:</b><br>
-            <div class="simu-flex">
-            <div>
-                <label>Paquete:</label>
-                <select id="simPaq">
-                    <option value="ESP 1">ESP 1</option>
-                    <option value="ESP 2">ESP 2</option>
-                    <option value="ESP 3" selected>ESP 3</option>
-                </select>
-            </div>
-            <div>
-                <label>Personas por pierna:</label>
-                <input type="number" min="1" id="simIzq" value="10" style="width:50px"> /
-                <input type="number" min="1" id="simDer" value="10" style="width:50px">
-            </div>
-            </div>
-            <button class="simulador-btn" onclick="simularGanancias()">Simular</button>
-            <div id="simuResult"></div>
-            </div>
-            `;
-            document.getElementById('simulador-container').innerHTML = html;
-            document.getElementById('simulador-container').style.display = "block";
-            simularGanancias = function() {
-                let paqueteSel = document.getElementById('simPaq').value;
-                let persIzq = parseInt(document.getElementById('simIzq').value)||0;
-                let persDer = parseInt(document.getElementById('simDer').value)||0;
-                let simu = simuladorGanancias(paqueteSel, persIzq, persDer);
-                let detallesGen = '';
-                ["1er","2do","3er","4to","5to"].forEach((nivel,i)=> {
-                    detallesGen += `${nivel} nivel: $${simu.detalleGeneracional[i].toFixed(2)} USD<br>`;
-                });
-                document.getElementById('simuResult').innerHTML = `
-                    <div class="res-simulador">
-                    <b>Binario:</b> $${simu.binario.toFixed(2)} USD <br>
-                    <b>Directos:</b> $${simu.bonoDirecto.toFixed(2)} USD<br>
-                    <b>Generacional:</b> $${simu.bonoGeneracional.toFixed(2)} USD<br>
-                    <small>${detallesGen}</small>
-                    </div>
-                `;
-            }
-        }
-
-        // ---- Evento principal -----
+        // ---- INTERFAZ PRINCIPAL ----
         function generarArbol() {
             document.getElementById('mensajeError').innerText = '';
-            document.getElementById('panelContadores').innerHTML = '';
+            document.getElementById('stats').innerHTML = '';
+            document.getElementById('treeSummary').innerHTML = '';
             document.getElementById('arbolRed').innerHTML = '';
-            document.getElementById('simulador-container').style.display = "none";
+            document.getElementById('gananciasBox').style.display = "none";
             let codigo = document.getElementById('codigo').value.trim();
-            usuarioCodigo = codigo;
             const btn = document.querySelector('button');
             if (!codigo) {
                 document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
                 return;
             }
-            btn.disabled = true;
-            let textoOriginal = btn.innerText;
-            btn.innerText = "Buscando...";
+            btn.disabled = true; let textoOriginal = btn.innerText; btn.innerText = "Buscando...";
             fetch(SHEET_CSV_URL)
                 .then(r => r.text())
                 .then(csv => {
@@ -475,29 +383,46 @@
                         return obj;
                     });
                     const raiz = getPorCodigo(codigo);
+                    raizGlobal = raiz;
                     if (!raiz) {
                         document.getElementById('arbolRed').innerHTML = "";
                         document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
                         btn.disabled = false; btn.innerText = textoOriginal;
                         return;
                     }
-                    usuarioPaquete = raiz.Paquete || "ESP 3";
-                    // Panel resumen
+                    // Estadísticas
                     let hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-                    let izq = hijos[0] ? contarPuntosRama(hijos[0], 1, 5) : 0;
-                    let der = hijos[1] ? contarPuntosRama(hijos[1], 1, 5) : 0;
-                    let niveles = nivelesCompletos(raiz, 1, 5);
-                    document.getElementById('panelContadores').innerHTML =
-                        `<div class="contador-red">Personas en red: <b>${contarRed(raiz, 1, 5)}</b></div>
-                         <div class="contador-red">Niveles completos: <b>${niveles}</b></div>
-                         <div class="contador-red">Puntos Izquierda: <b>${izq}</b></div>
-                         <div class="contador-red">Puntos Derecha: <b>${der}</b></div>
-                         <div class="contador-red">Total puntos: <b>${izq+der}</b></div>`;
-                    // Visualizar hasta 3 niveles, con navegación
-                    renderArbol(raiz, 3);
-                    // Simulador
-                    renderSimulador(raiz, izq, der);
+                    let izq = hijos[0] ? puntosRama(hijos[0], 1, maxNivel) : 0;
+                    let der = hijos[1] ? puntosRama(hijos[1], 1, maxNivel) : 0;
+                    let total = izq + der;
+                    let niveles = nivelesCompletos(raiz, 1, maxNivel);
+                    let personasRed = contarRed(raiz, 1, maxNivel);
+                    // Mostrar stats arriba
+                    document.getElementById('stats').innerHTML =
+                        `<div class="stats-box">Personas en red: ${personasRed}</div>
+                         <div class="stats-box">Niveles completos: ${niveles}</div>
+                         <div class="stats-box">Puntos Izquierda: ${izq}</div>
+                         <div class="stats-box">Puntos Derecha: ${der}</div>`;
+                    document.getElementById('treeSummary').innerHTML =
+                        `Total puntos: <b>${total}</b>`;
+
+                    // Render árbol hasta nivelActual
+                    document.getElementById('arbolRed').innerHTML = renderNiveles([raiz], 1, nivelActual);
+
+                    // Mostrar tarjeta de ganancias
+                    mostrarGanancias(raiz, izq, der);
+                    document.getElementById('gananciasBox').style.display = "block";
                     btn.disabled = false; btn.innerText = textoOriginal;
+
+                    // Botón de niveles
+                    let navHtml = '';
+                    if (nivelActual < maxNivel) {
+                        navHtml += `<center><button onclick="cambiarNivel(${nivelActual+1})" style="margin: 15px 0 0 0;">Ver más nivel ⬇️</button></center>`;
+                    }
+                    if (nivelActual > 3) {
+                        navHtml += `<center><button onclick="cambiarNivel(${nivelActual-1})" style="margin: 5px 0 0 0; background: #eee; color:#2563eb;">⬆️ Volver a 3 niveles</button></center>`;
+                    }
+                    document.getElementById('arbolRed').innerHTML += navHtml;
                 })
                 .catch(err => {
                     document.getElementById('mensajeError').innerText = "No se pudo consultar la base de datos.";
@@ -505,12 +430,83 @@
                 });
         }
 
-        // Para navegación por niveles
-        window.renderArbolPorNivel = renderArbolPorNivel;
-        // Simulador global (asigna en renderSimulador)
-        window.simularGanancias = function(){};
+        function cambiarNivel(nuevoNivel) {
+            if (!raizGlobal) return;
+            nivelActual = nuevoNivel;
+            // Actualiza árbol, pero no recarga hoja
+            document.getElementById('arbolRed').innerHTML = renderNiveles([raizGlobal], 1, nivelActual);
+            let navHtml = '';
+            if (nivelActual < maxNivel) {
+                navHtml += `<center><button onclick="cambiarNivel(${nivelActual+1})" style="margin: 15px 0 0 0;">Ver más nivel ⬇️</button></center>`;
+            }
+            if (nivelActual > 3) {
+                navHtml += `<center><button onclick="cambiarNivel(${nivelActual-1})" style="margin: 5px 0 0 0; background: #eee; color:#2563eb;">⬆️ Volver a 3 niveles</button></center>`;
+            }
+            document.getElementById('arbolRed').innerHTML += navHtml;
+        }
+
+        function renderNiveles(nodos, nivel, maxNivelMostrar) {
+            if (nivel > maxNivelMostrar) return "";
+            let html = `<div class="nivel">`;
+            let siguientes = [];
+            nodos.forEach((nodo, idx) => {
+                if (!nodo) {
+                    html += `<div class="nodo-circulo vacio">+</div>`;
+                    siguientes.push(null, null);
+                } else {
+                    html += `<div class="nodo-circulo ${nivel === 1 ? "raiz" : ""}">
+                        <div class="nombre">${nodo.Nombre ? nodo.Nombre.split(' ')[0] : 'Sin nombre'}</div>
+                        <div class="codigo">${nodo['Código Asignado']}</div>
+                        <div class="paquete">${nodo.Paquete ? nodo.Paquete.toUpperCase() : ''}</div>
+                    </div>`;
+                    // Buscar hijos
+                    const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+                    siguientes.push(hijos[0] || null, hijos[1] || null);
+                }
+            });
+            html += `</div>`;
+            // Dibujar conectores
+            if (nivel < maxNivelMostrar) {
+                html += `<div class="conectores">`;
+                for (let i = 0; i < nodos.length; i++) {
+                    html += `<div class="linea"></div><div class="linea"></div>`;
+                }
+                html += `</div>`;
+            }
+            if (nivel < maxNivelMostrar) {
+                html += renderNiveles(siguientes, nivel + 1, maxNivelMostrar);
+            }
+            return html;
+        }
+
+        function mostrarGanancias(raiz, izq, der) {
+            let paquetePropio = paqueteUsuario(raiz);
+            // Binario
+            let bin = calcularGananciaBinaria(raiz, paquetePropio);
+            // Directos
+            let directos = calcularBonosDirectos(raiz) / DOLAR;
+            // Generacional (solo si hay estructura hacia abajo)
+            let genera = 0; // Este es un ejemplo base, puedes ajustar para estructura real nivel por nivel.
+            // Solo pague generacional si hay estructura
+            let queue = [[raiz, 1]];
+            while (queue.length > 0) {
+                let [nodo, lvl] = queue.shift();
+                if (lvl > 5) continue;
+                let hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+                hijos.forEach(hijo => {
+                    if (hijo && BONOS_GENERA[paquetePropio]) genera += BONOS_GENERA[paquetePropio][lvl-1] / DOLAR;
+                    queue.push([hijo, lvl + 1]);
+                });
+            }
+            // Formateo
+            document.getElementById('gananciaBinario').innerHTML = `$${bin.usd.toFixed(2)} USD <span style="font-size:0.93em;color:#64748b;">(sobre ${bin.pts} pts)</span>`;
+            document.getElementById('gananciaDirectos').innerHTML = `$${directos.toFixed(2)} USD`;
+            document.getElementById('gananciaGeneracional').innerHTML = `$${genera.toFixed(2)} USD`;
+            document.getElementById('gananciaTotal').innerHTML = `$${(bin.usd + directos + genera).toFixed(2)} USD`;
+        }
     </script>
 </body>
 </html>
+
 
 
