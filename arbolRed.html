@@ -1,285 +1,457 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Así va tu red</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{
-      /* Cambia colores aquí si quieres */
-      --primary:#1d4ed8;   /* azul */
-      --accent:#9333ea;    /* morado */
-      --bg:#f1f5f9;
-      --surface:#ffffff;
-      --text:#0f172a;
-      --text-light:#64748b;
-      --info-chip:#e0f2fe;
-    }
-    *{box-sizing:border-box;}
-    body{background:var(--bg);font-family:'Inter',Arial,sans-serif;color:var(--text);}
-    .container{
-      max-width:1050px;margin:32px auto;background:var(--surface);border-radius:18px;
-      box-shadow:0 6px 32px rgba(60,90,200,.12);padding:2.2rem 1rem 2.6rem;
-    }
-    h1{text-align:center;color:var(--primary);margin-bottom:6px;font-size:2rem;}
-    .subtitle{text-align:center;color:var(--text-light);font-size:1.05rem;margin-bottom:22px;}
-    #input-section{display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
-    #codigo{
-      font-size:1.05rem;padding:8px 15px;border-radius:9px;border:1.5px solid #b6c6e3;width:230px;
-    }
-    button{
-      background:linear-gradient(90deg,var(--primary) 75%,var(--accent) 130%);
-      color:#fff;font-weight:700;padding:9px 26px;border-radius:9px;border:none;cursor:pointer;
-      transition:background .18s,transform .13s;font-size:1.04rem;
-    }
-    button:active{transform:scale(.96);}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Así va tu red | Red de Acción Masiva</title>
 
-    /* Chips resumen */
-    .top-summary{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:14px 0 8px;}
-    .summary-item{
-      background:var(--info-chip);color:var(--primary);font-weight:600;font-size:.98rem;
-      padding:7px 18px;border-radius:12px;
-    }
-    .summary-total{
-      text-align:center;background:#dbeafe;color:#1e40af;font-weight:700;font-size:1.06rem;
-      padding:7px 0;border-radius:10px;margin:8px 0 0;
-    }
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        :root{
+            --primary:#2563eb;
+            --primary-dark:#1d4ed8;
+            --accent:#22c55e;
+            --bg:#f1f5f9;
+            --surface:#ffffff;
+            --text:#0f172a;
+            --text-light:#64748b;
+            --chip-bg:#e0f2fe;
+            --chip-color:#2563eb;
+            --radius:18px;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        html,body{height:100%;scroll-behavior:smooth;}
+        body{
+            font-family:'Inter', Arial, sans-serif;
+            color:var(--text);
+            background:var(--bg);
+            display:flex;
+            flex-direction:column;
+        }
 
-    /* Árbol */
-    .arbol{display:flex;flex-direction:column;align-items:center;margin-top:16px;width:100%;}
-    .nivel{
-      display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:18px 0 0;width:100%;
-    }
-    .nodo{
-      background:#fff;border:2.3px solid var(--primary);border-radius:50%;
-      width:86px;height:86px;padding:6px 4px;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      box-shadow:0 1px 8px rgba(0,0,0,.08);position:relative;
-      flex:0 0 auto;
-    }
-    .nodo .nombre{
-      color:var(--primary);font-weight:700;font-size:.9rem;
-      max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-    }
-    .nodo .codigo{color:#64748b;font-size:.78rem;line-height:1;}
-    .nodo .paquete{color:#0ea5e9;font-size:.74rem;margin-top:1px;}
-    .nodo.raiz{
-      background:linear-gradient(135deg,var(--primary) 0%,var(--accent) 120%);
-      color:#fff;border:2.3px solid var(--accent);box-shadow:0 4px 18px #9333ea40;
-    }
-    .nodo.raiz .nombre,.nodo.raiz .codigo,.nodo.raiz .paquete{color:#fff;}
-    .nodo.vacio{
-      color:#a3a3a3;background:#f7fafc;border-style:dashed;border-color:#b6c6e3;font-style:italic;
-    }
-    .nodo.vacio span{font-size:2rem;color:#bae6fd;line-height:0;}
+        /* NAVBAR / HERO */
+        .navbar{
+            position:sticky; top:0; z-index:50;
+            width:100%;
+            background:var(--surface);
+            box-shadow:0 2px 16px rgba(0,0,0,.05);
+            padding:.9rem 1.5rem;
+            display:flex; justify-content:center; align-items:center;
+        }
+        .brand{
+            font-family:'Montserrat', sans-serif;
+            font-size:1.35rem;
+            font-weight:700;
+            color:var(--primary);
+            display:flex; align-items:center; gap:.55rem;
+            text-decoration:none;
+        }
+        .brand::before{
+            content:"";
+            width:22px;height:22px;border-radius:50%;
+            background:linear-gradient(135deg,var(--primary),var(--accent));
+            display:inline-block;
+        }
+        .hero{
+            width:100%;
+            background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 65%, #0ea5e9 120%);
+            color:#fff;
+            padding:3.3rem 1.2rem 3.8rem 1.2rem;
+            text-align:center;
+        }
+        .hero h1{
+            font-family:'Montserrat', sans-serif;
+            font-size:2rem;
+            font-weight:700;
+            margin-bottom:.5rem;
+        }
+        .hero p{
+            font-size:.95rem;
+            opacity:.9;
+            max-width:670px;
+            margin:0 auto 1.4rem auto;
+        }
+        #input-section{
+            display:flex; justify-content:center; gap:.6rem; margin-top:.9rem;
+        }
+        #codigo{
+            font-size:1rem;
+            padding:9px 12px;
+            border-radius:10px;
+            border:none;
+            outline:none;
+            width:200px;
+        }
+        #verBtn{
+            background:#fff;
+            color:var(--primary);
+            font-weight:600;
+            padding:9px 18px;
+            border-radius:10px;
+            border:none;
+            cursor:pointer;
+            transition:opacity .15s, transform .12s;
+        }
+        #verBtn:active{transform:scale(.97);}
+        #verBtn[disabled]{opacity:.6; cursor:not-allowed;}
 
-    /* Botón flotante para niveles extra */
-    #toggleNivelesBtn{
-      position:fixed;right:26px;bottom:30px;z-index:99;
-      background:linear-gradient(90deg,#10b981 20%,var(--primary) 110%);
-      color:#fff;border:none;border-radius:22px;padding:12px 26px;font-size:1.05rem;font-weight:700;
-      box-shadow:0 6px 32px #2563eb22;cursor:pointer;display:none;align-items:center;gap:10px;
-    }
-    #toggleNivelesBtn:hover{background:linear-gradient(90deg,#0ea5e9 0%,var(--primary) 110%);}
-    #mensajeError{color:#e11d48;text-align:center;margin-top:1rem;font-size:1rem;}
+        /* TARJETA CONTENIDO */
+        .wrapper{
+            flex:1;
+            display:flex;
+            justify-content:center;
+            padding:0 1rem;
+            transform:translateY(-48px);
+            margin-bottom:-48px;
+        }
+        .card{
+            width:100%;
+            max-width:1100px;
+            background:var(--surface);
+            border-radius:var(--radius);
+            box-shadow:0 12px 34px rgba(37,99,235,.12);
+            padding:2.2rem 1.3rem 2.4rem 1.3rem;
+        }
+        .chips{
+            display:flex; flex-wrap:wrap; justify-content:center; gap:12px;
+            margin-bottom:16px;
+        }
+        .chip{
+            background:var(--chip-bg);
+            color:var(--chip-color);
+            padding:6px 16px;
+            border-radius:999px;
+            font-size:.9rem;
+            font-weight:600;
+            white-space:nowrap;
+        }
+        #totalPuntos{
+            background:#e2fbe2;
+            color:#15803d;
+        }
 
-    @media(max-width:920px){
-      .container{padding:1rem .5rem 2rem;}
-      .nodo{width:70px;height:70px;}
-      .nodo .nombre{font-size:.78rem;max-width:58px;}
-    }
-    @media(max-width:600px){
-      .nodo{width:56px;height:56px;padding:3px;}
-      .nodo .nombre{font-size:.65rem;max-width:46px;}
-      .nodo .codigo{font-size:.65rem;}
-      .nodo .paquete{font-size:.6rem;}
-      #toggleNivelesBtn{right:12px;bottom:18px;font-size:.9rem;padding:9px 18px;}
-    }
-  </style>
+        /* ÁRBOL */
+        .arbol{display:flex; flex-direction:column; align-items:center; width:100%; margin-top:8px;}
+        .nivel{
+            position:relative;
+            transform-origin:top center;
+            margin:18px 0;
+        }
+        .fila{
+            display:flex;
+            justify-content:center;
+            gap:24px;
+        }
+        .nodo{
+            width:92px;height:92px;
+            border-radius:50%;
+            border:2px solid var(--primary);
+            background:#fff;
+            box-shadow:0 1px 8px rgba(37,99,235,.15);
+            display:flex; flex-direction:column; justify-content:center; align-items:center;
+            text-align:center;
+            padding:4px;
+            font-size:.8rem;
+            color:var(--primary);
+        }
+        .nodo.raiz{
+            background:linear-gradient(135deg,var(--primary),var(--accent));
+            border-color:var(--accent);
+            color:#fff;
+            box-shadow:0 8px 24px rgba(34,197,94,.25);
+        }
+        .nodo .nombre{font-weight:700; line-height:1.05; margin-bottom:2px;}
+        .nodo .codigo{font-size:.72rem; opacity:.85;}
+        .nodo .paq{font-size:.7rem; color:#0ea5e9;}
+        .vacio{
+            border-style:dashed;
+            border-color:#93c5fd;
+            background:#f1f5fe;
+            color:#93c5fd;
+            font-size:1.9rem;
+            line-height:92px;
+        }
+
+        /* Conectores simples */
+        .conectores{
+            display:flex; justify-content:center; gap:calc(24px + 92px - 46px); /* approx */
+            height:14px; margin-top:6px;
+        }
+        .conectores span{
+            display:block; width:46px; border-bottom:2px solid #cbd5e1;
+        }
+
+        /* BOTÓN NIVELES */
+        .btn-niveles{
+            position:fixed; right:34px; bottom:34px; z-index:120;
+            background:linear-gradient(90deg,#0ea5e9 0%, var(--accent) 140%);
+            color:#fff; font-weight:700; font-size:.95rem;
+            border:none; border-radius:22px;
+            padding:12px 22px;
+            box-shadow:0 8px 32px rgba(34,197,94,.35);
+            cursor:pointer;
+            transition:transform .12s, box-shadow .15s;
+        }
+        .btn-niveles:hover{box-shadow:0 10px 36px rgba(34,197,94,.45); transform:translateY(-2px);}
+        .btn-niveles:active{transform:scale(.97);}
+
+        #mensajeError{
+            color:#e11d48;
+            margin-top:14px;
+            text-align:center;
+            min-height:18px;
+        }
+
+        @media (max-width:740px){
+            .nodo{width:74px;height:74px; font-size:.7rem;}
+            .conectores{gap:calc(18px + 74px - 36px);}
+            .nivel{margin:14px 0;}
+        }
+        @media (max-width:480px){
+            .chips{gap:8px;}
+            .chip{font-size:.8rem; padding:5px 13px;}
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Así va tu red</h1>
-    <div class="subtitle">Proceso previo a la inscripción en Gano Excel</div>
+    <header class="navbar">
+        <a href="#" class="brand">Red de Acción Masiva</a>
+    </header>
 
-    <div id="input-section">
-      <input type="text" id="codigo" placeholder="Ingresa tu código asignado" />
-      <button onclick="generarArbol()">Ver árbol</button>
-    </div>
+    <section class="hero">
+        <h1>Así va tu red</h1>
+        <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 5 niveles.</p>
 
-    <div id="topResumen"></div>
-    <div id="arbolRed" class="arbol"></div>
-    <div id="mensajeError"></div>
-  </div>
+        <div id="input-section">
+            <input type="text" id="codigo" placeholder="RM-0000" />
+            <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
+        </div>
+    </section>
 
-  <button id="toggleNivelesBtn" onclick="toggleNiveles()">
-    <span id="iconoToggle">+ </span>Niveles
-  </button>
+    <main class="wrapper">
+        <div class="card">
+            <div id="chipsCont" class="chips" style="display:none;"></div>
+            <div id="arbolRed" class="arbol"></div>
+            <div id="mensajeError"></div>
+        </div>
+    </main>
 
-  <script>
-    /* CONFIG */
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
+    <button class="btn-niveles" id="toggleLvlsBtn" style="display:none;" onclick="toggleNiveles()">+ Niveles</button>
 
-    let registros = [];
-    let maxNivelRed = 5;
-    let maxNivelVisible = 3;
-    let ultimoCodigo = '';
+    <script>
+        /* ---------- CONFIG ---------- */
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
 
-    const limpiar = t => (t||'').replace(/"/g,'').trim();
-    function puntosPorPaquete(p){
-      switch(limpiar(p).toUpperCase()){
-        case 'ESP 1': return 100;
-        case 'ESP 2': return 250;
-        case 'ESP 3': return 500;
-        default: return 0;
-      }
-    }
-    const getPorCodigo = c => registros.find(r => limpiar(r['Código Asignado'])===limpiar(c));
-    function buscarPorPatrocinador(p){
-      return registros.filter(r => limpiar(r.Patrocinador)===limpiar(p)).slice(0,2);
-    }
-    function contarPuntosRama(nodo, lvl, max){
-      if(!nodo || lvl>max) return 0;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      let tot = puntosPorPaquete(nodo.Paquete);
-      for(const h of hijos){ tot += contarPuntosRama(h,lvl+1,max); }
-      return tot;
-    }
-    function contarRed(nodo, lvl, max){
-      if(!nodo || lvl>max) return 0;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      let total = hijos.length;
-      for(const h of hijos){ total += contarRed(h,lvl+1,max); }
-      return total;
-    }
-    function nivelesCompletos(nodo, lvl, max){
-      if(!nodo || lvl>max) return lvl-1;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      if(hijos.length<2) return lvl-1;
-      return Math.min(
-        nivelesCompletos(hijos[0],lvl+1,max),
-        nivelesCompletos(hijos[1],lvl+1,max)
-      );
-    }
+        /* ---------- VARIABLES ---------- */
+        let registros = [];
+        let nivelesData = [];   // arrays por nivel
+        let visibles = 3;       // niveles visibles por defecto
+        let raizGlobal = null;
 
-    /* Construye niveles sólo hasta que existan nodos */
-    function construirNiveles(raiz, max){
-      const niveles=[];
-      function rec(nodos, nivel){
-        if(nivel>max) return;
-        niveles.push(nodos);
-        let next=[];
-        let hayAlguien=false;
-        nodos.forEach(n=>{
-          if(n){
-            const hijos=buscarPorPatrocinador(n['Código Asignado']);
-            const iz=hijos[0]||null, der=hijos[1]||null;
-            next.push(iz,der);
-            if(iz||der) hayAlguien=true;
-          }else{
-            // no empujes hijos si no existe el padre, para evitar "ruido" abajo
-          }
-        });
-        if(hayAlguien) rec(next,nivel+1);
-      }
-      rec([raiz],1);
-      return niveles;
-    }
+        /* ---------- UTIL ---------- */
+        const limpiarTexto = t => (t||'').replace(/"/g,'').trim();
+        function buscarPorPatrocinador(p){
+            return registros.filter(x=>limpiarTexto(x.Patrocinador)===limpiarTexto(p)).slice(0,2);
+        }
+        function getPorCodigo(c){
+            return registros.find(x=>limpiarTexto(x['Código Asignado'])===limpiarTexto(c));
+        }
+        function puntosPorPaquete(p){
+            switch(limpiarTexto(p).toUpperCase()){
+                case "ESP 1": return 100;
+                case "ESP 2": return 250;
+                case "ESP 3": return 500;
+                default: return 0;
+            }
+        }
+        function contarPuntosRama(nodo, nivel, maxNivel){
+            if(!nodo || nivel>maxNivel) return 0;
+            const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            let total = puntosPorPaquete(nodo.Paquete);
+            for(const h of hijos) total += contarPuntosRama(h, nivel+1, maxNivel);
+            return total;
+        }
+        function contarRed(nodo, nivel, maxNivel){
+            if(!nodo || nivel>maxNivel) return 0;
+            const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            let total = hijos.length;
+            for(const h of hijos) total += contarRed(h, nivel+1, maxNivel);
+            return total;
+        }
+        function nivelesCompletos(nodo, nivel, maxNivel){
+            if(!nodo || nivel>maxNivel) return nivel-1;
+            const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+            if(hijos.length<2) return nivel-1;
+            return Math.min(nivelesCompletos(hijos[0],nivel+1,maxNivel), nivelesCompletos(hijos[1],nivel+1,maxNivel));
+        }
 
-    function renderArbol(niveles){
-      let html='';
-      const limite = Math.min(maxNivelVisible, niveles.length);
-      for(let i=0;i<limite;i++){
-        html += `<div class="nivel">`;
-        niveles[i].forEach(node=>{
-          if(!node){
-            html += `<div class="nodo vacio"><span>+</span></div>`;
-          }else{
-            html += `<div class="nodo ${i===0?'raiz':''}">
-                        <div class="nombre">${node.Nombre||''}</div>
-                        <div class="codigo">${node['Código Asignado']||''}</div>
-                        <div class="paquete">${node.Paquete||''}</div>
-                     </div>`;
-          }
-        });
-        html += `</div>`;
-      }
-      document.getElementById('arbolRed').innerHTML = html;
-    }
+        /* ---------- FETCH & BUILD ---------- */
+        function generarArbol(){
+            const codigo = document.getElementById('codigo').value.trim();
+            const btn = document.getElementById('verBtn');
+            document.getElementById('mensajeError').innerText='';
+            document.getElementById('arbolRed').innerHTML='';
+            document.getElementById('chipsCont').style.display='none';
+            document.getElementById('toggleLvlsBtn').style.display='none';
 
-    function generarArbol(){
-      document.getElementById('mensajeError').innerText='';
-      document.getElementById('topResumen').innerHTML='';
-      document.getElementById('arbolRed').innerHTML='';
-      const codigo = document.getElementById('codigo').value.trim();
-      ultimoCodigo = codigo;
-      if(!codigo){
-        document.getElementById('mensajeError').innerText='Debes ingresar tu código asignado.';
-        return;
-      }
+            if(!codigo){
+                document.getElementById('mensajeError').innerText="Debes ingresar tu código asignado.";
+                return;
+            }
+            btn.disabled=true; const original=btn.innerText; btn.innerText="Buscando...";
 
-      const btn=document.querySelector('#input-section button');
-      const oldTxt=btn.innerText;
-      btn.disabled=true; btn.innerText='Buscando...';
+            fetch(SHEET_CSV_URL)
+                .then(r=>r.text())
+                .then(csv=>{
+                    const filas = csv.split('\n');
+                    const headers = filas[0].split(',').map(limpiarTexto);
+                    registros = filas.slice(1).map(row=>{
+                        const cols = row.split(',');
+                        const obj={};
+                        headers.forEach((k,i)=>obj[k]=limpiarTexto(cols[i]));
+                        return obj;
+                    });
 
-      fetch(SHEET_CSV_URL)
-        .then(r=>r.text())
-        .then(csv=>{
-          const rows=csv.split('\n');
-          const headers=rows[0].split(',').map(limpiar);
-          registros = rows.slice(1).map(line=>{
-            const cols=line.split(',');
-            const obj={}; headers.forEach((k,i)=>obj[k]=limpiar(cols[i]));
-            return obj;
-          });
+                    const raiz = getPorCodigo(codigo);
+                    raizGlobal = raiz;
+                    if(!raiz){
+                        document.getElementById('mensajeError').innerText="No se encontró el código en la base de datos.";
+                        btn.disabled=false; btn.innerText=original; return;
+                    }
 
-          const raiz=getPorCodigo(codigo);
-          if(!raiz){
-            document.getElementById('mensajeError').innerText='No se encontró el código en la base de datos.';
-            btn.disabled=false; btn.innerText=oldTxt; return;
-          }
+                    // Métricas
+                    const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+                    const izq = hijos[0] ? contarPuntosRama(hijos[0],1,5) : 0;
+                    const der = hijos[1] ? contarPuntosRama(hijos[1],1,5) : 0;
+                    const total = izq+der;
+                    const nivComp = nivelesCompletos(raiz,1,5);
+                    const personas = contarRed(raiz,1,5);
 
-          const hijos=buscarPorPatrocinador(raiz['Código Asignado']);
-          const izq=hijos[0]?contarPuntosRama(hijos[0],1,maxNivelRed):0;
-          const der=hijos[1]?contarPuntosRama(hijos[1],1,maxNivelRed):0;
-          const total=izq+der;
+                    renderChips({personas, nivComp, izq, der, total});
 
-          document.getElementById('topResumen').innerHTML=`
-            <div class="top-summary">
-              <div class="summary-item">Personas en red: <b>${contarRed(raiz,1,maxNivelRed)}</b></div>
-              <div class="summary-item">Niveles completos: <b>${nivelesCompletos(raiz,1,maxNivelRed)}</b></div>
-              <div class="summary-item">Puntos Izq: <b>${izq}</b></div>
-              <div class="summary-item">Puntos Der: <b>${der}</b></div>
-            </div>
-            <div class="summary-total">Total puntos: ${total}</div>
-          `;
+                    // Construir niveles
+                    nivelesData = construirNiveles([raiz],1,5);
+                    visibles = 3;
+                    renderArbol();
 
-          const niveles = construirNiveles(raiz,maxNivelRed);
-          renderArbol(niveles);
+                    document.getElementById('toggleLvlsBtn').style.display = 'block';
 
-          const toggleBtn=document.getElementById('toggleNivelesBtn');
-          if(niveles.length>3){
-            toggleBtn.style.display='flex';
-            document.getElementById('iconoToggle').textContent = maxNivelVisible===3 ? '+ ' : '- ';
-          }else{
-            toggleBtn.style.display='none';
-          }
+                    btn.disabled=false; btn.innerText=original;
+                })
+                .catch(err=>{
+                    console.error(err);
+                    document.getElementById('mensajeError').innerText="No se pudo consultar la base de datos.";
+                    btn.disabled=false; btn.innerText=original;
+                });
+        }
 
-          btn.disabled=false; btn.innerText=oldTxt;
-        })
-        .catch(err=>{
-          document.getElementById('mensajeError').innerText='No se pudo consultar la base de datos.';
-          btn.disabled=false; btn.innerText=oldTxt;
-          console.error(err);
-        });
-    }
+        function construirNiveles(nodos, nivel, maxNivel){
+            const niveles=[];
+            (function rec(current,lvl){
+                if(lvl>maxNivel) return;
+                niveles.push([...current]);
+                const siguiente=[];
+                current.forEach(n=>{
+                    if(!n){siguiente.push(null,null);}
+                    else{
+                        const h=buscarPorPatrocinador(n['Código Asignado']);
+                        siguiente.push(h[0]||null,h[1]||null);
+                    }
+                });
+                rec(siguiente,lvl+1);
+            })(nodos,nivel);
+            return niveles;
+        }
 
-    function toggleNiveles(){
-      maxNivelVisible = (maxNivelVisible===3)?5:3;
-      if(ultimoCodigo) generarArbol();
-    }
-  </script>
+        /* ---------- RENDER ---------- */
+        function renderChips({personas,nivComp,izq,der,total}){
+            const cont=document.getElementById('chipsCont');
+            cont.innerHTML = `
+                <span class="chip">Personas en red: <b>${personas}</b></span>
+                <span class="chip">Niveles completos: <b>${nivComp}</b></span>
+                <span class="chip">Puntos Izq: <b>${izq}</b></span>
+                <span class="chip">Puntos Der: <b>${der}</b></span>
+                <span class="chip" id="totalPuntos">Total puntos: <b>${total}</b></span>`;
+            cont.style.display='flex';
+        }
+
+        function renderArbol(){
+            const cont=document.getElementById('arbolRed');
+            cont.innerHTML='';
+            const max = Math.min(visibles, nivelesData.length);
+
+            for(let i=0;i<max;i++){
+                const nivelDiv=document.createElement('div');
+                nivelDiv.className='nivel';
+                const fila=document.createElement('div');
+                fila.className='fila';
+
+                nivelesData[i].forEach(nodo=>{
+                    if(!nodo){
+                        fila.innerHTML+=`<div class="nodo vacio">+</div>`;
+                    }else{
+                        fila.innerHTML+=`
+                        <div class="nodo ${i===0?'raiz':''}">
+                            <div class="nombre">${nodo.Nombre||''}</div>
+                            <div class="codigo">${nodo['Código Asignado']||''}</div>
+                            <div class="paq">${nodo.Paquete||''}</div>
+                        </div>`;
+                    }
+                });
+
+                nivelDiv.appendChild(fila);
+
+                // conectores (no para el último visible ni si solo hay raíz)
+                if(i<max-1){
+                    const cons=document.createElement('div');
+                    cons.className='conectores';
+                    const elementos = nivelesData[i].length;
+                    for(let k=0;k<elementos;k++){
+                        cons.innerHTML+=`<span></span>`;
+                    }
+                    nivelDiv.appendChild(cons);
+                }
+
+                cont.appendChild(nivelDiv);
+            }
+
+            ajustarEscala();
+            actualizarTextoBoton();
+        }
+
+        // Escala cada nivel para que quepan todos los nodos sin overflow
+        function ajustarEscala(){
+            const nivelesDOM=document.querySelectorAll('.nivel');
+            nivelesDOM.forEach(n=>{
+                const fila=n.querySelector('.fila');
+                const nodos=fila.children.length;
+                // 6 nodos caben normal en desktop; si hay más, escalamos
+                let scale = nodos<=6 ? 1 : (6/nodos);
+                scale = Math.max(0.55, scale); // no menos de 55%
+                n.style.setProperty('--lvl-scale', scale);
+                n.style.transform = `scale(${scale})`;
+            });
+        }
+
+        function toggleNiveles(){
+            if(visibles===3){
+                visibles = nivelesData.length; // mostrar todos
+            }else{
+                visibles = 3; // volver
+                window.scrollTo({top:0,behavior:'smooth'});
+            }
+            renderArbol();
+        }
+        function actualizarTextoBoton(){
+            const btn=document.getElementById('toggleLvlsBtn');
+            if(visibles===3){
+                btn.textContent = '+ Niveles';
+            }else{
+                btn.textContent = '− Ocultar niveles';
+            }
+        }
+    </script>
 </body>
 </html>
 
