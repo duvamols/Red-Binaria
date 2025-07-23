@@ -30,7 +30,6 @@
             flex-direction:column;
         }
 
-        /* NAVBAR / HERO */
         .navbar{
             position:sticky; top:0; z-index:50;
             width:100%;
@@ -96,7 +95,6 @@
         #verBtn:active{transform:scale(.97);}
         #verBtn[disabled]{opacity:.6; cursor:not-allowed;}
 
-        /* TARJETA CONTENIDO */
         .wrapper{
             flex:1;
             display:flex;
@@ -126,23 +124,11 @@
             font-weight:600;
             white-space:nowrap;
         }
-        #totalPuntos{
-            background:#e2fbe2;
-            color:#15803d;
-        }
+        #totalPuntos{background:#e2fbe2;color:#15803d;}
 
-        /* ÁRBOL */
         .arbol{display:flex; flex-direction:column; align-items:center; width:100%; margin-top:8px;}
-        .nivel{
-            position:relative;
-            transform-origin:top center;
-            margin:18px 0;
-        }
-        .fila{
-            display:flex;
-            justify-content:center;
-            gap:24px;
-        }
+        .nivel{position:relative; transform-origin:top center; margin:18px 0;}
+        .fila{display:flex; justify-content:center; gap:24px;}
         .nodo{
             width:92px;height:92px;
             border-radius:50%;
@@ -150,10 +136,8 @@
             background:#fff;
             box-shadow:0 1px 8px rgba(37,99,235,.15);
             display:flex; flex-direction:column; justify-content:center; align-items:center;
-            text-align:center;
-            padding:4px;
-            font-size:.8rem;
-            color:var(--primary);
+            text-align:center; padding:4px;
+            font-size:.8rem; color:var(--primary);
         }
         .nodo.raiz{
             background:linear-gradient(135deg,var(--primary),var(--accent));
@@ -165,24 +149,20 @@
         .nodo .codigo{font-size:.72rem; opacity:.85;}
         .nodo .paq{font-size:.7rem; color:#0ea5e9;}
         .vacio{
-            border-style:dashed;
-            border-color:#93c5fd;
-            background:#f1f5fe;
-            color:#93c5fd;
-            font-size:1.9rem;
-            line-height:92px;
+            border-style:dashed; border-color:#93c5fd;
+            background:#f1f5fe; color:#93c5fd;
+            font-size:1.9rem; line-height:92px;
         }
 
-        /* Conectores simples */
         .conectores{
-            display:flex; justify-content:center; gap:calc(24px + 92px - 46px); /* approx */
+            display:flex; justify-content:center;
+            gap:calc(24px + 92px - 46px);
             height:14px; margin-top:6px;
         }
         .conectores span{
             display:block; width:46px; border-bottom:2px solid #cbd5e1;
         }
 
-        /* BOTÓN NIVELES */
         .btn-niveles{
             position:fixed; right:34px; bottom:34px; z-index:120;
             background:linear-gradient(90deg,#0ea5e9 0%, var(--accent) 140%);
@@ -221,8 +201,7 @@
 
     <section class="hero">
         <h1>Así va tu red</h1>
-        <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 5 niveles.</p>
-
+        <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 5 niveles (sin contar tu propia posición).</p>
         <div id="input-section">
             <input type="text" id="codigo" placeholder="RM-0000" />
             <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
@@ -240,16 +219,17 @@
     <button class="btn-niveles" id="toggleLvlsBtn" style="display:none;" onclick="toggleNiveles()">+ Niveles</button>
 
     <script>
-        /* ---------- CONFIG ---------- */
+        /* ------------ CONFIG ------------ */
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
 
-        /* ---------- VARIABLES ---------- */
+        /* ------------ VARS ------------ */
         let registros = [];
-        let nivelesData = [];   // arrays por nivel
-        let visibles = 3;       // niveles visibles por defecto
+        let nivelesData = [];
+        let descVisibles = 3;              // niveles descendentes visibles por defecto
+        const MAX_DESC = 5;                // niveles descendentes totales
         let raizGlobal = null;
 
-        /* ---------- UTIL ---------- */
+        /* ------------ UTIL ------------ */
         const limpiarTexto = t => (t||'').replace(/"/g,'').trim();
         function buscarPorPatrocinador(p){
             return registros.filter(x=>limpiarTexto(x.Patrocinador)===limpiarTexto(p)).slice(0,2);
@@ -286,7 +266,7 @@
             return Math.min(nivelesCompletos(hijos[0],nivel+1,maxNivel), nivelesCompletos(hijos[1],nivel+1,maxNivel));
         }
 
-        /* ---------- FETCH & BUILD ---------- */
+        /* ------------ CORE ------------ */
         function generarArbol(){
             const codigo = document.getElementById('codigo').value.trim();
             const btn = document.getElementById('verBtn');
@@ -307,7 +287,7 @@
                     const filas = csv.split('\n');
                     const headers = filas[0].split(',').map(limpiarTexto);
                     registros = filas.slice(1).map(row=>{
-                        const cols = row.split(',');
+                        const cols=row.split(',');
                         const obj={};
                         headers.forEach((k,i)=>obj[k]=limpiarTexto(cols[i]));
                         return obj;
@@ -322,20 +302,20 @@
 
                     // Métricas
                     const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-                    const izq = hijos[0] ? contarPuntosRama(hijos[0],1,5) : 0;
-                    const der = hijos[1] ? contarPuntosRama(hijos[1],1,5) : 0;
+                    const izq = hijos[0] ? contarPuntosRama(hijos[0],1,MAX_DESC) : 0;
+                    const der = hijos[1] ? contarPuntosRama(hijos[1],1,MAX_DESC) : 0;
                     const total = izq+der;
-                    const nivComp = nivelesCompletos(raiz,1,5);
-                    const personas = contarRed(raiz,1,5);
+                    const nivComp = nivelesCompletos(raiz,1,MAX_DESC);
+                    const personas = contarRed(raiz,1,MAX_DESC);
 
-                    renderChips({personas, nivComp, izq, der, total});
+                    renderChips({personas,nivComp,izq,der,total});
 
-                    // Construir niveles
-                    nivelesData = construirNiveles([raiz],1,5);
-                    visibles = 3;
+                    // Construir niveles: raíz + 5 descendentes => maxNivel = MAX_DESC+1 (6)
+                    nivelesData = construirNiveles([raiz], 0, MAX_DESC); // 0 = raíz, luego 1..5 descend.
+                    descVisibles = 3;
                     renderArbol();
 
-                    document.getElementById('toggleLvlsBtn').style.display = 'block';
+                    document.getElementById('toggleLvlsBtn').style.display='block';
 
                     btn.disabled=false; btn.innerText=original;
                 })
@@ -346,25 +326,26 @@
                 });
         }
 
-        function construirNiveles(nodos, nivel, maxNivel){
+        // Guarda: nivelesData[0] = raíz, nivelesData[1] = nivel1 (descendencia directa), ... hasta nivel5.
+        function construirNiveles(nodos, lvlActual, maxDesc){
             const niveles=[];
-            (function rec(current,lvl){
-                if(lvl>maxNivel) return;
-                niveles.push([...current]);
+            (function rec(actual, lvl){
+                niveles.push([...actual]); // push nivel actual (lvl 0 = raíz)
+                if(lvl===maxDesc) return;
                 const siguiente=[];
-                current.forEach(n=>{
+                actual.forEach(n=>{
                     if(!n){siguiente.push(null,null);}
                     else{
                         const h=buscarPorPatrocinador(n['Código Asignado']);
                         siguiente.push(h[0]||null,h[1]||null);
                     }
                 });
-                rec(siguiente,lvl+1);
-            })(nodos,nivel);
+                rec(siguiente, lvl+1);
+            })(nodos, lvlActual);
             return niveles;
         }
 
-        /* ---------- RENDER ---------- */
+        /* ------------ RENDER ------------ */
         function renderChips({personas,nivComp,izq,der,total}){
             const cont=document.getElementById('chipsCont');
             cont.innerHTML = `
@@ -379,11 +360,15 @@
         function renderArbol(){
             const cont=document.getElementById('arbolRed');
             cont.innerHTML='';
-            const max = Math.min(visibles, nivelesData.length);
 
-            for(let i=0;i<max;i++){
+            // Descendentes visibles + raíz siempre
+            const maxIndex = Math.min(descVisibles, MAX_DESC); // 1..5 descendentes
+            const nivelesAMostrar = maxIndex + 1; // +1 por la raíz
+
+            for(let i=0;i<nivelesAMostrar;i++){
                 const nivelDiv=document.createElement('div');
                 nivelDiv.className='nivel';
+
                 const fila=document.createElement('div');
                 fila.className='fila';
 
@@ -399,11 +384,10 @@
                         </div>`;
                     }
                 });
-
                 nivelDiv.appendChild(fila);
 
-                // conectores (no para el último visible ni si solo hay raíz)
-                if(i<max-1){
+                // conectores hasta el último nivel mostrado
+                if(i < nivelesAMostrar-1){
                     const cons=document.createElement('div');
                     cons.className='conectores';
                     const elementos = nivelesData[i].length;
@@ -420,32 +404,29 @@
             actualizarTextoBoton();
         }
 
-        // Escala cada nivel para que quepan todos los nodos sin overflow
         function ajustarEscala(){
             const nivelesDOM=document.querySelectorAll('.nivel');
             nivelesDOM.forEach(n=>{
                 const fila=n.querySelector('.fila');
                 const nodos=fila.children.length;
-                // 6 nodos caben normal en desktop; si hay más, escalamos
                 let scale = nodos<=6 ? 1 : (6/nodos);
-                scale = Math.max(0.55, scale); // no menos de 55%
-                n.style.setProperty('--lvl-scale', scale);
+                scale = Math.max(0.55, scale);
                 n.style.transform = `scale(${scale})`;
             });
         }
 
         function toggleNiveles(){
-            if(visibles===3){
-                visibles = nivelesData.length; // mostrar todos
+            if(descVisibles===3){
+                descVisibles = MAX_DESC; // mostrar los 5 descendentes
             }else{
-                visibles = 3; // volver
+                descVisibles = 3;
                 window.scrollTo({top:0,behavior:'smooth'});
             }
             renderArbol();
         }
         function actualizarTextoBoton(){
             const btn=document.getElementById('toggleLvlsBtn');
-            if(visibles===3){
+            if(descVisibles===3){
                 btn.textContent = '+ Niveles';
             }else{
                 btn.textContent = '− Ocultar niveles';
