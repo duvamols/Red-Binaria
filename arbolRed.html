@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang='es'>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <title>Así va tu red | Red de Acción Masiva</title>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel='preconnect' href='https://fonts.gstatic.com' />
+  <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap' rel='stylesheet' />
   <style>
     :root {
       --primary: #2563eb;
@@ -19,7 +19,6 @@
       --chip-bg: #e0f2fe;
       --chip-color: #2563eb;
       --radius: 18px;
-
       --node: 92px;   /* tamaño base del nodo */
       --gap: 24px;    /* espacio horizontal entre nodos */
       --scale: 1;     /* se ajusta desde JS */
@@ -52,7 +51,7 @@
       text-decoration: none;
     }
     .brand::before {
-      content: "";
+      content: '';
       width: 22px; height: 22px; border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       display: inline-block;
@@ -120,6 +119,23 @@
       padding: 2.2rem 1.3rem 2.4rem 1.3rem;
       overflow: hidden;
     }
+    .nav-buttons {
+      display: none;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .nav-buttons button {
+      background: var(--surface);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .nav-buttons button:hover {
+      background: var(--primary);
+      color: #fff;
+    }
     .chips {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
       margin-bottom: 16px;
@@ -145,15 +161,12 @@
     .nivel {
       position: relative;
       transform-origin: top center;
-      /* Reducimos espacio vertical y escalamos sólo en X */
       margin: 12px 0;
       transform: scaleX(var(--current-scale)) scaleY(1);
     }
     .fila {
       display: flex; justify-content: center; gap: var(--gap);
     }
-
-    /* node */
     .nodo {
       width: var(--node);
       height: var(--node);
@@ -164,6 +177,7 @@
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       text-align: center; padding: 4px;
       font-size: .8rem; color: var(--primary);
+      cursor: pointer;
     }
     .nodo.raiz {
       background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -179,8 +193,6 @@
       background: #f1f5fe; color: #93c5fd;
       font-size: 1.9rem; line-height: calc(var(--node) - 4px);
     }
-
-    /* connectors */
     .conectores {
       display: flex; justify-content: center;
       gap: calc(var(--gap) + var(--node) - 46px);
@@ -189,29 +201,6 @@
     .conectores span {
       display: block; width: 46px; border-bottom: 2px solid #cbd5e1;
     }
-
-    /* FAB levels button */
-    .btn-niveles {
-      position: fixed; right: 34px; bottom: 34px; z-index: 120;
-      background: linear-gradient(90deg, #0ea5e9 0%, var(--accent) 140%);
-      color: #fff; font-weight: 700; font-size: .95rem;
-      border: none; border-radius: 22px;
-      padding: 12px 22px;
-      box-shadow: 0 8px 32px rgba(34,197,94,.35);
-      cursor: pointer;
-      transition: transform .12s, box-shadow .15s;
-    }
-    .btn-niveles:hover { box-shadow: 0 10px 36px rgba(34,197,94,.45); transform: translateY(-2px); }
-    .btn-niveles:active { transform: scale(.97); }
-
-    #mensajeError {
-      color: #e11d48;
-      margin-top: 14px;
-      text-align: center;
-      min-height: 18px;
-    }
-
-    /* responsive tweaks */
     @media (max-width:740px) {
       :root { --node: 74px; --gap: 18px; }
       .nivel { margin: 10px 0; }
@@ -223,258 +212,145 @@
   </style>
 </head>
 <body>
-  <header class="navbar">
-    <a href="#" class="brand">Red de Acción Masiva</a>
+  <header class='navbar'>
+    <a href='#' class='brand'>Red de Acción Masiva</a>
   </header>
 
-  <section class="hero">
+  <section class='hero'>
     <h1>Así va tu red</h1>
-    <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 5 niveles (sin contar tu propia posición).</p>
-    <div id="input-section">
-      <input type="text" id="codigo" placeholder="RM-0000" />
-      <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
+    <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 4 niveles (sin contar tu propia posición).</p>
+    <div id='input-section'>
+      <input type='text' id='codigo' placeholder='RM-0000' />
+      <button id='verBtn' onclick='generarArbol()'>Ver árbol</button>
     </div>
   </section>
 
-  <main class="wrapper">
-    <div class="card">
-      <div id="chipsCont" class="chips" style="display:none;"></div>
-      <div id="arbolRed" class="arbol"></div>
-      <div id="mensajeError"></div>
+  <main class='wrapper'>
+    <div class='card'>
+      <div id='navButtons' class='nav-buttons'></div>
+      <div id='chipsCont' class='chips' style='display:none;'></div>
+      <div id='arbolRed' class='arbol'></div>
+      <div id='mensajeError'></div>
     </div>
   </main>
 
-  <button class="btn-niveles" id="toggleLvlsBtn" style="display:none;" onclick="toggleNiveles()">+ Niveles</button>
-
   <script>
-    /* -------- CONFIG -------- */
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-
-    /* -------- VARS -------- */
-    let registros = [];
-    let nivelesData = [];
-    let descVisibles = 3;          // niveles descendentes visibles por defecto
-    const MAX_DESC = 5;            // niveles descendentes totales
-    let raizGlobal = null;
-
-    /* -------- UTIL -------- */
+    let registros = [], nivelesData = [], raizGlobal = null, initialRoot = null, historyStack = [];
+    const MAX_DESC = 3;
     const limpiarTexto = t => (t||'').replace(/"/g,'').trim();
-    function buscarPorPatrocinador(p){
-      return registros.filter(x=>limpiarTexto(x.Patrocinador)===limpiarTexto(p)).slice(0,2);
-    }
-    function getPorCodigo(c){
-      return registros.find(x=>limpiarTexto(x['Código Asignado'])===limpiarTexto(c));
-    }
-    function puntosPorPaquete(p){
-      switch(limpiarTexto(p).toUpperCase()){
-        case "ESP 1": return 100;
-        case "ESP 2": return 250;
-        case "ESP 3": return 500;
-        default: return 0;
-      }
-    }
-    function contarPuntosRama(nodo, nivel, maxNivel){
-      if(!nodo || nivel>maxNivel) return 0;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      let total = puntosPorPaquete(nodo.Paquete);
-      for(const h of hijos) total += contarPuntosRama(h, nivel+1, maxNivel);
-      return total;
-    }
-    function contarRed(nodo, nivel, maxNivel){
-      if(!nodo || nivel>maxNivel) return 0;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      let total = hijos.length;
-      for(const h of hijos) total += contarRed(h, nivel+1, maxNivel);
-      return total;
-    }
-    function nivelesCompletos(nodo, nivel, maxNivel){
-      if(!nodo || nivel>maxNivel) return nivel-1;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      if(hijos.length<2) return nivel-1;
-      return Math.min(
-        nivelesCompletos(hijos[0], nivel+1, maxNivel),
-        nivelesCompletos(hijos[1], nivel+1, maxNivel)
-      );
-    }
-
-    /* -------- CORE -------- */
+    function buscarPorPatrocinador(p){ return registros.filter(x=>limpiarTexto(x.Patrocinador)===limpiarTexto(p)).slice(0,2); }
+    function getPorCodigo(c){ return registros.find(x=>limpiarTexto(x['Código Asignado'])===limpiarTexto(c)); }
+    function puntosPorPaquete(p){ switch(limpiarTexto(p).toUpperCase()){ case 'ESP 1': return 100; case 'ESP 2': return 250; case 'ESP 3': return 500; default: return 0; } }
+    function contarPuntosRama(nodo,nivel,maxNivel){ if(!nodo||nivel>maxNivel) return 0; const hijos = buscarPorPatrocinador(nodo['Código Asignado']); let total = puntosPorPaquete(nodo.Paquete); for(const h of hijos) total += contarPuntosRama(h,nivel+1,maxNivel); return total; }
+    function contarRed(nodo,nivel,maxNivel){ if(!nodo||nivel>maxNivel) return 0; const hijos = buscarPorPatrocinador(nodo['Código Asignado']); let total = hijos.length; for(const h of hijos) total += contarRed(h,nivel+1,maxNivel); return total; }
+    function nivelesCompletos(nodo,nivel,maxNivel){ if(!nodo||nivel>maxNivel) return nivel-1; const hijos = buscarPorPatrocinador(nodo['Código Asignado']); if(hijos.length<2) return nivel-1; return Math.min(nivelesCompletos(hijos[0],nivel+1,maxNivel), nivelesCompletos(hijos[1],nivel+1,maxNivel)); }
+    function construirNiveles(nodos, lvlActual, maxDesc){ const niveles=[]; (function rec(actual,lvl){ niveles.push([...actual]); if(lvl===maxDesc) return; const siguiente=[]; actual.forEach(n => { if(!n){ siguiente.push(null,null); } else { const h = buscarPorPatrocinador(n['Código Asignado']); siguiente.push(h[0]||null,h[1]||null); } }); rec(siguiente,lvl+1); })(nodos,lvlActual); return niveles; }
     function generarArbol(){
       const codigo = document.getElementById('codigo').value.trim();
       const btn = document.getElementById('verBtn');
-      document.getElementById('mensajeError').innerText = '';
-      document.getElementById('arbolRed').innerHTML = '';
-      document.getElementById('chipsCont').style.display = 'none';
-      document.getElementById('toggleLvlsBtn').style.display = 'none';
-
-      if(!codigo){
-        document.getElementById('mensajeError').innerText = "Debes ingresar tu código asignado.";
-        return;
-      }
-      btn.disabled = true;
-      const original = btn.innerText;
-      btn.innerText = "Buscando...";
-
+      document.getElementById('mensajeError').innerText='';
+      document.getElementById('arbolRed').innerHTML='';
+      document.getElementById('chipsCont').style.display='none';
+      document.getElementById('navButtons').style.display='none';
+      if(!codigo){ document.getElementById('mensajeError').innerText='Debes ingresar tu código asignado.'; return; }
+      btn.disabled=true; const original=btn.innerText; btn.innerText='Buscando...';
       fetch(SHEET_CSV_URL)
-        .then(r => r.text())
-        .then(csv => {
+        .then(r=>r.text())
+        .then(csv=>{
           const filas = csv.split('\n');
           const headers = filas[0].split(',').map(limpiarTexto);
-          registros = filas.slice(1).map(row => {
-            const cols = row.split(',');
-            const obj = {};
-            headers.forEach((k,i) => obj[k] = limpiarTexto(cols[i]));
-            return obj;
-          });
-
+          registros = filas.slice(1).map(row=>{ const cols=row.split(','); const obj={}; headers.forEach((k,i)=>obj[k]=limpiarTexto(cols[i])); return obj; });
           const raiz = getPorCodigo(codigo);
           raizGlobal = raiz;
-          if(!raiz){
-            document.getElementById('mensajeError').innerText = "No se encontró el código en la base de datos.";
-            btn.disabled = false;
-            btn.innerText = original;
-            return;
-          }
-
-          // Métricas
-          const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-          const izq   = hijos[0] ? contarPuntosRama(hijos[0], 1, MAX_DESC) : 0;
-          const der   = hijos[1] ? contarPuntosRama(hijos[1], 1, MAX_DESC) : 0;
-          const total = izq + der;
-          const nivComp  = nivelesCompletos(raiz, 1, MAX_DESC);
-          const personas = contarRed(raiz, 1, MAX_DESC);
-
-          renderChips({ personas, nivComp, izq, der, total });
-
-          // raíz + niveles
-          nivelesData   = construirNiveles([raiz], 0, MAX_DESC);
-          descVisibles  = 3;
-          renderArbol();
-
-          document.getElementById('toggleLvlsBtn').style.display = 'block';
-          btn.disabled = false;
-          btn.innerText = original;
+          initialRoot = raiz;
+          historyStack = [];
+          if(!raiz){ document.getElementById('mensajeError').innerText='No se encontró el código en la base de datos.'; btn.disabled=false; btn.innerText=original; return; }
+          updateTreeView();
+          btn.disabled=false; btn.innerText=original;
         })
-        .catch(err => {
-          console.error(err);
-          document.getElementById('mensajeError').innerText = "No se pudo consultar la base de datos.";
-          btn.disabled = false;
-          btn.innerText = original;
-        });
+        .catch(err=>{ console.error(err); document.getElementById('mensajeError').innerText='No se pudo consultar la base de datos.'; btn.disabled=false; btn.innerText=original; });
     }
-
-    function construirNiveles(nodos, lvlActual, maxDesc){
-      const niveles = [];
-      (function rec(actual, lvl){
-        niveles.push([...actual]);
-        if(lvl === maxDesc) return;
-        const siguiente = [];
-        actual.forEach(n => {
-          if(!n) {
-            siguiente.push(null, null);
-          } else {
-            const h = buscarPorPatrocinador(n['Código Asignado']);
-            siguiente.push(h[0] || null, h[1] || null);
-          }
-        });
-        rec(siguiente, lvl + 1);
-      })(nodos, lvlActual);
-      return niveles;
+    function updateTreeView(){
+      const raiz = raizGlobal;
+      const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+      const izq   = hijos[0] ? contarPuntosRama(hijos[0],1,MAX_DESC) : 0;
+      const der   = hijos[1] ? contarPuntosRama(hijos[1],1,MAX_DESC) : 0;
+      const total = izq + der;
+      const nivComp  = nivelesCompletos(raiz,1,MAX_DESC);
+      const personas = contarRed(raiz,1,MAX_DESC);
+      renderChips({ personas, nivComp, izq, der, total });
+      nivelesData = construirNiveles([raiz],0,MAX_DESC);
+      renderArbol();
+      renderNavButtons();
     }
-
-    /* -------- RENDER -------- */
     function renderChips({ personas, nivComp, izq, der, total }){
       const cont = document.getElementById('chipsCont');
-      cont.innerHTML = `
-        <span class="chip">Personas en red: <b>${personas}</b></span>
-        <span class="chip">Niveles completos: <b>${nivComp}</b></span>
-        <span class="chip">Puntos Izq: <b>${izq}</b></span>
-        <span class="chip">Puntos Der: <b>${der}</b></span>
-        <span class="chip" id="totalPuntos">Total puntos: <b>${total}</b></span>`;
+      cont.innerHTML = `<span class='chip'>Personas en red: <b>${personas}</b></span><span class='chip'>Niveles completos: <b>${nivComp}</b></span><span class='chip'>Puntos Izq: <b>${izq}</b></span><span class='chip'>Puntos Der: <b>${der}</b></span><span class='chip' id='totalPuntos'>Total puntos: <b>${total}</b></span>`;
       cont.style.display = 'flex';
     }
-
     function renderArbol(){
       const cont = document.getElementById('arbolRed');
       cont.innerHTML = '';
-
-      const nivelesAMostrar = Math.min(descVisibles, MAX_DESC) + 1;
-
-      for(let i = 0; i < nivelesAMostrar; i++){
+      const descendantLevels = Math.min(MAX_DESC, nivelesData.length - 1);
+      const nivelesAMostrar = descendantLevels + 1;
+      for(let i=0; i<nivelesAMostrar; i++){
         const nivelDiv = document.createElement('div');
         nivelDiv.className = 'nivel';
-
-        const fila = document.createElement('div');
-        fila.className = 'fila';
-
+        const fila = document.createElement('div'); fila.className = 'fila';
         nivelesData[i].forEach(nodo => {
-          if(!nodo){
-            fila.innerHTML += `<div class="nodo vacio">+</div>`;
-          } else {
-            fila.innerHTML += `
-              <div class="nodo ${i===0?'raiz':''}">
-                <div class="nombre">${nodo.Nombre||''}</div>
-                <div class="codigo">${nodo['Código Asignado']||''}</div>
-                <div class="paq">${nodo.Paquete||''}</div>
-              </div>`;
-          }
+          fila.innerHTML += nodo
+            ? `<div class='nodo ${i===0? 'raiz': ''}'><div class='nombre'>${nodo.Nombre||''}</div><div class='codigo'>${nodo['Código Asignado']||''}</div><div class='paq'>${nodo.Paquete||''}</div></div>`
+            : `<div class='nodo vacio'>+</div>`;
         });
-
         nivelDiv.appendChild(fila);
-
         if(i < nivelesAMostrar - 1){
-          const cons = document.createElement('div');
-          cons.className = 'conectores';
-          const cantidad = nivelesData[i].length;
-          for(let k = 0; k < cantidad; k++){
-            cons.innerHTML += `<span></span>`;
-          }
+          const cons = document.createElement('div'); cons.className = 'conectores';
+          for(let k=0; k<nivelesData[i].length; k++) cons.innerHTML += '<span></span>';
           nivelDiv.appendChild(cons);
         }
-
         cont.appendChild(nivelDiv);
       }
-
       ajustarEscalaGlobal(nivelesAMostrar);
-      actualizarTextoBoton();
+      cont.querySelectorAll('.nodo').forEach(el => {
+        if(!el.classList.contains('vacio')){
+          el.onclick = () => {
+            const codeEl = el.querySelector('.codigo');
+            const code = codeEl ? codeEl.innerText : null;
+            if(code){
+              historyStack.push(raizGlobal['Código Asignado']);
+              const nodo = getPorCodigo(code);
+              if(nodo){ raizGlobal = nodo; updateTreeView(); }
+            }
+          };
+        }
+      });
     }
-
     function ajustarEscalaGlobal(nivelesAMostrar){
       const container = document.querySelector('.card');
       const available = container.clientWidth - 32;
-
       const nodeSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--node'));
-      const gap      = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
-
+      const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
       let maxNodes = 0;
-      for(let i = 0; i < nivelesAMostrar; i++){
-        maxNodes = Math.max(maxNodes, nivelesData[i].length);
-      }
+      for(let i=0; i<nivelesAMostrar; i++) maxNodes = Math.max(maxNodes, nivelesData[i].length);
       const required = maxNodes * nodeSize + (maxNodes - 1) * gap;
       let scale = available / required;
-      if(scale > 1) scale = 1;
-      if(scale < 0.45) scale = 0.45;
-
+      scale = scale > 1 ? 1 : (scale < 0.45 ? 0.45 : scale);
       document.documentElement.style.setProperty('--scale', scale.toString());
     }
-
-    function toggleNiveles(){
-      if(descVisibles === 3){
-        descVisibles = MAX_DESC;
+    function renderNavButtons(){
+      const nav = document.getElementById('navButtons'); nav.innerHTML = '';
+      if(historyStack.length > 0){
+        const backBtn = document.createElement('button'); backBtn.innerText = '← Anterior'; backBtn.onclick = goBack;
+        const homeBtn = document.createElement('button'); homeBtn.innerText = '🏠 Inicio'; homeBtn.onclick = goHome;
+        nav.appendChild(backBtn); nav.appendChild(homeBtn); nav.style.display = 'flex';
       } else {
-        descVisibles = 3;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        nav.style.display = 'none';
       }
-      renderArbol();
     }
-
-    function actualizarTextoBoton(){
-      const btn = document.getElementById('toggleLvlsBtn');
-      btn.textContent = descVisibles === 3 ? '+ Niveles' : '− Ocultar niveles';
-    }
-
-    window.addEventListener('resize', ()=>{
-      if(nivelesData.length) renderArbol();
-    });
+    function goBack(){ const prev = historyStack.pop(); if(prev){ const nodo = getPorCodigo(prev); if(nodo){ raizGlobal = nodo; updateTreeView(); } }}
+    function goHome(){ raizGlobal = initialRoot; historyStack = []; updateTreeView(); }
+    window.addEventListener('resize', ()=>{ if(nivelesData.length) renderArbol(); });
   </script>
 </body>
 </html>
