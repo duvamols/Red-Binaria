@@ -12,17 +12,20 @@
       --accent: #22c55e;
       --sidebar: #0f172a;
       --sidebar-active: #2563eb;
-      --bg: linear-gradient(135deg, #e3ebfd 0%, #f6fcff 100%);
-      --card-bg: rgba(255,255,255,0.92);
+      --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
+      --card-bg: #f8faff;
       --glass: rgba(255,255,255,0.60);
-      --surface: #ffffff;
+      --surface: #fff;
       --success-bg: #e2fbe2;
       --success-txt: #15803d;
-      --shadow: 0 8px 32px rgba(37,99,235,0.12);
-      --radius: 20px;
+      --shadow-soft: 0 8px 24px 0 #dde8fc, 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
+      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
+      --radius: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
       --node: 92px;
       --gap: 24px;
-      --transition: 0.17s cubic-bezier(.7,.22,.17,.89);
+      --transition: 0.16s cubic-bezier(.6,.2,.29,.97);
     }
     html, body {
       height: 100%;
@@ -46,7 +49,8 @@
       flex-direction: column;
       align-items: stretch;
       padding: 32px 0 24px 0;
-      box-shadow: 0 0 30px rgba(30,41,59,0.13);
+      box-shadow: var(--shadow-soft);
+      border-radius: 0 var(--radius) var(--radius) 0;
       position: relative;
     }
     .sidebar .logo {
@@ -67,7 +71,7 @@
       width: 32px; height: 32px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--accent));
-      box-shadow: 0 4px 14px rgba(34,197,94,.12);
+      box-shadow: 0 4px 18px #dde8fc, 0 0 0 4px #fff;
     }
     .sidebar nav {
       flex: 1;
@@ -84,13 +88,15 @@
       color: #cbd5e1;
       font-weight: 500;
       border-left: 4px solid transparent;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      box-shadow: 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
       transition: background var(--transition), color var(--transition), border-color var(--transition);
-      border-radius: 0 22px 22px 0;
     }
     .sidebar nav a.active, .sidebar nav a:hover {
-      background: rgba(37,99,235,0.09);
+      background: rgba(37,99,235,0.13);
       color: #fff;
       border-color: var(--sidebar-active);
+      box-shadow: 0 2px 10px #2563eb19, 0 1.5px 0 #fff inset;
     }
     .sidebar .logout {
       margin: 32px 0 0 0;
@@ -100,9 +106,12 @@
       background: none; border: none; color: #94a3b8;
       font-size: 1.05rem; cursor: pointer;
       display: flex; align-items: center; gap: 7px;
-      transition: color 0.18s;
+      border-radius: var(--radius-sm);
+      padding: 5px 13px;
+      box-shadow: 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
+      transition: color 0.18s, background .12s;
     }
-    .sidebar .logout button:hover { color: #fff; }
+    .sidebar .logout button:hover { color: #fff; background: #233262; }
     .dashboard-content {
       flex: 1;
       display: flex;
@@ -114,20 +123,22 @@
       align-items: center;
       justify-content: space-between;
       padding: 26px 44px 18px 44px;
-      border-bottom: 1.5px solid #f1f5f9;
-      background: var(--glass);
-      box-shadow: 0 2px 18px rgba(30,64,175,0.05);
+      border-bottom: 1.5px solid #e6ecf5;
+      background: #f6faffd8;
+      box-shadow: var(--shadow-soft);
       position: sticky;
       top: 0;
       z-index: 22;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(7px);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
     }
     .main-header .title {
       font-family: 'Montserrat',sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.38rem;
       font-weight: 700;
       letter-spacing: 1px;
       color: var(--primary);
+      filter: drop-shadow(0 1.5px 0 #fff);
     }
     .metrics-row {
       display: flex;
@@ -139,37 +150,40 @@
     }
     .metric-card {
       background: var(--card-bg);
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-      padding: 12px 15px 10px 13px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-neu);
+      padding: 15px 22px 13px 19px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      min-width: 125px;
-      max-width: 160px;
+      min-width: 130px;
+      max-width: 170px;
       position: relative;
-      transition: transform .11s;
+      transition: transform .12s, box-shadow .14s;
+      border: 1.6px solid #f0f4fa;
     }
     .metric-card:hover {
-      transform: translateY(-4px) scale(1.032);
-      box-shadow: 0 16px 40px rgba(37,99,235,0.16);
+      transform: translateY(-5px) scale(1.045);
+      box-shadow: 0 24px 44px #dde5f0, 0 1.5px 0 #fff inset;
+      background: #f3f8ff;
     }
     .metric-title {
-      font-size: 0.98rem;
+      font-size: 1.01rem;
       font-weight: 600;
-      opacity: .8;
-      margin-bottom: 2px;
+      opacity: .84;
+      margin-bottom: 4px;
       display: flex; align-items: center; gap: 8px;
     }
     .metric-value {
-      font-size: 1.18rem;
+      font-size: 1.26rem;
       font-weight: 700;
       color: var(--primary);
-      letter-spacing: .4px;
+      letter-spacing: .38px;
       margin-bottom: 1px;
-      line-height: 1.13;
+      line-height: 1.18;
+      filter: drop-shadow(0 1.2px 0 #fff);
     }
-    .metric-card.total { background: var(--success-bg); color: var(--success-txt);}
+    .metric-card.total { background: var(--success-bg); color: var(--success-txt); border-color: #b5f5d1;}
     .metric-card.total .metric-value { color: var(--success-txt);}
     .search-box {
       display: flex;
@@ -178,24 +192,30 @@
     }
     .search-box input {
       font-size: 1.1rem;
-      padding: 9px 14px;
-      border-radius: 9px;
-      border: 1.2px solid #cdd4e1;
-      background: #f5faff;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      border: 1.7px solid #e2eaf5;
+      background: #f9fcff;
       outline: none;
-      transition: border .13s;
+      box-shadow: var(--shadow-neu);
+      transition: border .13s, box-shadow .13s;
       width: 170px;
+    }
+    .search-box input:focus {
+      border: 1.9px solid var(--primary);
+      box-shadow: 0 2px 11px #2563eb22;
     }
     .search-box button {
       background: var(--primary);
       color: #fff;
       border: none;
-      border-radius: 9px;
+      border-radius: var(--radius-sm);
       font-weight: 700;
-      padding: 9px 20px;
+      padding: 11px 22px;
       font-size: 1.07rem;
       cursor: pointer;
-      transition: background .12s;
+      box-shadow: var(--shadow-soft);
+      transition: background .12s, box-shadow .12s;
     }
     .search-box button:active { background: #1d4ed8; }
     .search-box button[disabled] { opacity: .62; cursor: not-allowed;}
@@ -206,13 +226,14 @@
       margin: 0 auto;
       margin-top: 6px;
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px 18px 36px 18px;
+      box-shadow: var(--shadow-neu);
+      padding: 26px 22px 44px 22px;
       min-height: 370px;
       position: relative;
       transition: box-shadow .11s;
       backdrop-filter: blur(7px);
       overflow-x: auto;
+      border: 1.8px solid #eef3fb;
     }
     .arbol {
       display: flex; flex-direction: column; align-items: center;
@@ -223,7 +244,7 @@
     .nivel {
       position: relative;
       transform-origin: top center;
-      margin: 16px 0;
+      margin: 18px 0;
       transform: scaleX(var(--current-scale)) scaleY(1);
     }
     .fila {
@@ -233,42 +254,43 @@
       width: var(--node);
       height: var(--node);
       border-radius: 50%;
-      border: 2.6px solid var(--primary);
-      background: #fff;
-      box-shadow: 0 4px 16px rgba(37,99,235,0.16);
+      border: 2.4px solid #e6ecfa;
+      background: #f7faff;
+      box-shadow: var(--shadow-neu);
       display: flex; flex-direction: column; justify-content: center; align-items: center;
       text-align: center; padding: 4px;
-      font-size: .82rem; color: var(--primary);
-      transition: box-shadow .13s, border-color .12s, background .12s;
+      font-size: .86rem; color: var(--primary);
+      transition: box-shadow .14s, border-color .13s, background .14s;
       cursor: pointer;
       font-family: 'Montserrat',sans-serif;
       position: relative;
       overflow: hidden;
     }
     .nodo:hover {
-      box-shadow: 0 10px 24px rgba(37,99,235,0.29);
-      background: #f1f5fe;
-      border-color: #0ea5e9;
+      box-shadow: 0 16px 36px #2563eb21, 0 3px 0 #fff inset;
+      background: #ecf6ff;
+      border-color: #c3e2ff;
       z-index: 2;
     }
     .nodo.raiz {
       background: linear-gradient(135deg, var(--primary), var(--accent));
-      border-color: var(--accent);
+      border-color: #d1ffeb;
       color: #fff;
-      box-shadow: 0 16px 32px rgba(34,197,94,.25);
-      font-size: .93rem;
+      box-shadow: 0 16px 32px #c3ffea55, 0 2px 10px #dde8fc inset;
+      font-size: .98rem;
       font-weight: bold;
-      text-shadow: 0 2px 10px rgba(37,99,235,0.17);
+      text-shadow: 0 2px 10px #1d4ed855;
     }
-    .nodo .nombre { font-weight: 700; line-height: 1.05; margin-bottom: 2px; }
-    .nodo .codigo { font-size: .72rem; opacity: .87; }
-    .nodo .paq { font-size: .74rem; color: #0ea5e9; }
+    .nodo .nombre { font-weight: 700; line-height: 1.06; margin-bottom: 2px; }
+    .nodo .codigo { font-size: .73rem; opacity: .89; }
+    .nodo .paq { font-size: .76rem; color: #0ea5e9; }
     .vacio {
       border-style: dashed; border-color: #93c5fd;
       background: #f1f5fe; color: #93c5fd;
       font-size: 1.7rem; line-height: calc(var(--node) - 4px);
       cursor: default !important;
       pointer-events: none;
+      box-shadow: 0 0 0 #fff;
     }
     .conectores {
       display: flex; justify-content: center;
@@ -276,38 +298,42 @@
       height: 16px; margin-top: 6px;
     }
     .conectores span {
-      display: block; width: 46px; border-bottom: 2.2px solid #cbd5e1;
+      display: block; width: 46px; border-bottom: 2.2px solid #d3dcef;
     }
     .nav-buttons {
       display: flex;
-      gap: 9px;
-      margin-bottom: 17px;
+      gap: 12px;
+      margin-bottom: 18px;
     }
     .nav-buttons button {
-      background: var(--surface);
-      border: 1.5px solid var(--primary);
+      background: #f4faff;
+      border: 1.7px solid #d8e2f2;
       color: var(--primary);
-      padding: 8px 17px;
-      border-radius: 8px;
-      font-size: .98rem;
+      padding: 10px 21px;
+      border-radius: var(--radius-sm);
+      font-size: 1.03rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background .12s, color .13s, border-color .12s;
+      box-shadow: 4px 4px 12px #e3ebfa, -2px -2px 6px #fff;
+      transition: background .12s, color .13s, border-color .12s, box-shadow .13s;
     }
     .nav-buttons button:hover {
       background: var(--primary);
       color: #fff;
-      border-color: #0ea5e9;
+      border-color: #90c4ff;
+      box-shadow: 0 8px 24px #c6dbf1;
     }
     #mensajeError {
       color: #e11d48;
       margin-top: 13px;
       text-align: center;
       min-height: 20px;
+      font-size: 1.08rem;
+      border-radius: 8px;
     }
     @media (max-width: 1100px) {
       .metrics-row { gap: 10px; }
-      .main-header, .metrics-row { padding-left: 18px; padding-right: 18px;}
+      .main-header, .metrics-row { padding-left: 12px; padding-right: 12px;}
     }
     @media (max-width:900px) {
       .sidebar { width: 60px; min-width: 60px;}
@@ -318,7 +344,7 @@
     }
     @media (max-width:800px) {
       .metrics-row { flex-wrap: wrap; }
-      .main-header, .metrics-row { padding-left: 6px; padding-right: 6px;}
+      .main-header, .metrics-row { padding-left: 2vw; padding-right: 2vw;}
       .glass-card { padding-left: 2vw; padding-right: 2vw;}
     }
     @media (max-width:600px) {
@@ -329,7 +355,6 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="logo">Red Acción <span></span></div>
     <nav>
@@ -343,7 +368,6 @@
       <button><i class="lucide lucide-log-out"></i><span>Salir</span></button>
     </div>
   </aside>
-  <!-- Main dashboard -->
   <section class="dashboard-content">
     <div class="main-header">
       <span class="title">Así va tu red</span>
@@ -352,7 +376,6 @@
         <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
       </div>
     </div>
-    <!-- Métricas tipo cards compactas -->
     <div class="metrics-row">
       <div class="metric-card">
         <span class="metric-title"><i class="lucide lucide-users"></i>Personas en red</span>
@@ -375,14 +398,12 @@
         <span class="metric-value" id="metric-total">-</span>
       </div>
     </div>
-    <!-- Aquí inmediatamente inicia la estructura de red -->
     <div class="glass-card">
       <div id="navButtons" class="nav-buttons"></div>
       <div id="arbolRed" class="arbol"></div>
       <div id="mensajeError"></div>
     </div>
   </section>
-  <!-- JS árbol -->
   <script>
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
     let registros = [], nivelesData = [], raizGlobal = null, initialRoot = null, historyStack = [];
@@ -505,3 +526,4 @@
   </script>
 </body>
 </html>
+
