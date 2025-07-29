@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Así va tu red | Red de Acción Masiva</title>
+  <title>Red de Acción Masiva — Navegación por niveles</title>
 
   <link rel="preconnect" href="https://fonts.gstatic.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
@@ -14,390 +14,163 @@
       --bg: #f1f5f9;
       --surface: #ffffff;
       --text: #0f172a;
-      --chip-bg: #e0f2fe;
-      --chip-color: #2563eb;
-      --radius: 18px;
-
       --node: 92px;
       --gap: 24px;
-      --scale: 1;
     }
     * { box-sizing: border-box; margin:0; padding:0; }
-    html, body { height:100%; scroll-behavior:smooth; }
     body {
       font-family:'Inter',Arial,sans-serif;
-      color:var(--text);
       background:var(--bg);
-      display:flex; flex-direction:column;
-    }
-
-    /* NAV */
-    .navbar {
-      position:sticky; top:0; z-index:50;
-      width:100%; background:var(--surface);
-      box-shadow:0 2px 16px rgba(0,0,0,.05);
-      padding:.9rem 1.5rem;
-      display:flex; justify-content:center; align-items:center;
-    }
-    .brand {
-      font-family:'Montserrat',sans-serif;
-      font-size:1.35rem; font-weight:700;
-      color:var(--primary);
-      text-decoration:none;
-      display:flex; align-items:center; gap:.55rem;
-    }
-    .brand::before {
-      content:""; width:22px; height:22px; border-radius:50%;
-      background:linear-gradient(135deg,var(--primary),var(--accent));
-      display:inline-block;
-    }
-
-    /* HERO */
-    .hero {
-      text-align:center; color:#fff;
-      background:linear-gradient(135deg,var(--primary) 0%,#1d4ed8 65%,#0ea5e9 120%);
-      padding:3.3rem 1.2rem 3.8rem;
-    }
-    .hero h1 { font-family:'Montserrat',sans-serif; font-size:2rem; font-weight:700; margin-bottom:.5rem; }
-    .hero p { font-size:.95rem; opacity:.9; max-width:670px; margin:0 auto 1.4rem; }
-    #input-section { display:flex; justify-content:center; gap:.6rem; }
-    #codigo {
-      width:200px; padding:9px 12px; font-size:1rem;
-      border:none; border-radius:10px; outline:none;
-    }
-    #verBtn {
-      background:#fff; color:var(--primary); font-weight:600;
-      padding:9px 18px; border:none; border-radius:10px;
-      cursor:pointer; transition:opacity .15s,transform .12s;
-    }
-    #verBtn:active { transform:scale(.97); }
-    #verBtn[disabled] { opacity:.6; cursor:not-allowed; }
-
-    /* CARD */
-    .wrapper {
-      flex:1; display:flex; justify-content:center;
-      padding:0 1rem; transform:translateY(-48px); margin-bottom:-48px;
-    }
-    .card {
-      width:100%; max-width:1100px; background:var(--surface);
-      border-radius:var(--radius);
-      box-shadow:0 12px 34px rgba(37,99,235,.12);
-      padding:2.2rem 1.3rem 2.4rem; overflow:hidden;
-    }
-    .chips {
-      display:flex; flex-wrap:wrap; justify-content:center; gap:12px;
-      margin-bottom:16px;
-    }
-    .chip {
-      background:var(--chip-bg); color:var(--chip-color);
-      padding:6px 16px; border-radius:999px;
-      font-weight:600; font-size:.9rem; white-space:nowrap;
-    }
-    #totalPuntos { background:#e2fbe2; color:#15803d; }
-
-    /* ÁRBOL */
-    .arbol {
+      color:var(--text);
       display:flex; flex-direction:column; align-items:center;
-      width:100%; margin-top:8px;
-      --current-scale:var(--scale);
     }
+    h1 { margin:1rem 0; }
+    #codigo { padding:8px; font-size:1rem; }
+    #verBtn { margin-left:.5rem; }
+
+    .card {
+      width:100%; max-width:1100px;
+      background:var(--surface);
+      border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,.05);
+      padding:1.5rem; margin-bottom:2rem;
+    }
+    .arbol { display:flex; flex-direction:column; gap:1rem; }
     .nivel {
-      width:100%;
-      position:relative; transform-origin:top center;
-      margin:calc(8px * var(--current-scale)) 0;
-      transform:scaleX(var(--current-scale)) scaleY(1);
-    }
-    .fila {
       display:flex; justify-content:space-between;
       width:100%;
     }
     .nodo {
-      flex:0 0 var(--node);
-      height:var(--node); border-radius:50%;
-      border:2px solid var(--primary); background:#fff;
-      box-shadow:0 1px 8px rgba(37,99,235,.15);
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      text-align:center; padding:4px; color:var(--primary);
-      position:relative;
+      flex:0 0 var(--node); height:var(--node);
+      border:2px solid var(--primary); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center; padding:4px; background:#fff;
+      cursor:pointer; transition:transform .1s;
     }
+    .nodo:hover { transform:scale(1.05); }
     .nodo.raiz {
       background:linear-gradient(135deg,var(--primary),var(--accent));
       border-color:var(--accent); color:#fff;
-      box-shadow:0 8px 24px rgba(34,197,94,.25);
     }
-    .nodo .nombre { font-weight:700; line-height:1.05; margin-bottom:2px; }
-    .nodo .codigo { font-size:.72rem; opacity:.85; }
-    .nodo .paq { font-size:.7rem; color:#0ea5e9; }
-
-    /* Inicial para niveles 4 y 5 */
-    .nodo .inicial { font-size:1.2rem; font-weight:700; }
-    .nodo[data-tooltip] { cursor:pointer; }
-    .nodo[data-tooltip]::before,
-    .nodo[data-tooltip]::after {
-      position:absolute; left:50%; transform:translateX(-50%);
-      opacity:0; pointer-events:none; transition:opacity .2s; z-index:100;
-    }
-    .nodo[data-tooltip]::before {
-      content:''; top:100%;
-      border:6px solid transparent; border-top-color:rgba(0,0,0,0.75);
-    }
-    .nodo[data-tooltip]::after {
-      content:attr(data-tooltip); top:calc(100% + 6px);
-      white-space:pre-line; background:rgba(0,0,0,0.75);
-      color:#fff; padding:6px 8px; border-radius:4px;
-      font-size:.75rem; min-width:80px; text-align:center;
-    }
-    .nodo[data-tooltip]:hover::before,
-    .nodo[data-tooltip]:hover::after {
-      opacity:1;
-    }
-
-    .vacio {
-      flex:0 0 var(--node); height:var(--node);
-      border:2px dashed #93c5fd; background:#f1f5fe; color:#93c5fd;
-      font-size:1.9rem; line-height:calc(var(--node) - 4px);
-      display:flex; align-items:center; justify-content:center;
-    }
-
-    .conectores {
-      display:flex; justify-content:space-between;
-      width:100%; height:8px; margin-top:4px;
-    }
-    .conectores span {
-      width:46px; border-bottom:2px solid #cbd5e1;
-    }
-
-    .btn-niveles {
-      position:fixed; right:34px; bottom:34px; z-index:120;
-      background:linear-gradient(90deg,#0ea5e9 0%,var(--accent) 140%);
-      color:#fff; font-weight:700; font-size:.95rem;
-      border:none; border-radius:22px; padding:12px 22px;
-      box-shadow:0 8px 32px rgba(34,197,94,.35);
-      cursor:pointer; transition:transform .12s,box-shadow .15s;
-    }
-    .btn-niveles:hover { transform:translateY(-2px); }
-    .btn-niveles:active { transform:scale(.97); }
-
-    #mensajeError {
-      color:#e11d48; margin-top:14px; text-align:center; min-height:18px;
-    }
-
-    @media (max-width:740px) {
-      :root { --node:74px; --gap:18px; }
+    .tooltip {
+      position:absolute; pointer-events:none;
+      background:rgba(0,0,0,.75); color:#fff;
+      padding:6px 8px; border-radius:4px;
+      font-size:.75rem; white-space:pre-line;
+      z-index:10; opacity:0; transition:opacity .15s;
     }
   </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <a href="#" class="brand">Red de Acción Masiva</a>
-  </header>
+  <h1>Red de Acción Masiva</h1>
+  <div>
+    <input id="codigo" placeholder="RM-0000"/>
+    <button id="verBtn">Cargar niveles</button>
+  </div>
 
-  <section class="hero">
-    <h1>Así va tu red</h1>
-    <p>Proceso previo a la inscripción en Gano Excel. Ingresa tu código para ver tu estructura binaria hasta 5 niveles (sin contar tu propia posición).</p>
-    <div id="input-section">
-      <input type="text" id="codigo" placeholder="RM-0000"/>
-      <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
-    </div>
-  </section>
+  <div class="card">
+    <div id="arbolRed" class="arbol"></div>
+  </div>
 
-  <main class="wrapper">
-    <div class="card">
-      <div id="chipsCont" class="chips" style="display:none;"></div>
-      <div id="arbolRed" class="arbol"></div>
-      <div id="mensajeError"></div>
-    </div>
-  </main>
-
-  <button class="btn-niveles" id="toggleLvlsBtn" style="display:none;" onclick="toggleNiveles()">+ Niveles</button>
+  <div id="tooltip" class="tooltip"></div>
 
   <script>
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-    let registros = [], nivelesData = [], descVisibles = 3;
-    const MAX_DESC = 5;
-    const limpiarTexto = t => (t||'').replace(/"/g,'').trim();
+    let registros = [];
 
-    function buscarPorPatrocinador(p){
-      return registros.filter(x=>limpiarTexto(x.Patrocinador)===limpiarTexto(p)).slice(0,2);
-    }
-    function getPorCodigo(c){
-      return registros.find(x=>limpiarTexto(x['Código Asignado'])===limpiarTexto(c));
-    }
-    function puntosPorPaquete(p){
-      switch(limpiarTexto(p).toUpperCase()){
-        case "ESP 1": return 100;
-        case "ESP 2": return 250;
-        case "ESP 3": return 500;
-        default: return 0;
-      }
-    }
-    function contarPuntosRama(nodo, lvl, maxLvl){
-      if(!nodo||lvl>maxLvl) return 0;
-      let h = buscarPorPatrocinador(nodo['Código Asignado']), total = puntosPorPaquete(nodo.Paquete);
-      h.forEach(c=> total += contarPuntosRama(c, lvl+1, maxLvl));
-      return total;
-    }
-    function contarRed(nodo, lvl, maxLvl){
-      if(!nodo||lvl>maxLvl) return 0;
-      let h = buscarPorPatrocinador(nodo['Código Asignado']), total = h.length;
-      h.forEach(c=> total += contarRed(c, lvl+1, maxLvl));
-      return total;
-    }
-    function nivelesCompletos(nodo, lvl, maxLvl){
-      if(!nodo||lvl>maxLvl) return lvl-1;
-      let h = buscarPorPatrocinador(nodo['Código Asignado']);
-      if(h.length<2) return lvl-1;
-      return Math.min(
-        nivelesCompletos(h[0], lvl+1, maxLvl),
-        nivelesCompletos(h[1], lvl+1, maxLvl)
-      );
-    }
+    // Utiles
+    const limpiar = t => (t||'').replace(/"/g,'').trim();
+    const buscar = p => registros.filter(r=>limpiar(r.Patrocinador)===limpiar(p)).slice(0,2);
+    const getNodo = c => registros.find(r=>limpiar(r['Código Asignado'])===limpiar(c));
 
-    function generarArbol(){
-      const cod = document.getElementById('codigo').value.trim();
-      const btn = document.getElementById('verBtn');
-      document.getElementById('mensajeError').innerText = '';
-      document.getElementById('arbolRed').innerHTML = '';
-      document.getElementById('chipsCont').style.display = 'none';
-      document.getElementById('toggleLvlsBtn').style.display = 'none';
-
-      if(!cod){
-        document.getElementById('mensajeError').innerText = "Debes ingresar tu código.";
-        return;
-      }
-      btn.disabled = true;
-      const orig = btn.innerText; btn.innerText = "Buscando...";
-
-      fetch(SHEET_CSV_URL)
-        .then(r=>r.text())
-        .then(csv=>{
-          const rows = csv.split('\n'), headers = rows[0].split(',').map(limpiarTexto);
-          registros = rows.slice(1).map(r=>{
-            const cols = r.split(','), o={};
-            headers.forEach((h,i)=>o[h]=limpiarTexto(cols[i]||''));
-            return o;
-          });
-
-          const raiz = getPorCodigo(cod);
-          if(!raiz){
-            document.getElementById('mensajeError').innerText = "Código no encontrado.";
-            btn.disabled=false; btn.innerText=orig;
-            return;
-          }
-
-          const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-          const izq = hijos[0]?contarPuntosRama(hijos[0],1,MAX_DESC):0;
-          const der = hijos[1]?contarPuntosRama(hijos[1],1,MAX_DESC):0;
-          const total = izq+der;
-          const nivComp = nivelesCompletos(raiz,1,MAX_DESC);
-          const personas = contarRed(raiz,1,MAX_DESC);
-
-          renderChips({personas,nivComp,izq,der,total});
-
-          nivelesData = construirNiveles([raiz],0,MAX_DESC);
-          descVisibles = 3;
-          renderArbol();
-
-          document.getElementById('toggleLvlsBtn').style.display='block';
-          btn.disabled=false; btn.innerText=orig;
-        })
-        .catch(e=>{
-          console.error(e);
-          document.getElementById('mensajeError').innerText="Error al cargar datos.";
-          btn.disabled=false; btn.innerText=orig;
-        });
-    }
-
-    function construirNiveles(arr, lvl, maxLvl){
-      const res=[]; (function rec(a,n){
-        res.push([...a]);
-        if(n===maxLvl) return;
-        const nxt=[];
-        a.forEach(x=>{
-          if(!x) nxt.push(null,null);
+    // Construye exactamente N niveles descendientes
+    function construir(root, niveles) {
+      const res = [];
+      function rec(nodos, nivel) {
+        if(nivel>niveles) return;
+        res.push(nodos);
+        const sig = [];
+        nodos.forEach(n=>{
+          if(!n) sig.push(null,null);
           else {
-            const h = buscarPorPatrocinador(x['Código Asignado']);
-            nxt.push(h[0]||null,h[1]||null);
+            const h = buscar(n['Código Asignado']);
+            sig.push(h[0]||null, h[1]||null);
           }
         });
-        rec(nxt,n+1);
-      })(arr,lvl);
+        rec(sig, nivel+1);
+      }
+      rec([root], 0);
       return res;
     }
 
-    function renderChips({personas,nivComp,izq,der,total}){
-      const c = document.getElementById('chipsCont');
-      c.innerHTML=`
-        <span class="chip">Personas en red:<b>${personas}</b></span>
-        <span class="chip">Niveles completos:<b>${nivComp}</b></span>
-        <span class="chip">Puntos Izq:<b>${izq}</b></span>
-        <span class="chip">Puntos Der:<b>${der}</b></span>
-        <span class="chip" id="totalPuntos">Total puntos:<b>${total}</b></span>`;
-      c.style.display='flex';
-    }
+    function render(nivelPadreCodigo) {
+      const root = getNodo(nivelPadreCodigo);
+      if(!root) return alert('Código no encontrado');
+      const niveles = construir(root, 2); // raíz + 2 descendientes = 3 filas
+      const cont = document.getElementById('arbolRed');
+      cont.innerHTML = '';
 
-    function renderArbol(){
-      const c = document.getElementById('arbolRed');
-      c.innerHTML='';
-      const lvlCount = Math.min(descVisibles,MAX_DESC)+1;
-      for(let i=0;i<lvlCount;i++){
-        const divN = document.createElement('div'); divN.className='nivel';
-        const fila = document.createElement('div'); fila.className='fila';
-
-        nivelesData[i].forEach(n=>{
-          if(!n){
-            fila.innerHTML+=`<div class="vacio">+</div>`;
-          } else if(i>=4){
-            const ini=(n.Nombre||'').charAt(0);
-            const info=`${n.Nombre}\n${n['Código Asignado']}\n${n.Paquete}`;
-            fila.innerHTML+=`
-              <div class="nodo" data-tooltip="${info}">
-                <div class="inicial">${ini}</div>
-              </div>`;
+      niveles.forEach((fil, i) => {
+        const filaDiv = document.createElement('div');
+        filaDiv.className = 'nivel';
+        fil.forEach(n=>{
+          const div = document.createElement('div');
+          if(!n) {
+            div.className='nodo';
+            div.textContent='+';
+            div.style.borderStyle='dashed';
           } else {
-            fila.innerHTML+=`
-              <div class="nodo ${i===0?'raiz':''}">
-                <div class="nombre">${n.Nombre}</div>
-                <div class="codigo">${n['Código Asignado']}</div>
-                <div class="paq">${n.Paquete}</div>
-              </div>`;
+            div.className = 'nodo'+(i===0?' raiz':'');
+            // en niveles 1 y 2 mostramos solo la inicial
+            if(i>0) {
+              div.textContent = (n.Nombre||'')[0] || '';
+              // attach tooltip data
+              div.dataset.tooltip = `${n.Nombre}\n${n['Código Asignado']}\n${n.Paquete}`;
+            } else {
+              div.innerHTML = `<div>${n.Nombre}</div><small>${n['Código Asignado']}</small>`;
+            }
+            // click para profundizar en este nodo
+            div.onclick = ()=> render(n['Código Asignado']);
           }
+          filaDiv.appendChild(div);
         });
+        cont.appendChild(filaDiv);
+      });
+    }
 
-        divN.appendChild(fila);
-        if(i<lvlCount-1){
-          const con = document.createElement('div'); con.className='conectores';
-          nivelesData[i].forEach(_=>con.innerHTML+='<span></span>');
-          divN.appendChild(con);
-        }
-        c.appendChild(divN);
+    // Tooltip
+    const tip = document.getElementById('tooltip');
+    document.body.addEventListener('mousemove', e=>{
+      const tgt = e.target.closest('.nodo[data-tooltip]');
+      if(tgt) {
+        tip.textContent = tgt.dataset.tooltip;
+        tip.style.left = e.pageX + 10 + 'px';
+        tip.style.top  = e.pageY + 10 + 'px';
+        tip.style.opacity = 1;
+      } else {
+        tip.style.opacity = 0;
       }
-      ajustarEscala(lvlCount);
-      document.getElementById('toggleLvlsBtn').textContent = descVisibles===3?'+ Niveles':'− Ocultar niveles';
-    }
+    });
 
-    function ajustarEscala(lvlCount){
-      const w = document.querySelector('.card').clientWidth - 32;
-      const nodeSz = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--node'));
-      const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
-      let maxN = 0;
-      nivelesData.slice(0,lvlCount).forEach(l=> maxN=Math.max(maxN,l.length));
-      const req = maxN*nodeSz + (maxN-1)*gap;
-      let s = w/req;
-      s = Math.min(1,Math.max(0.3,s));
-      document.documentElement.style.setProperty('--scale',s);
-      // Reaplica: transform escalaX en cada nivel
-      document.querySelectorAll('.nivel').forEach(n=> n.style.transform = `scaleX(${s}) scaleY(1)`);
-    }
-
-    function toggleNiveles(){
-      descVisibles = descVisibles===3?MAX_DESC:3;
-      if(descVisibles===3) window.scrollTo({top:0,behavior:'smooth'});
-      renderArbol();
-    }
-
-    window.addEventListener('resize',()=>{ if(nivelesData.length) renderArbol(); });
+    // Carga inicial de datos
+    document.getElementById('verBtn').onclick = ()=>{
+      const code = document.getElementById('codigo').value.trim();
+      if(!code) return alert('Ingresa un código');
+      if(registros.length===0) {
+        fetch(SHEET_CSV_URL).then(r=>r.text()).then(csv=>{
+          const rows = csv.split('\n'), headers = rows[0].split(',').map(limpiar);
+          registros = rows.slice(1).map(r=>{
+            const cols = r.split(','), o={};
+            headers.forEach((h,i)=>o[h]=limpiar(cols[i]));
+            return o;
+          });
+          render(code);
+        }).catch(()=>alert('Error al cargar datos'));
+      } else {
+        render(code);
+      }
+    };
   </script>
+
 </body>
 </html>
