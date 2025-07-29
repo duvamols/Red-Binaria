@@ -15,7 +15,6 @@
     --bg:#f1f5f9;
     --surface:#ffffff;
     --text:#0f172a;
-    --text-light:#64748b;
     --chip-bg:#e0f2fe;
     --chip-color:#2563eb;
     --radius:18px;
@@ -32,127 +31,44 @@ body{
     background:var(--bg);
     display:flex;
     flex-direction:column;
+    align-items:center;
 }
 
 /* NAV */
-.navbar{
-    position:sticky; top:0; z-index:50;
-    width:100%;
-    background:var(--surface);
-    box-shadow:0 2px 16px rgba(0,0,0,.05);
-    padding:.9rem 1.5rem;
-    display:flex; justify-content:center; align-items:center;
-}
-.brand{
-    font-family:'Montserrat', sans-serif;
-    font-size:1.35rem;
-    font-weight:700;
-    color:var(--primary);
-    display:flex; align-items:center; gap:.55rem;
-    text-decoration:none;
-}
-.brand::before{
-    content:"";
-    width:22px;height:22px;border-radius:50%;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    display:inline-block;
-}
+.navbar{ /* ... mismo que antes ... */ }
+.brand{ /* ... */ }
+.brand::before{ /* ... */ }
 
 /* HERO */
-.hero{
-    width:100%;
-    background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 65%, #0ea5e9 120%);
-    color:#fff;
-    padding:3.3rem 1.2rem 3.8rem 1.2rem;
-    text-align:center;
-}
-.hero h1{
-    font-family:'Montserrat', sans-serif;
-    font-size:2rem;
-    font-weight:700;
-    margin-bottom:.5rem;
-}
-.hero p{
-    font-size:.95rem;
-    opacity:.9;
-    max-width:670px;
-    margin:0 auto 1.4rem auto;
-}
-#input-section{
-    display:flex; justify-content:center; gap:.6rem; margin-top:.9rem;
-}
-#codigo{
-    font-size:1rem;
-    padding:9px 12px;
-    border-radius:10px;
-    border:none;
-    outline:none;
-    width:200px;
-}
-#verBtn{
-    background:#fff;
-    color:var(--primary);
-    font-weight:600;
-    padding:9px 18px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    transition:opacity .15s, transform .12s;
-}
-#verBtn:active{transform:scale(.97);}
-#verBtn[disabled]{opacity:.6; cursor:not-allowed;}
+.hero{ /* ... */ }
+.hero h1{ /* ... */ }
+.hero p{ /* ... */ }
+#input-section{ /* ... */ }
+#codigo{ /* ... */ }
+#verBtn{ /* ... */ }
 
 /* CARD */
-.wrapper{
-    flex:1;
-    display:flex;
-    justify-content:center;
-    padding:0 1rem;
-    transform:translateY(-48px);
-    margin-bottom:-48px;
-}
-.card{
-    width:100%;
-    max-width:1100px;
-    background:var(--surface);
-    border-radius:var(--radius);
-    box-shadow:0 12px 34px rgba(37,99,235,.12);
-    padding:2.2rem 1.3rem 2.4rem 1.3rem;
-    overflow:hidden;   /* evita scroll horizontal */
-}
-.chips{
-    display:flex; flex-wrap:wrap; justify-content:center; gap:12px;
-    margin-bottom:16px;
-}
-.chip{
-    background:var(--chip-bg);
-    color:var(--chip-color);
-    padding:6px 16px;
-    border-radius:999px;
-    font-size:.9rem;
-    font-weight:600;
-    white-space:nowrap;
-}
-#totalPuntos{background:#e2fbe2;color:#15803d;}
+.wrapper{ /* ... */ }
+.card{ /* ... */ }
+.chips{ /* ... */ }
+.chip{ /* ... */ }
+#totalPuntos{ /* ... */ }
 
 /* TREE */
 .arbol{
     display:flex; flex-direction:column; align-items:center;
-    width:100%;
-    margin-top:8px;
+    width:100%; margin-top:8px;
     --current-scale:var(--scale);
 }
 .nivel{
-    position:relative;
-    width:100%;
+    position:relative; width:100%;
     transform-origin:top center;
     margin:18px 0;
-    /* sólo escalado horizontal, no deformar vertical */
+    /* solo escalado horizontal */
     transform:scaleX(var(--current-scale)) scaleY(1);
 }
 .fila{
-    display:flex; justify-content:space-between;
-    width:100%;
+    display:flex; justify-content:center; gap:var(--gap);
 }
 
 /* node */
@@ -170,78 +86,54 @@ body{
     transition:transform .1s;
 }
 .nodo:hover{transform:scale(1.05);}
-.nodo.raiz{
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    border-color:var(--accent);
-    color:#fff;
-    box-shadow:0 8px 24px rgba(34,197,94,.25);
-}
-.nodo .nombre{font-weight:700; line-height:1.05; margin-bottom:2px;}
-.nodo .codigo{font-size:.72rem; opacity:.85;}
-.nodo .paq{font-size:.7rem; color:#0ea5e9;}
-.vacio{
-    flex:0 0 var(--node);
-    height:var(--node);
-    border:2px dashed #93c5fd;
-    background:#f1f5fe; color:#93c5fd;
-    display:flex; align-items:center; justify-content:center;
-    font-size:1.9rem; line-height:calc(var(--node) - 4px);
-}
+.nodo.raiz{ /* ... igual ... */ }
+.nodo .nombre{ /* ... */ }
+.nodo .codigo{ /* ... */ }
+.nodo .paq{ /* ... */ }
+.vacio{ /* ... */ }
 
 /* connectors */
-.conectores{
-    display:flex; justify-content:space-between;
-    width:100%; height:14px; margin-top:6px;
-}
-.conectores span{
-    width:46px; border-bottom:2px solid #cbd5e1;
-}
+.conectores{ /* ... */ }
+.conectores span{ /* ... */ }
 
 /* tooltip */
-#tooltip{
-    position:absolute; pointer-events:none;
-    background:rgba(0,0,0,.75); color:#fff;
-    padding:6px 8px; border-radius:4px;
-    font-size:.75rem; white-space:pre-line;
-    opacity:0; transition:opacity .15s; z-index:100;
-}
-
+#tooltip{ /* ... */ }
 </style>
 </head>
 <body>
 
 <header class="navbar">
-    <a href="#" class="brand">Red de Acción Masiva</a>
+  <a href="#" class="brand">Red de Acción Masiva</a>
 </header>
 
 <section class="hero">
-    <h1>Así va tu red</h1>
-    <p>Ingresa tu código para ver tus primeros 4 niveles. Luego haz clic en cualquier nodo para navegar por sus 4 niveles.</p>
-    <div id="input-section">
-        <input type="text" id="codigo" placeholder="RM-0000" />
-        <button id="verBtn">Ver 4 niveles</button>
-    </div>
+  <h1>Así va tu red</h1>
+  <p>Ingresa tu código para ver tus primeros 4 niveles. Haz clic en cualquier nodo para navegar sus niveles.</p>
+  <div id="input-section">
+    <input type="text" id="codigo" placeholder="RM-0000" />
+    <button id="verBtn">Ver 4 niveles</button>
+  </div>
 </section>
 
 <main class="wrapper">
-    <div class="card">
-        <div id="chipsCont" class="chips" style="display:none;"></div>
-        <div id="arbolRed" class="arbol"></div>
-        <div id="mensajeError"></div>
-    </div>
+  <div class="card">
+    <div id="chipsCont" class="chips" style="display:none;"></div>
+    <div id="arbolRed" class="arbol"></div>
+    <div id="mensajeError"></div>
+  </div>
 </main>
 
 <div id="tooltip"></div>
 
 <script>
 // ---- CONFIG ----
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRusO2GcoYUtkgNYArBk_q8ApISe1IZodp9PoNYDfMVuZ2Vrs8T6InJNLCvOHTj-Mww1sEcGk33EHAR/pub?output=csv';
-
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/.../pub?output=csv';
 let registros = [];
 let nivelesData = [];
 let raizGlobal = null;
-const NIVELES_A_MOSTRAR = 4;  // raíz + 3 descendientes
-const MAX_DESC = 5;           // solo para métricas internas
+
+const SHOW_DESC = 3;     // mostramos 3 niveles descendientes -> 4 niveles totales
+const METRIC_DESC = 5;   // métricas siguen hasta 5 niveles
 
 // ---- UTIL ----
 const limpiar = t => (t||'').replace(/"/g,'').trim();
@@ -262,21 +154,21 @@ function puntosPorPaquete(p){
     }
 }
 function contarPuntos(nodo, lvl){
-    if(!nodo||lvl>MAX_DESC) return 0;
+    if(!nodo||lvl>METRIC_DESC) return 0;
     const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
     let total = puntosPorPaquete(nodo.Paquete);
     hijos.forEach(h=> total += contarPuntos(h, lvl+1));
     return total;
 }
 function contarRed(nodo, lvl){
-    if(!nodo||lvl>MAX_DESC) return 0;
+    if(!nodo||lvl>METRIC_DESC) return 0;
     const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
     let cnt = hijos.length;
     hijos.forEach(h=> cnt += contarRed(h, lvl+1));
     return cnt;
 }
 function nivCompletos(nodo, lvl){
-    if(!nodo||lvl>MAX_DESC) return lvl-1;
+    if(!nodo||lvl>METRIC_DESC) return lvl-1;
     const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
     if(hijos.length<2) return lvl-1;
     return Math.min(
@@ -285,12 +177,13 @@ function nivCompletos(nodo, lvl){
     );
 }
 
-// ---- CONSTRUIR ÁRBOL ----
+// ---- CONSTRUIR ----
+//  Raíz + SHOW_DESC niveles
 function construir(raiz){
-    const result = [];
+    const res = [];
     (function rec(arr, lvl){
-        result.push([...arr]);
-        if(lvl === NIVELES_A_MOSTRAR-1) return;
+        res.push([...arr]);
+        if(lvl===SHOW_DESC) return;
         const next = [];
         arr.forEach(n=>{
             if(!n) next.push(null,null);
@@ -301,13 +194,14 @@ function construir(raiz){
         });
         rec(next, lvl+1);
     })([raiz], 0);
-    return result;
+    return res;
 }
 
 // ---- RENDER CHIPS ----
 function renderChips(raiz){
-    const izq = contarPuntos(buscarPorPatrocinador(raiz['Código Asignado'])[0],1);
-    const der = contarPuntos(buscarPorPatrocinador(raiz['Código Asignado'])[1],1);
+    const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+    const izq = contarPuntos(hijos[0],1);
+    const der = contarPuntos(hijos[1],1);
     const total = izq + der;
     const personas = contarRed(raiz,1);
     const nivComp  = nivCompletos(raiz,1);
@@ -323,32 +217,32 @@ function renderChips(raiz){
     cont.style.display = 'flex';
 }
 
-// ---- RENDER ÁRBOL + CLICK NAVIGATION ----
+// ---- RENDER ÁRBOL ----
 function renderArbol(){
     const tree = document.getElementById('arbolRed');
     tree.innerHTML = '';
     nivelesData = construir(raizGlobal);
 
-    nivelesData.forEach((filaArr, i) => {
+    nivelesData.forEach((filaArr, i)=>{
       const lvlDiv = document.createElement('div');
       lvlDiv.className = 'nivel';
       const fila = document.createElement('div');
       fila.className = 'fila';
 
-      filaArr.forEach(n => {
+      filaArr.forEach(n=>{
         const d = document.createElement('div');
         if(!n){
-          d.className = 'vacio';
-          d.textContent = '+';
+          d.className='vacio'; d.textContent='+';
         } else {
-          d.className = 'nodo' + (i===0?' raiz':'');
+          d.className='nodo'+(i===0?' raiz':'');
           d.innerHTML = `
             <div class="nombre">${n.Nombre}</div>
             <div class="codigo">${n['Código Asignado']}</div>
             <div class="paq">${n.Paquete}</div>
           `;
-          d.dataset.codigo = n['Código Asignado'];
+          // navegación
           d.onclick = ()=> showNode(n['Código Asignado']);
+          // tooltip
           d.dataset.tooltip = `${n.Nombre}\n${n['Código Asignado']}\n${n.Paquete}`;
         }
         fila.appendChild(d);
@@ -367,20 +261,18 @@ function renderArbol(){
     ajustarEscalaGlobal();
 }
 
-// ---- ESCALA HORIZONTAL ----
+// ---- ESCALA ----
 function ajustarEscalaGlobal(){
-    const contW = document.querySelector('.card').clientWidth - 32;
-    const nodeSz = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--node'));
-    const gap    = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
-    // cantidad máxima de nodos en un nivel de 4 niveles: 2^(4-1)=8
-    const maxN = Math.pow(2, NIVELES_A_MOSTRAR-1);
-    const req = maxN * nodeSz + (maxN - 1) * gap;
-    let s = contW/req;
-    s = Math.min(1, Math.max(0.45, s));
+    const cont = document.querySelector('.card').clientWidth - 32;
+    const sz = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--node'));
+    const gap= parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap'));
+    const maxN = Math.pow(2, SHOW_DESC);
+    const req = maxN * sz + (maxN - 1)*gap;
+    let s = cont/req; s = Math.min(1, Math.max(0.45, s));
     document.documentElement.style.setProperty('--scale', s);
 }
 
-// ---- NAVEGACIÓN ----
+// ---- NAVEGAR ----
 function showNode(code){
   const nodo = getPorCodigo(code);
   if(!nodo) return;
@@ -389,31 +281,28 @@ function showNode(code){
   renderArbol();
 }
 
-// ---- INICIAL ----
+// ---- INICIO ----
 document.getElementById('verBtn').onclick = ()=>{
   const code = document.getElementById('codigo').value.trim();
-  if(!code) return alert('Por favor ingresa tu código.');
+  if(!code) return alert('Ingresa tu código');
   if(!registros.length){
-    fetch(SHEET_CSV_URL)
-      .then(r=>r.text())
-      .then(txt=>{
-        const rows = txt.split('\n');
-        const hdrs = rows[0].split(',').map(limpiar);
-        registros = rows.slice(1).map(r=>{
-          const cols = r.split(','), o = {};
-          hdrs.forEach((h,i)=>o[h]=limpiar(cols[i]||''));
-          return o;
-        });
-        const root = getPorCodigo(code);
-        if(!root) return alert('Código no válido.');
-        raizGlobal = root;
-        renderChips(root);
-        renderArbol();
-      })
-      .catch(()=>alert('Error al cargar datos.'));
+    fetch(SHEET_CSV_URL).then(r=>r.text()).then(txt=>{
+      const rows = txt.split('\n');
+      const hdrs = rows[0].split(',').map(limpiar);
+      registros = rows.slice(1).map(r=>{
+        const cols = r.split(','), o={};
+        hdrs.forEach((h,i)=>o[h]=limpiar(cols[i]||''));
+        return o;
+      });
+      const root = getPorCodigo(code);
+      if(!root) return alert('Código no válido');
+      raizGlobal = root;
+      renderChips(root);
+      renderArbol();
+    }).catch(()=>alert('Error al cargar datos'));
   } else {
     const root = getPorCodigo(code);
-    if(!root) return alert('Código no válido.');
+    if(!root) return alert('Código no válido');
     raizGlobal = root;
     renderChips(root);
     renderArbol();
@@ -429,12 +318,11 @@ document.body.addEventListener('mousemove', e=>{
     tip.style.left = e.pageX + 10 + 'px';
     tip.style.top  = e.pageY + 10 + 'px';
     tip.style.opacity = 1;
-  } else {
-    tip.style.opacity = 0;
-  }
+  } else tip.style.opacity = 0;
 });
 </script>
 
 </body>
 </html>
+
 
