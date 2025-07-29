@@ -447,23 +447,39 @@
         })
         .catch(err=>{ console.error(err); document.getElementById('mensajeError').innerText='No se pudo consultar la base de datos.'; btn.disabled=false; btn.innerText=original; });
     }
-    function updateTreeView(){
-      const raiz = raizGlobal;
-      const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
-      const izq   = hijos[0] ? contarPuntosRama(hijos[0],1,MAX_DESC) : 0;
-      const der   = hijos[1] ? contarPuntosRama(hijos[1],1,MAX_DESC) : 0;
-      const total = izq + der;
-      const nivComp  = nivelesCompletos(raiz,1,MAX_DESC);
-      const personas = contarRed(raiz,1,MAX_DESC);
-      document.getElementById('metric-personas').textContent = personas;
-      document.getElementById('metric-niveles').textContent = nivComp;
-      document.getElementById('metric-izq').textContent = izq;
-      document.getElementById('metric-der').textContent = der;
-      document.getElementById('metric-total').textContent = total;
-      nivelesData = construirNiveles([raiz],0,MAX_DESC);
-      renderArbol();
-      renderNavButtons();
-    }
+    function updateTreeView() {
+  const raiz = raizGlobal;
+  const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
+  const izq   = hijos[0] ? contarPuntosRama(hijos[0], 1, MAX_DESC) : 0;
+  const der   = hijos[1] ? contarPuntosRama(hijos[1], 1, MAX_DESC) : 0;
+  const nivComp  = nivelesCompletos(raiz, 1, MAX_DESC);
+  const personas = contarRed(raiz, 1, MAX_DESC);
+
+  // Mostrar puntos normales
+  document.getElementById('metric-personas').textContent = personas;
+  document.getElementById('metric-niveles').textContent = nivComp;
+  document.getElementById('metric-izq').textContent = izq;
+  document.getElementById('metric-der').textContent = der;
+
+  // Calcular GANANCIA en USD (lado menor x % paquete)
+  let menor = Math.min(izq, der);
+  let porcentaje = 0.10; // Default ESP 1
+
+  const paquete = (raiz.Paquete || "").toUpperCase();
+  if (paquete.includes("ESP 2")) porcentaje = 0.15;
+  else if (paquete.includes("ESP 3")) porcentaje = 0.17;
+
+  const ganancia = menor * porcentaje;
+
+  // Mostrar como dinero formateado
+  document.getElementById('metric-total').textContent =
+    "$" + ganancia.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " USD";
+
+  nivelesData = construirNiveles([raiz], 0, MAX_DESC);
+  renderArbol();
+  renderNavButtons();
+}
+
     function renderArbol(){
       const cont = document.getElementById('arbolRed');
       cont.innerHTML = '';
