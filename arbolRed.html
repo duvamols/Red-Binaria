@@ -250,16 +250,22 @@
     .fila {
       display: flex; justify-content: center; gap: var(--gap);
     }
+    /* NODOS NORMALES MÁS LLAMATIVOS */
     .nodo {
       width: var(--node);
       height: var(--node);
       border-radius: 50%;
-      border: 2.4px solid #e6ecfa;
-      background: #f7faff;
-      box-shadow: var(--shadow-neu);
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 4px;
-      font-size: .86rem; color: var(--primary);
+      border: 2.4px solid #2563eb;    /* azul fuerte */
+      background: #e0eaff;            /* celeste intenso, más notorio */
+      box-shadow: 0 4px 16px #2563eb2b, 0 0.5px 2.5px #b9c6d8 inset;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4px;
+      font-size: .86rem;
+      color: #0a2174;                 /* azul oscuro */
       transition: box-shadow .14s, border-color .13s, background .14s;
       cursor: pointer;
       font-family: 'Montserrat',sans-serif;
@@ -267,11 +273,12 @@
       overflow: hidden;
     }
     .nodo:hover {
-      box-shadow: 0 16px 36px #2563eb21, 0 3px 0 #fff inset;
-      background: #ecf6ff;
-      border-color: #c3e2ff;
+      box-shadow: 0 16px 36px #2563eb42, 0 3px 0 #fff inset;
+      background: #b6d4fb;    /* azul celeste más intenso al pasar el mouse */
+      border-color: #1e40af;  /* azul aún más oscuro al hover */
       z-index: 2;
     }
+    /* NODO RAÍZ SE MANTIENE DIFERENTE */
     .nodo.raiz {
       background: linear-gradient(135deg, var(--primary), var(--accent));
       border-color: #d1ffeb;
@@ -526,4 +533,3 @@
   </script>
 </body>
 </html>
-
