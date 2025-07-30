@@ -458,7 +458,7 @@
   const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
   const izq   = hijos[0] ? contarPuntosRama(hijos[0], 1, MAX_DESC) : 0;
   const der   = hijos[1] ? contarPuntosRama(hijos[1], 1, MAX_DESC) : 0;
-  const nivComp  = nivelesCompletos(raiz, 1, MAX_DESC);
+  const nivComp  = nivelesCompletosTotales(raiz, 1); // Nuevo cálculo profundo
   const personas = contarTodosLosDescendientes(raiz);  // Nuevo conteo completo
 
   // Mostrar puntos normales
@@ -532,6 +532,16 @@
   nivelesData = construirNiveles([raiz], 0, MAX_DESC);
   renderArbol();
   renderNavButtons();
+}
+function nivelesCompletosTotales(nodo, nivel = 1) {
+  if (!nodo) return nivel - 1;
+  const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+  if (hijos.length < 2) return nivel - 1; // No es completo si le falta un hijo
+  // Ambos hijos existen, sigue bajando...
+  return Math.min(
+    nivelesCompletosTotales(hijos[0], nivel + 1),
+    nivelesCompletosTotales(hijos[1], nivel + 1)
+  );
 }
     // Cuenta todos los descendientes del nodo (no te cuenta a ti)
 function contarTodosLosDescendientes(nodo) {
