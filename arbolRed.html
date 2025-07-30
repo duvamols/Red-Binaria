@@ -453,7 +453,7 @@
         })
         .catch(err=>{ console.error(err); document.getElementById('mensajeError').innerText='No se pudo consultar la base de datos.'; btn.disabled=false; btn.innerText=original; });
     }
-    function updateTreeView() {
+  function updateTreeView() {
   const raiz = raizGlobal;
   const hijos = buscarPorPatrocinador(raiz['Código Asignado']);
   const izq   = hijos[0] ? contarPuntosRama(hijos[0], 1, MAX_DESC) : 0;
@@ -481,58 +481,58 @@
   document.getElementById('metric-total').textContent =
     "$" + ganancia.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " USD";
 
+  // ==== Cálculo Dinero Bonos Generacionales ====
+
+  // 1. Mapeo de bonos por paquete y generación (GEN1-GEN5)
+  const BONOS_TABLA = {
+    "ESP 1": [25, 5, 5, 5, 10],
+    "ESP 2": [75, 10, 10, 10, 20],
+    "ESP 3": [150, 20, 20, 20, 40]
+  };
+
+  // 2. Función para obtener los nodos por generación (GEN1 a GEN5)
+  function getGeneracionNodos(raiz, gen, maxGen) {
+    // Retorna array de arrays: [ [GEN1], [GEN2], [GEN3], [GEN4], [GEN5] ]
+    let niveles = [];
+    let actual = [raiz];
+    for(let g=1; g<=maxGen; g++) {
+      let sig = [];
+      actual.forEach(nodo => {
+        if (!nodo) return;
+        const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
+        sig.push(...hijos.filter(h=>h));
+      });
+      niveles.push(sig);
+      actual = sig;
+    }
+    return niveles; // Array con 5 arrays, cada uno de una gen
+  }
+
+  // 3. Calcular el bono total
+  let bonoTotal = 0;
+  const generaciones = getGeneracionNodos(raiz, 1, 5);
+
+  generaciones.forEach((arrGen, idxGen) => {
+    arrGen.forEach(nodo => {
+      const p = (nodo.Paquete || "").toUpperCase();
+      let valor = 0;
+      // Detectar el paquete del afiliado, buscar en tabla
+      if (p.includes("ESP 3")) valor = BONOS_TABLA["ESP 3"][idxGen];
+      else if (p.includes("ESP 2")) valor = BONOS_TABLA["ESP 2"][idxGen];
+      else if (p.includes("ESP 1")) valor = BONOS_TABLA["ESP 1"][idxGen];
+      bonoTotal += valor;
+    });
+  });
+
+  // 4. Mostrarlo en el cuadro "Dinero Bonos"
+  document.getElementById('metric-bonos').textContent =
+    "$" + bonoTotal.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " USD";
+
+  // ...resto de la función...
   nivelesData = construirNiveles([raiz], 0, MAX_DESC);
   renderArbol();
   renderNavButtons();
 }
-    // ==== Cálculo Dinero Bonos Generacionales ====
-
-// 1. Mapeo de bonos por paquete y generación (GEN1-GEN5)
-const BONOS_TABLA = {
-  "ESP 1": [25, 5, 5, 5, 10],
-  "ESP 2": [75, 10, 10, 10, 20],
-  "ESP 3": [150, 20, 20, 20, 40]
-};
-
-// 2. Función para obtener los nodos por generación (GEN1 a GEN5)
-function getGeneracionNodos(raiz, gen, maxGen) {
-  // Retorna array de arrays: [ [GEN1], [GEN2], [GEN3], [GEN4], [GEN5] ]
-  let niveles = [];
-  let actual = [raiz];
-  for(let g=1; g<=maxGen; g++) {
-    let sig = [];
-    actual.forEach(nodo => {
-      if (!nodo) return;
-      const hijos = buscarPorPatrocinador(nodo['Código Asignado']);
-      sig.push(...hijos.filter(h=>h));
-    });
-    niveles.push(sig);
-    actual = sig;
-  }
-  return niveles; // Array con 5 arrays, cada uno de una gen
-}
-
-// 3. Calcular el bono total
-let bonoTotal = 0;
-const paqueteTabla = ["ESP 1", "ESP 2", "ESP 3"];
-const generaciones = getGeneracionNodos(raiz, 1, 5);
-
-generaciones.forEach((arrGen, idxGen) => {
-  arrGen.forEach(nodo => {
-    const p = (nodo.Paquete || "").toUpperCase();
-    let valor = 0;
-    // Detectar el paquete del afiliado, buscar en tabla
-    if (p.includes("ESP 3")) valor = BONOS_TABLA["ESP 3"][idxGen];
-    else if (p.includes("ESP 2")) valor = BONOS_TABLA["ESP 2"][idxGen];
-    else if (p.includes("ESP 1")) valor = BONOS_TABLA["ESP 1"][idxGen];
-    bonoTotal += valor;
-  });
-});
-
-// 4. Mostrarlo en el cuadro "Dinero Bonos"
-document.getElementById('metric-bonos').textContent =
-  "$" + bonoTotal.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " USD";
-
     function renderArbol(){
       const cont = document.getElementById('arbolRed');
       cont.innerHTML = '';
