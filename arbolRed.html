@@ -365,7 +365,7 @@
   <aside class="sidebar">
     <div class="logo">Red Acción <span></span></div>
     <nav>
-      <a class="active" href="#"><i class="lucide lucide-network"></i><span>Dashboard</span></a>
+      <a class="active" href="#"><i class="lucide lucide-network"></i><span>Principal</span></a>
       <a href="#"><i class="lucide lucide-bar-chart"></i><span>Métricas</span></a>
       <a href="#"><i class="lucide lucide-users"></i><span>Red</span></a>
       <a href="#"><i class="lucide lucide-list"></i><span>Registros</span></a>
@@ -380,7 +380,7 @@
       <span class="title">Así va tu red</span>
       <div class="search-box">
         <input type="text" id="codigo" placeholder="RM-0000" />
-        <button id="verBtn" onclick="generarArbol()">Ver árbol</button>
+        <button id="verBtn" onclick="generarArbol()">Buscar</button>
       </div>
     </div>
     <div class="metrics-row">
@@ -401,15 +401,17 @@
         <span class="metric-value" id="metric-der">-</span>
       </div>
       <div class="metric-card total">
-        <center><span class="metric-title"><i class="lucide lucide-trophy"></i>Total Dinero</span></center>
+        <center><span class="metric-title"><i class="lucide lucide-trophy"></i>Dinero por Puntos</span></center>
         <span class="metric-value" id="metric-total">-</span>
       </div>
     </div>
-    </div>
-      <div class="metric-card total">
-        <span class="metric-title"><i class="lucide lucide-trophy"></i>Total Bonos</span>
+    <center>
+    <div class="metric-card total">
+         <center><span class="metric-title"><i class="lucide lucide-trophy"></i>Dinero por Bonos</span></center>
         <span class="metric-value" id="metric-total">-</span>
       </div>
+      </center>
+    </div>
     </div>
     <div class="glass-card">
       <div id="navButtons" class="nav-buttons"></div>
