@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Red de Acción Masiva | Preinscripción</title>
+  <title>Red de Acción Masiva | Tu mejor oportunidad</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.349.0/dist/lucide.css" />
   <style>
@@ -23,8 +23,6 @@
       --radius: 28px;
       --radius-md: 20px;
       --radius-sm: 14px;
-      --node: 92px;
-      --gap: 24px;
       --transition: 0.16s cubic-bezier(.6,.2,.29,.97);
     }
     html, body {
@@ -94,46 +92,162 @@
       border-color: var(--sidebar-active);
       box-shadow: 0 2px 10px #2563eb19;
     }
-    .container {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.7rem 2vw;
+    .hero-home {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary) 55%, #0ea5e9 130%);
+      color: #fff;
+      padding: 3.2rem 1.3rem 2.7rem 1.3rem;
+      text-align: center;
     }
-    .main-content {
+    .hero-home h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 0.72rem;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px #1d4ed899;
+    }
+    .hero-home p {
+      font-size: 1.13rem;
+      opacity: .96;
+      max-width: 670px;
+      margin: 0 auto 1.5rem auto;
+      font-weight: 500;
+      line-height: 1.56;
+    }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 0.7rem;
+      padding: 13px 42px;
+      font-size: 1.13rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg,var(--accent) 10%, var(--primary) 140%);
+      border: none;
+      border-radius: 22px;
+      box-shadow: 0 4px 18px #2563eb55;
+      transition: background .16s, box-shadow .18s, transform .12s;
+      text-decoration: none;
+      letter-spacing: .5px;
+    }
+    .cta-btn:hover {
+      background: linear-gradient(90deg, var(--primary) 20%, var(--accent) 140%);
+      box-shadow: 0 8px 28px #2563eb33;
+      transform: translateY(-2px) scale(1.01);
+    }
+    .content-section {
+      max-width: 980px;
+      margin: 0 auto;
+      margin-top: -38px;
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow-neu);
-      padding: 2.5rem 2.2rem 2.7rem 2.2rem;
-      min-width: 320px;
-      max-width: 470px;
-      width: 100%;
-      min-height: 320px;
-      text-align: center;
-      position: relative;
-      border: 1.7px solid #eef3fb;
+      border: 1.6px solid #eef3fb;
+      padding: 2.3rem 2.1rem 1.7rem 2.1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+    .benefits-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
       justify-content: center;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .benefit-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      box-shadow: 0 3px 16px #dde5f04b;
+      padding: 1.18rem 1.3rem;
+      max-width: 240px;
+      min-width: 170px;
+      flex: 1 1 170px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.3px solid #ecf0fa;
+      font-weight: 600;
+      font-size: 1.08rem;
+      color: #2563eb;
+      text-align: center;
+      gap: 10px;
       transition: box-shadow .14s;
-      backdrop-filter: blur(7px);
     }
-    .main-content h1 {
-      font-size: 2rem;
+    .benefit-card i {
+      font-size: 2.4rem;
       color: var(--primary);
-      margin-bottom: 1.2rem;
-      font-family: 'Montserrat',sans-serif;
-      font-weight: 700;
-      letter-spacing: .5px;
+      margin-bottom: 7px;
     }
-    .main-content p {
-      color: #64748b;
-      margin-bottom: 1.9rem;
-      font-size: 1.09rem;
-      line-height: 1.5;
-      font-weight: 500;
+    .section-title {
+      color: var(--primary);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.33rem;
+      font-weight: 700;
+      margin: 25px 0 8px 0;
+      letter-spacing: .1px;
+      text-align: center;
+    }
+    .testimonials {
+      width: 100%;
+      margin: 13px 0 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+    }
+    .testimonial-card {
+      background: #fff;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 10px #dde5f041;
+      padding: 1rem 1.18rem;
+      min-width: 185px;
+      max-width: 280px;
+      font-size: 1.02rem;
+      border: 1.1px solid #e4ecf8;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+    }
+    .testimonial-card .name {
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 0.82rem;
+      font-size: 1.07rem;
+      font-family: 'Montserrat',sans-serif;
+    }
+    .testimonial-card .lucide {
+      color: #22c55e;
+      position: absolute;
+      top: 1.08rem;
+      right: 1.05rem;
+      font-size: 1.43rem;
+    }
+    .faq {
+      margin: 23px 0 7px 0;
+      width: 100%;
+      max-width: 720px;
+    }
+    .faq-item {
+      background: #fff;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 10px #dde5f041;
+      margin-bottom: 13px;
+      border: 1.1px solid #e4ecf8;
+      padding: 1rem 1.13rem;
+      color: #222;
+      font-size: 1.04rem;
+    }
+    .faq-item strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 700;
+      font-family: 'Montserrat',sans-serif;
     }
     footer {
       background: var(--card-bg);
@@ -148,6 +262,13 @@
       z-index: 100;
       margin-top: auto;
     }
+    @media (max-width: 1100px) {
+      .content-section { padding: 1.2rem 1vw 1.2rem 1vw;}
+      .benefits-list {gap: 12px;}
+    }
+    @media (max-width: 800px) {
+      .content-section { padding: 1rem 2vw;}
+    }
     @media (max-width: 700px) {
       .navbar {
         flex-direction: column;
@@ -158,13 +279,13 @@
         margin-bottom: 13px;
         margin-right: 0;
       }
-      .container {
-        padding: 1.1rem 2vw;
+      .content-section {
+        padding: 0.7rem 1vw 0.9rem 1vw;
+        border-radius: 13px;
+        margin-top: -22px;
       }
-      .main-content {
-        padding: 1.2rem 0.7rem 1.4rem 0.7rem;
-        max-width: 99vw;
-      }
+      .benefit-card {min-width: 140px;}
+      .main-content {max-width: 99vw;}
     }
   </style>
 </head>
@@ -177,16 +298,76 @@
       <a href="arbolRed.html"><i class="lucide lucide-network"></i> <span style="margin-left:6px">Ver mi Red</span></a>
     </div>
   </nav>
-  <div class="container">
-    <div class="main-content">
-      <h1>Bienvenido</h1>
-      <p>
-        Únete a una red de mercadeo moderna, confiable y diseñada para tu éxito.<br>
-        Descubre oportunidades y sé parte de nuestro equipo.
-      </p>
-      <!-- Aquí se insertará el contenido específico de cada página -->
+
+  <!-- HERO/HEADER -->
+  <section class="hero-home">
+    <h1>Una Red, un Equipo, una Oportunidad Real</h1>
+    <p>
+      La vida cambia cuando te rodeas de personas que quieren crecer.<br>
+      Da el paso hoy y únete a una red de mercadeo donde el apoyo, la educación y el crecimiento sí son prioridad.<br>
+      ¡Construye tu tranquilidad económica desde cero, incluso si nunca has hecho network marketing!
+    </p>
+    <a href="Index.html" class="cta-btn"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
+  </section>
+
+  <div class="content-section">
+
+    <!-- BENEFICIOS -->
+    <div class="section-title">¿Por qué unirte a Red de Acción Masiva?</div>
+    <div class="benefits-list">
+      <div class="benefit-card"><i class="lucide lucide-users"></i>Equipo de apoyo real y mentoría</div>
+      <div class="benefit-card"><i class="lucide lucide-trophy"></i>Sistema que premia el trabajo en equipo</div>
+      <div class="benefit-card"><i class="lucide lucide-graduation-cap"></i>Capacitación desde cero</div>
+      <div class="benefit-card"><i class="lucide lucide-phone"></i>Todo digital y sencillo desde tu celular</div>
+      <div class="benefit-card"><i class="lucide lucide-handshake"></i>Resultados en bloque, no caminas solo</div>
+      <div class="benefit-card"><i class="lucide lucide-shield-check"></i>Red confiable, productos validados</div>
     </div>
+
+    <!-- TESTIMONIOS -->
+    <div class="section-title" style="margin-top:36px;">Testimonios reales</div>
+    <div class="testimonials">
+      <div class="testimonial-card">
+        <i class="lucide lucide-quote"></i>
+        “Entré con miedo, pero aquí sí se siente el respaldo. En mi primer mes logré mis primeros ingresos sin experiencia.”
+        <span class="name">— Mariana F.</span>
+      </div>
+      <div class="testimonial-card">
+        <i class="lucide lucide-quote"></i>
+        “La educación y el acompañamiento diario marcan la diferencia. Por fin encontré un equipo que sí te enseña.”
+        <span class="name">— Carlos M.</span>
+      </div>
+      <div class="testimonial-card">
+        <i class="lucide lucide-quote"></i>
+        “¡Aquí los resultados llegan más rápido porque todos empujamos juntos! Recomiendo la Red a quien quiera de verdad crecer.”
+        <span class="name">— Luisa R.</span>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-title" style="margin-top:36px;">Preguntas frecuentes</div>
+    <div class="faq">
+      <div class="faq-item">
+        <strong>¿Necesito experiencia previa?</strong>
+        Para nada. Aquí empiezas desde cero y cuentas con mentoría y capacitación personalizada.
+      </div>
+      <div class="faq-item">
+        <strong>¿Qué pasa si no conozco a nadie?</strong>
+        Nuestro sistema es en bloque: ¡tú no reclutas solo! Recibes ayuda y el apoyo de todo el equipo.
+      </div>
+      <div class="faq-item">
+        <strong>¿Cuánto debo invertir?</strong>
+        Hay paquetes para todos los bolsillos y puedes iniciar de acuerdo a tus posibilidades.
+      </div>
+      <div class="faq-item">
+        <strong>¿Realmente puedo ganar dinero?</strong>
+        Sí. Aquí los ingresos dependen de tu participación y del equipo. Te mostramos el paso a paso.
+      </div>
+    </div>
+
+    <!-- CTA FINAL -->
+    <a href="Index.html" class="cta-btn" style="margin-top: 23px;"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
   </div>
+
   <footer>
     &copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀
   </footer>
@@ -196,4 +377,3 @@
   </script>
 </body>
 </html>
-
