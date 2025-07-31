@@ -283,6 +283,83 @@
       .panel-liderespro {max-width: 99vw;}
       .main-content {max-width: 99vw;}
     }
+    .testimonials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.testimonial-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 3px 16px #dde5f04b;
+  padding: 1.5rem 1.2rem 1rem 1.2rem;
+  max-width: 240px;
+  min-width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.3px solid #ecf0fa;
+  text-align: center;
+}
+.testimonial-photo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 9px #2563eb22;
+  border: 3px solid #f5fbff;
+}
+.testimonial-text {
+  font-size: 1.03rem;
+  color: #23272f;
+  margin-bottom: 0.9rem;
+}
+.testimonial-name {
+  color: #2563eb;
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.faq-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.faq-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px #dde5f041;
+  border: 1.1px solid #e4ecf8;
+  padding: 1rem 1.1rem 1rem 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 225px;
+  max-width: 320px;
+  flex: 1 1 225px;
+}
+.faq-card i {
+  font-size: 2.1rem;
+  color: #2563eb;
+  margin-top: 2px;
+}
+.faq-q {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 6px;
+}
+.faq-a {
+  color: #23272f;
+  font-size: 1.01rem;
+  line-height: 1.36;
+}
   </style>
 </head>
 <body>
@@ -334,47 +411,58 @@
       <div class="benefit-card"><i class="lucide lucide-shield-check"></i>Red confiable, productos validados</div>
     </div>
 
-    <!-- TESTIMONIOS -->
-    <div class="section-title" style="margin-top:36px;">Testimonios reales</div>
-    <div class="testimonials">
-      <div class="testimonial-card">
-        <i class="lucide lucide-quote"></i>
-        “Entré con miedo, pero aquí sí se siente el respaldo. En mi primer mes logré mis primeros ingresos sin experiencia.”
-        <span class="name">— Mariana F.</span>
-      </div>
-      <div class="testimonial-card">
-        <i class="lucide lucide-quote"></i>
-        “La educación y el acompañamiento diario marcan la diferencia. Por fin encontré un equipo que sí te enseña.”
-        <span class="name">— Carlos M.</span>
-      </div>
-      <div class="testimonial-card">
-        <i class="lucide lucide-quote"></i>
-        “¡Aquí los resultados llegan más rápido porque todos empujamos juntos! Recomiendo la Red a quien quiera de verdad crecer.”
-        <span class="name">— Luisa R.</span>
-      </div>
-    </div>
+   <!-- TESTIMONIOS -->
+<div class="section-title" style="margin-top:36px;">Testimonios reales</div>
+<div class="testimonials-grid">
+  <div class="testimonial-card">
+    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-photo" alt="Mariana F.">
+    <div class="testimonial-text">“Entré con miedo, pero aquí sí se siente el respaldo. En mi primer mes logré mis primeros ingresos sin experiencia.”</div>
+    <div class="testimonial-name">Mariana F.</div>
+  </div>
+  <div class="testimonial-card">
+    <img src="https://randomuser.me/api/portraits/men/55.jpg" class="testimonial-photo" alt="Carlos M.">
+    <div class="testimonial-text">“La educación y el acompañamiento diario marcan la diferencia. Por fin encontré un equipo que sí te enseña.”</div>
+    <div class="testimonial-name">Carlos M.</div>
+  </div>
+  <div class="testimonial-card">
+    <img src="https://randomuser.me/api/portraits/women/65.jpg" class="testimonial-photo" alt="Luisa R.">
+    <div class="testimonial-text">“¡Aquí los resultados llegan más rápido porque todos empujamos juntos! Recomiendo la Red a quien quiera de verdad crecer.”</div>
+    <div class="testimonial-name">Luisa R.</div>
+  </div>
+</div>
 
-    <!-- FAQ -->
-    <div class="section-title" style="margin-top:36px;">Preguntas frecuentes</div>
-    <div class="faq">
-      <div class="faq-item">
-        <strong>¿Necesito experiencia previa?</strong>
-        Para nada. Aquí empiezas desde cero y cuentas con mentoría y capacitación personalizada.
-      </div>
-      <div class="faq-item">
-        <strong>¿Qué pasa si no conozco a nadie?</strong>
-        Nuestro sistema es en bloque: ¡tú no reclutas solo! Recibes ayuda y el apoyo de todo el equipo.
-      </div>
-      <div class="faq-item">
-        <strong>¿Cuánto debo invertir?</strong>
-        Hay paquetes para todos los bolsillos y puedes iniciar de acuerdo a tus posibilidades.
-      </div>
-      <div class="faq-item">
-        <strong>¿Realmente puedo ganar dinero?</strong>
-        Sí. Aquí los ingresos dependen de tu participación y del equipo. Te mostramos el paso a paso.
-      </div>
+<!-- PREGUNTAS FRECUENTES -->
+<div class="section-title" style="margin-top:36px;">Preguntas frecuentes</div>
+<div class="faq-grid">
+  <div class="faq-card">
+    <i class="lucide lucide-help-circle"></i>
+    <div>
+      <div class="faq-q"><b>¿Necesito experiencia previa?</b></div>
+      <div class="faq-a">Para nada. Aquí empiezas desde cero y cuentas con mentoría y capacitación personalizada.</div>
     </div>
-
+  </div>
+  <div class="faq-card">
+    <i class="lucide lucide-users"></i>
+    <div>
+      <div class="faq-q"><b>¿Qué pasa si no conozco a nadie?</b></div>
+      <div class="faq-a">Nuestro sistema es en bloque: ¡tú no reclutas solo! Recibes ayuda y el apoyo de todo el equipo.</div>
+    </div>
+  </div>
+  <div class="faq-card">
+    <i class="lucide lucide-wallet"></i>
+    <div>
+      <div class="faq-q"><b>¿Cuánto debo invertir?</b></div>
+      <div class="faq-a">Hay paquetes para todos los bolsillos y puedes iniciar de acuerdo a tus posibilidades.</div>
+    </div>
+  </div>
+  <div class="faq-card">
+    <i class="lucide lucide-dollar-sign"></i>
+    <div>
+      <div class="faq-q"><b>¿Realmente puedo ganar dinero?</b></div>
+      <div class="faq-a">Sí. Aquí los ingresos dependen de tu participación y del equipo. Te mostramos el paso a paso.</div>
+    </div>
+  </div>
+</div>
     <!-- CTA FINAL -->
     <a href="Index.html" class="cta-btn" style="margin-top: 23px;"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
   </div>
