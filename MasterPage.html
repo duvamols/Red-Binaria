@@ -190,84 +190,80 @@
       letter-spacing: .1px;
       text-align: center;
     }
-    .testimonials {
+    .panel-liderespro {
       width: 100%;
-      margin: 13px 0 0 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      justify-content: center;
-    }
-    .testimonial-card {
+      max-width: 430px;
       background: #fff;
-      border-radius: var(--radius-sm);
-      box-shadow: 0 2px 10px #dde5f041;
-      padding: 1rem 1.18rem;
-      min-width: 185px;
-      max-width: 280px;
-      font-size: 1.02rem;
-      border: 1.1px solid #e4ecf8;
-      color: #0f172a;
+      border-radius: var(--radius-md);
+      box-shadow: 0 6px 18px #2563eb29, 0 1.5px 0 #fff inset;
+      border: 1.5px solid #c8e3f7;
+      padding: 1.38rem 1.18rem 1.25rem 1.18rem;
+      margin: 23px auto 25px auto;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-    }
-    .testimonial-card .name {
-      font-weight: 700;
-      color: var(--primary);
-      margin-top: 0.82rem;
-      font-size: 1.07rem;
-      font-family: 'Montserrat',sans-serif;
-    }
-    .testimonial-card .lucide {
-      color: #22c55e;
-      position: absolute;
-      top: 1.08rem;
-      right: 1.05rem;
-      font-size: 1.43rem;
-    }
-    .faq {
-      margin: 23px 0 7px 0;
-      width: 100%;
-      max-width: 720px;
-    }
-    .faq-item {
-      background: #fff;
-      border-radius: var(--radius-sm);
-      box-shadow: 0 2px 10px #dde5f041;
-      margin-bottom: 13px;
-      border: 1.1px solid #e4ecf8;
-      padding: 1rem 1.13rem;
-      color: #222;
-      font-size: 1.04rem;
-    }
-    .faq-item strong {
-      color: var(--primary);
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 700;
-      font-family: 'Montserrat',sans-serif;
-    }
-    footer {
-      background: var(--card-bg);
-      color: #94a3b8;
-      font-size: 1.05rem;
+      align-items: center;
       text-align: center;
-      padding: 18px 0 15px 0;
-      letter-spacing: 0.25px;
-      border-top: 1.5px solid #e6ecf5;
-      box-shadow: 0 -4px 20px #dde8fc2c;
-      border-radius: 22px 22px 0 0;
-      z-index: 100;
-      margin-top: auto;
     }
-    @media (max-width: 1100px) {
-      .content-section { padding: 1.2rem 1vw 1.2rem 1vw;}
-      .benefits-list {gap: 12px;}
+    .panel-liderespro img {
+      width: 94%;
+      max-width: 350px;
+      border-radius: 14px;
+      margin-bottom: 11px;
+      border: 1.2px solid #e0eaff;
+      box-shadow: 0 2px 9px #2563eb15;
     }
-    @media (max-width: 800px) {
-      .content-section { padding: 1rem 2vw;}
+    .panel-liderespro .panel-title {
+      color: #2563eb;
+      font-size: 1.07rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .panel-liderespro .panel-btn {
+      margin-top: 10px;
+      padding: 9px 30px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(90deg, #22c55e 10%, #2563eb 140%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background .15s, box-shadow .13s, transform .12s;
+      box-shadow: 0 3px 12px #dde8fc65;
+      text-decoration: none;
+    }
+    .panel-liderespro .panel-btn:hover {
+      background: linear-gradient(90deg, #2563eb 10%, #22c55e 140%);
+      transform: translateY(-1.5px) scale(1.01);
+      box-shadow: 0 7px 16px #22c55e44;
+    }
+    /* WhatsApp floating button */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 38px;
+      right: 32px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 18px #25d36660;
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.45rem;
+      z-index: 2000;
+      cursor: pointer;
+      transition: background .14s, box-shadow .13s, transform .12s;
+      border: none;
+      outline: none;
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover {
+      background: #128C7E;
+      box-shadow: 0 8px 22px #25d36633;
+      transform: scale(1.06);
     }
     @media (max-width: 700px) {
       .navbar {
@@ -284,7 +280,7 @@
         border-radius: 13px;
         margin-top: -22px;
       }
-      .benefit-card {min-width: 140px;}
+      .panel-liderespro {max-width: 99vw;}
       .main-content {max-width: 99vw;}
     }
   </style>
@@ -311,6 +307,22 @@
   </section>
 
   <div class="content-section">
+
+    <!-- PANEL LIDERESPRO (AVANCE REAL DE LA RED) -->
+    <div class="panel-liderespro">
+      <div class="panel-title">Avance de nuestra red en <b>LideresPro</b></div>
+      <!-- Pon aquí tu captura o imagen real; esto es demo -->
+      <img src="https://liderespro.info/static/media/estadisticas.5e077aaf7d9a9f510b43.png"
+           alt="Estadísticas de la Red en LideresPro">
+      <div style="font-size:1.01rem;color:#64748b; margin-bottom:6px;">
+        Más de <b>400 miembros activos</b> y creciendo cada semana.<br>
+        Resultados visibles, crecimiento real. <br>
+        <b>Tú también puedes ser parte.</b>
+      </div>
+      <a class="panel-btn" href="https://liderespro.info/" target="_blank">
+        Ver detalles y ranking en LideresPro
+      </a>
+    </div>
 
     <!-- BENEFICIOS -->
     <div class="section-title">¿Por qué unirte a Red de Acción Masiva?</div>
@@ -371,9 +383,17 @@
   <footer>
     &copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀
   </footer>
+
+  <!-- Botón flotante de WhatsApp -->
+  <a href="https://wa.me/TU_NUMERO?text=Hola%20quiero%20más%20información%20sobre%20Red%20de%20Acción%20Masiva"
+     target="_blank" class="whatsapp-btn" title="¡Escríbenos por WhatsApp!">
+    <i class="lucide lucide-message-circle"></i>
+  </a>
+
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
   </script>
 </body>
 </html>
+
