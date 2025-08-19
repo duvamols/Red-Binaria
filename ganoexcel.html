@@ -12,37 +12,59 @@
       --accent: #22c55e;
       --sidebar: #0f172a;
       --sidebar-active: #2563eb;
-      --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
-      --card-bg: #f8faff;
-      --radius: 28px;
-      --radius-md: 20px;
-      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
+      --bg: #f1f5fb;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
+      --gradient-alt: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      --radius: 22px;
+      --shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
     body {font-family: 'Inter', sans-serif; margin: 0; background: var(--bg);}
     .navbar {background: var(--sidebar); padding: 0.9rem 2.2rem; display: flex; align-items: center; gap: 2rem; border-radius: 0 0 var(--radius) var(--radius);}
     .logo {font-size: 1.38rem; font-weight: 700; color: var(--primary); display: flex; align-items: center;}
     .logo::before {content: ''; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); margin-right: 12px; box-shadow: 0 0 0 4px #fff;}
     .nav-links {display: flex; gap: 1.2rem;}
-    .nav-links a {color: #cbd5e1; font-weight: 600; font-size: 1.05rem; text-decoration: none; padding: 7px 15px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 6px;}
-    .nav-links a.active, .nav-links a:hover {background: rgba(37,99,235,0.13); color: #fff;}
-    .hero-home {background: url('https://www.ganoexcel.com/images/aboutus-banner.jpg') center/cover no-repeat; color: #fff; padding: 3rem 1.3rem; text-align: center;}
-    .hero-home h1 {font-size: 2.4rem; font-family: 'Montserrat', sans-serif; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px #000;}
-    .hero-home p {font-size: 1.15rem; max-width: 700px; margin: 0 auto; line-height: 1.6; text-shadow: 0 1px 6px #000;}
-    .content-section {max-width: 1100px; margin: -40px auto 40px auto; background: var(--card-bg); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-neu);}
-    .section-title {font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0; text-align: center;}
-    .image-block {text-align: center; margin: 1rem 0;}
-    .image-block img {max-width: 90%; border-radius: 14px; box-shadow: 0 4px 16px #0002;}
+    .nav-links a {color: #cbd5e1; font-weight: 600; font-size: 1.05rem; text-decoration: none; padding: 7px 15px; border-radius: 12px; display: flex; align-items: center; gap: 6px;}
+    .nav-links a.active, .nav-links a:hover {background: rgba(37,99,235,0.2); color: #fff;}
+
+    /* Hero */
+    .hero-home {
+      background: var(--gradient);
+      color: #fff;
+      padding: 3.5rem 1.3rem;
+      text-align: center;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-home h1 {font-size: 2.6rem; font-family: 'Montserrat', sans-serif; font-weight: 800; margin-bottom: 1rem;}
+    .hero-home p {font-size: 1.2rem; max-width: 720px; margin: 0 auto; line-height: 1.6; opacity: 0.95;}
+
+    /* Content blocks */
+    .content-section {max-width: 1100px; margin: 40px auto; padding: 2rem; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow);}
+    .alt-section {background: #eaf2ff; padding: 3rem 1.5rem; border-radius: var(--radius); margin: 40px auto;}
+    .section-title {font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 1.6rem; font-weight: 700; margin: 1.5rem 0; text-align: center; position: relative;}
+    .section-title::after {content: ""; display: block; width: 60px; height: 4px; background: var(--accent); margin: 8px auto 0 auto; border-radius: 4px;}
+
+    /* Cards */
     .info-grid {display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;}
-    .info-card {background: #fff; border-radius: var(--radius-md); box-shadow: 0 3px 14px #dde5f050; padding: 1.4rem; flex: 1 1 280px; max-width: 320px; text-align: center;}
+    .info-card {background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.6rem; flex: 1 1 280px; max-width: 320px; text-align: center; border-top: 4px solid var(--primary);}
     .info-card i {font-size: 2.4rem; color: var(--primary); margin-bottom: 10px;}
     .info-card h3 {font-size: 1.15rem; font-weight: 700; margin-bottom: 10px;}
+    .info-card p {font-size: 1rem; line-height: 1.45; color: #444;}
+
+    /* Productos */
     .product-grid {display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;}
-    .product-card {background: #fff; border-radius: var(--radius-md); box-shadow: 0 3px 14px #dde5f050; flex: 1 1 250px; max-width: 280px; overflow: hidden;}
+    .product-card {background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); flex: 1 1 250px; max-width: 280px; overflow: hidden; border: 1px solid #e2e8f0;}
     .product-card img {width: 100%; height: 180px; object-fit: cover;}
     .product-card .p-body {padding: 1rem; text-align: center;}
     .product-card h4 {font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;}
-    .cta-btn {display: block; margin: 2rem auto 0 auto; padding: 14px 40px; font-size: 1.15rem; font-weight: 700; color: #fff; background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%); border-radius: 22px; text-align: center; text-decoration: none; max-width: 280px;}
-    footer {text-align: center; padding: 1.2rem; background: #fff; color: #444;}
+    .product-card p {font-size: 0.95rem; color: #555;}
+
+    /* Botón */
+    .cta-btn {display: block; margin: 2rem auto 0 auto; padding: 14px 40px; font-size: 1.15rem; font-weight: 700; color: #fff; background: var(--gradient-alt); border-radius: 22px; text-align: center; text-decoration: none; max-width: 280px; transition: transform .15s;}
+    .cta-btn:hover {transform: scale(1.05);}
+
+    footer {text-align: center; padding: 1.2rem; background: #fff; color: #444; font-size: 0.95rem; border-top: 1px solid #eee;}
   </style>
 </head>
 <body>
@@ -63,13 +85,17 @@
     <p>Una empresa global que combina innovación, salud y oportunidades financieras, presente en más de 60 países con la plantación de Ganoderma más grande del mundo.</p>
   </section>
 
+  <!-- Historia -->
   <div class="content-section">
     <div class="section-title">Nuestra Historia</div>
-    <p>Fundada en 1995 por Leow Soon Seng en Malasia, Gano Excel nació con la visión de cambiar vidas a través del Ganoderma lucidum.</p>
-    <div class="image-block">
-      <img src="https://www.ganoexcel.com/images/ganoderma-farm.jpg" alt="Plantación de Ganoderma">
+    <p style="text-align:center;">Fundada en 1995 por Leow Soon Seng en Malasia, Gano Excel nació con la visión de cambiar vidas a través del Ganoderma lucidum.</p>
+    <div style="text-align:center;margin-top:1rem;">
+      <img src="https://www.ganoexcel.com/images/ganoderma-farm.jpg" alt="Plantación de Ganoderma" style="max-width:90%;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.2);">
     </div>
+  </div>
 
+  <!-- Misión y Visión -->
+  <div class="alt-section">
     <div class="section-title">Misión, Visión y Valores</div>
     <div class="info-grid">
       <div class="info-card">
@@ -88,7 +114,10 @@
         <p>Liderazgo, integridad, innovación, excelencia y compromiso social.</p>
       </div>
     </div>
+  </div>
 
+  <!-- Productos -->
+  <div class="content-section">
     <div class="section-title">Productos Destacados</div>
     <div class="product-grid">
       <div class="product-card">
@@ -113,13 +142,19 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Alcance Global -->
+  <div class="alt-section">
     <div class="section-title">Alcance Global</div>
-    <div class="image-block">
-      <img src="https://www.ganoexcel.com/images/global-map.jpg" alt="Mapa global Gano Excel">
+    <div style="text-align:center;">
+      <img src="https://www.ganoexcel.com/images/global-map.jpg" alt="Mapa global Gano Excel" style="max-width:90%;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,0.2);">
     </div>
-    <p style="text-align:center;">Presencia en más de 60 países, llevando salud y oportunidades a millones de familias.</p>
+    <p style="text-align:center; margin-top:1rem;">Presencia en más de 60 países, llevando salud y oportunidades a millones de familias.</p>
+  </div>
 
+  <!-- CTA -->
+  <div class="content-section" style="text-align:center;">
     <a href="Index.html" class="cta-btn"><i class="lucide lucide-edit"></i> Quiero unirme a la Red</a>
   </div>
 
@@ -129,5 +164,6 @@
   <script>window.addEventListener("DOMContentLoaded",()=>{lucide.createIcons();});</script>
 </body>
 </html>
+
 
 
