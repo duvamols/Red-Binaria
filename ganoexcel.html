@@ -4,65 +4,257 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sobre Gano Excel | Red de Acción Masiva</title>
-  <!-- Mantén tus font y estilo aquí -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.349.0/dist/lucide.css" />
   <style>
-    /* Reutiliza aquí tu CSS ya existente (tal cual lo tienes) */
+    /* Reutilizamos exactamente los estilos de tu MasterPage */
+    :root {
+      --primary: #2563eb;
+      --accent: #22c55e;
+      --sidebar: #0f172a;
+      --sidebar-active: #2563eb;
+      --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
+      --card-bg: #f8faff;
+      --glass: rgba(255,255,255,0.60);
+      --surface: #fff;
+      --shadow-soft: 0 8px 24px 0 #dde8fc, 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
+      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
+      --radius: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --transition: 0.16s cubic-bezier(.6,.2,.29,.97);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      margin: 0;
+      color: #23272f;
+    }
+    .navbar {
+      background: var(--sidebar);
+      padding: 0.9rem 2.2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-radius: 0 0 var(--radius) var(--radius);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 1.38rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo::before {
+      content: '';
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      margin-right: 12px;
+      box-shadow: 0 0 0 4px #fff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+    }
+    .nav-links a {
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      padding: 7px 15px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-links a.active, .nav-links a:hover {
+      background: rgba(37,99,235,0.13);
+      color: #fff;
+    }
+    .hero-home {
+      background: linear-gradient(135deg, var(--primary) 0%, #0ea5e9 100%);
+      color: #fff;
+      padding: 3rem 1.3rem;
+      text-align: center;
+    }
+    .hero-home h1 {
+      font-size: 2.3rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .hero-home p {
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+    .content-section {
+      max-width: 1100px;
+      margin: -40px auto 40px auto;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-neu);
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 1.5rem 0 1rem 0;
+      text-align: center;
+    }
+    .info-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      justify-content: center;
+    }
+    .info-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      box-shadow: 0 3px 14px #dde5f050;
+      padding: 1.4rem;
+      flex: 1 1 280px;
+      max-width: 320px;
+      text-align: center;
+      border: 1.2px solid #e5ecf9;
+    }
+    .info-card i {
+      font-size: 2.4rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .info-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .info-card p {
+      font-size: 1rem;
+      line-height: 1.45;
+      color: #444;
+    }
+    ul.check-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.check-list li {
+      margin: 8px 0;
+      padding-left: 28px;
+      position: relative;
+      font-size: 1rem;
+      color: #333;
+    }
+    ul.check-list li::before {
+      content: "✔";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    .cta-btn {
+      display: block;
+      margin: 2rem auto 0 auto;
+      padding: 14px 40px;
+      font-size: 1.15rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%);
+      border: none;
+      border-radius: 22px;
+      box-shadow: 0 4px 18px #2563eb55;
+      text-align: center;
+      text-decoration: none;
+      max-width: 280px;
+      transition: all .16s;
+    }
+    .cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px #2563eb44;
+    }
+    footer {
+      text-align: center;
+      padding: 1.2rem;
+      background: #fff;
+      color: #444;
+      font-size: 0.95rem;
+      border-top: 1px solid #eee;
+    }
   </style>
 </head>
 <body>
+  <!-- NAV -->
   <nav class="navbar">
     <div class="logo">Red de Acción Masiva</div>
     <div class="nav-links">
-      <a href="MasterPage.html"><i class="lucide lucide-home"></i> <span style="margin-left:6px">Inicio</span></a>
-      <a href="Index.html"><i class="lucide lucide-edit"></i> <span style="margin-left:6px">Preinscripción</span></a>
-      <a href="arbolRed.html"><i class="lucide lucide-network"></i> <span style="margin-left:6px">Ver mi Red</span></a>
-      <a href="ganoexcel.html" class="active"><i class="lucide lucide-info"></i> <span style="margin-left:6px">Sobre Gano Excel</span></a>
+      <a href="MasterPage.html"><i class="lucide lucide-home"></i> Inicio</a>
+      <a href="Index.html"><i class="lucide lucide-edit"></i> Preinscripción</a>
+      <a href="arbolRed.html"><i class="lucide lucide-network"></i> Ver mi Red</a>
+      <a href="ganoexcel.html" class="active"><i class="lucide lucide-info"></i> Sobre Gano Excel</a>
     </div>
   </nav>
 
+  <!-- HERO -->
   <section class="hero-home">
-    <h1>Sobre Gano Excel</h1>
-    <p>Conoce más sobre la empresa que potencia nuestra red y origen de nuestro propósito.</p>
+    <h1>Gano Excel Colombia</h1>
+    <p>Una empresa global que combina innovación, salud y oportunidades financieras, presente en más de 60 países con la plantación de Ganoderma más grande del mundo.</p>
   </section>
 
   <div class="content-section">
     <div class="section-title">Nuestra Historia</div>
-    <p>
-      Gano Excel fue fundada en 1995 por el Sr. Leow Soon Seng, con la visión de cambiar vidas promoviendo salud, riqueza y felicidad a través del Ganoderma lucidum. Nació en Malasia y se ha convertido en un líder global en investigación, cultivo, producción y distribución de productos de inmunología basados en este hongo :contentReference[oaicite:4]{index=4}.
-    </p>
+    <p>Fundada en 1995 por Leow Soon Seng en Malasia, Gano Excel nació con la visión de cambiar vidas a través del Ganoderma lucidum, ofreciendo salud, riqueza y felicidad a millones de familias en el mundo.</p>
 
-    <div class="section-title">Misión y Visión</div>
-    <p>
-      <strong>Misión:</strong> Elevar la calidad de vida de las familias en el mundo mediante productos innovadores de Ganoderma lucidum, generando oportunidades financieras y desarrollo personal :contentReference[oaicite:5]{index=5}.<br>
-      <strong>Visión:</strong> Ser líderes globales en innovación, cultivo y distribución de productos de Ganoderma de calidad superior, promoviendo bienestar y prosperidad :contentReference[oaicite:6]{index=6}.
-    </p>
+    <div class="section-title">Misión, Visión y Valores</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <i class="lucide lucide-flag"></i>
+        <h3>Misión</h3>
+        <p>Elevar la calidad de vida mediante productos de Ganoderma de alta calidad y un modelo de negocio que empodera a las familias.</p>
+      </div>
+      <div class="info-card">
+        <i class="lucide lucide-eye"></i>
+        <h3>Visión</h3>
+        <p>Ser líderes mundiales en innovación, cultivo y distribución de productos de Ganoderma, promoviendo bienestar y prosperidad.</p>
+      </div>
+      <div class="info-card">
+        <i class="lucide lucide-star"></i>
+        <h3>Valores</h3>
+        <p>Liderazgo, integridad, innovación, excelencia, calidad, compromiso y unidad como base de nuestra cultura empresarial.</p>
+      </div>
+    </div>
 
     <div class="section-title">Alcance Global</div>
-    <ul>
-      <li>Presencia en más de 60 países en todo el mundo :contentReference[oaicite:7]{index=7}.</li>
-      <li>Cuenta con la plantación de Ganoderma más grande del mundo, asegurando calidad desde cultivo hasta el consumidor :contentReference[oaicite:8]{index=8}.</li>
+    <ul class="check-list">
+      <li>Presencia en más de 60 países.</li>
+      <li>Plantación de Ganoderma más grande del mundo.</li>
+      <li>Sistema de distribución que combina productos, educación y crecimiento financiero.</li>
+      <li>Compromiso con la ética y la responsabilidad social en cada mercado.</li>
     </ul>
 
-    <div class="section-title">Compromiso y Valores</div>
-    <p>
-      Se destaca el compromiso con prácticas éticas y responsabilidad social, promoviendo desarrollo económico, educativo y social en las comunidades donde opera :contentReference[oaicite:9]{index=9}.
-    </p>
-    <p>
-      Valores fundamentales como liderazgo, integridad, innovación, excelencia, calidad, compromiso y unidad guían su modelo de negocio :contentReference[oaicite:10]{index=10}.
-    </p>
+    <div class="section-title">Oportunidad de Negocio</div>
+    <p>Gano Excel ofrece la posibilidad de iniciar un negocio independiente como distribuidor, generando ingresos mientras ayudas a otros a transformar su vida con productos confiables y un modelo probado de crecimiento en equipo.</p>
 
-    <div class="section-title">¿Cómo Funciona?</div>
-    <p>
-      El modelo de negocio permite convertirse en distribuidor independiente, acceder a productos y generar ingresos ayudando a otros a comenzar su negocio Gano Excel :contentReference[oaicite:11]{index=11}.
-    </p>
+    <a href="Index.html" class="cta-btn"><i class="lucide lucide-edit"></i> Quiero unirme a la Red</a>
   </div>
 
-  <footer style="margin-top: 2rem; text-align: center;">
+  <footer>
     &copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
-  <script> window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); }); </script>
+  <script>window.addEventListener("DOMContentLoaded",()=>{lucide.createIcons();});</script>
 </body>
 </html>
+
