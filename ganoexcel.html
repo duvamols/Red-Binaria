@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.349.0/dist/lucide.css" />
   <style>
-    /* Reutilizamos exactamente los estilos de tu MasterPage */
     :root {
       --primary: #2563eb;
       --accent: #22c55e;
@@ -15,183 +14,35 @@
       --sidebar-active: #2563eb;
       --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
       --card-bg: #f8faff;
-      --glass: rgba(255,255,255,0.60);
-      --surface: #fff;
-      --shadow-soft: 0 8px 24px 0 #dde8fc, 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
-      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
       --radius: 28px;
       --radius-md: 20px;
-      --radius-sm: 14px;
-      --transition: 0.16s cubic-bezier(.6,.2,.29,.97);
+      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
     }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      margin: 0;
-      color: #23272f;
-    }
-    .navbar {
-      background: var(--sidebar);
-      padding: 0.9rem 2.2rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      border-radius: 0 0 var(--radius) var(--radius);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .logo {
-      font-size: 1.38rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-    }
-    .logo::before {
-      content: '';
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      margin-right: 12px;
-      box-shadow: 0 0 0 4px #fff;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.2rem;
-    }
-    .nav-links a {
-      color: #cbd5e1;
-      font-weight: 600;
-      font-size: 1.05rem;
-      text-decoration: none;
-      padding: 7px 15px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background var(--transition), color var(--transition);
-    }
-    .nav-links a.active, .nav-links a:hover {
-      background: rgba(37,99,235,0.13);
-      color: #fff;
-    }
-    .hero-home {
-      background: linear-gradient(135deg, var(--primary) 0%, #0ea5e9 100%);
-      color: #fff;
-      padding: 3rem 1.3rem;
-      text-align: center;
-    }
-    .hero-home h1 {
-      font-size: 2.3rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-    .hero-home p {
-      font-size: 1.15rem;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-      opacity: 0.95;
-    }
-    .content-section {
-      max-width: 1100px;
-      margin: -40px auto 40px auto;
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-neu);
-    }
-    .section-title {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--primary);
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 1.5rem 0 1rem 0;
-      text-align: center;
-    }
-    .info-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-      justify-content: center;
-    }
-    .info-card {
-      background: #fff;
-      border-radius: var(--radius-md);
-      box-shadow: 0 3px 14px #dde5f050;
-      padding: 1.4rem;
-      flex: 1 1 280px;
-      max-width: 320px;
-      text-align: center;
-      border: 1.2px solid #e5ecf9;
-    }
-    .info-card i {
-      font-size: 2.4rem;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-    .info-card h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .info-card p {
-      font-size: 1rem;
-      line-height: 1.45;
-      color: #444;
-    }
-    ul.check-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    ul.check-list li {
-      margin: 8px 0;
-      padding-left: 28px;
-      position: relative;
-      font-size: 1rem;
-      color: #333;
-    }
-    ul.check-list li::before {
-      content: "✔";
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    }
-    .cta-btn {
-      display: block;
-      margin: 2rem auto 0 auto;
-      padding: 14px 40px;
-      font-size: 1.15rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%);
-      border: none;
-      border-radius: 22px;
-      box-shadow: 0 4px 18px #2563eb55;
-      text-align: center;
-      text-decoration: none;
-      max-width: 280px;
-      transition: all .16s;
-    }
-    .cta-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 28px #2563eb44;
-    }
-    footer {
-      text-align: center;
-      padding: 1.2rem;
-      background: #fff;
-      color: #444;
-      font-size: 0.95rem;
-      border-top: 1px solid #eee;
-    }
+    body {font-family: 'Inter', sans-serif; margin: 0; background: var(--bg);}
+    .navbar {background: var(--sidebar); padding: 0.9rem 2.2rem; display: flex; align-items: center; gap: 2rem; border-radius: 0 0 var(--radius) var(--radius);}
+    .logo {font-size: 1.38rem; font-weight: 700; color: var(--primary); display: flex; align-items: center;}
+    .logo::before {content: ''; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); margin-right: 12px; box-shadow: 0 0 0 4px #fff;}
+    .nav-links {display: flex; gap: 1.2rem;}
+    .nav-links a {color: #cbd5e1; font-weight: 600; font-size: 1.05rem; text-decoration: none; padding: 7px 15px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 6px;}
+    .nav-links a.active, .nav-links a:hover {background: rgba(37,99,235,0.13); color: #fff;}
+    .hero-home {background: url('https://www.ganoexcel.com/images/aboutus-banner.jpg') center/cover no-repeat; color: #fff; padding: 3rem 1.3rem; text-align: center;}
+    .hero-home h1 {font-size: 2.4rem; font-family: 'Montserrat', sans-serif; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 2px 10px #000;}
+    .hero-home p {font-size: 1.15rem; max-width: 700px; margin: 0 auto; line-height: 1.6; text-shadow: 0 1px 6px #000;}
+    .content-section {max-width: 1100px; margin: -40px auto 40px auto; background: var(--card-bg); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-neu);}
+    .section-title {font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0; text-align: center;}
+    .image-block {text-align: center; margin: 1rem 0;}
+    .image-block img {max-width: 90%; border-radius: 14px; box-shadow: 0 4px 16px #0002;}
+    .info-grid {display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;}
+    .info-card {background: #fff; border-radius: var(--radius-md); box-shadow: 0 3px 14px #dde5f050; padding: 1.4rem; flex: 1 1 280px; max-width: 320px; text-align: center;}
+    .info-card i {font-size: 2.4rem; color: var(--primary); margin-bottom: 10px;}
+    .info-card h3 {font-size: 1.15rem; font-weight: 700; margin-bottom: 10px;}
+    .product-grid {display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;}
+    .product-card {background: #fff; border-radius: var(--radius-md); box-shadow: 0 3px 14px #dde5f050; flex: 1 1 250px; max-width: 280px; overflow: hidden;}
+    .product-card img {width: 100%; height: 180px; object-fit: cover;}
+    .product-card .p-body {padding: 1rem; text-align: center;}
+    .product-card h4 {font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;}
+    .cta-btn {display: block; margin: 2rem auto 0 auto; padding: 14px 40px; font-size: 1.15rem; font-weight: 700; color: #fff; background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%); border-radius: 22px; text-align: center; text-decoration: none; max-width: 280px;}
+    footer {text-align: center; padding: 1.2rem; background: #fff; color: #444;}
   </style>
 </head>
 <body>
@@ -214,14 +65,17 @@
 
   <div class="content-section">
     <div class="section-title">Nuestra Historia</div>
-    <p>Fundada en 1995 por Leow Soon Seng en Malasia, Gano Excel nació con la visión de cambiar vidas a través del Ganoderma lucidum, ofreciendo salud, riqueza y felicidad a millones de familias en el mundo.</p>
+    <p>Fundada en 1995 por Leow Soon Seng en Malasia, Gano Excel nació con la visión de cambiar vidas a través del Ganoderma lucidum.</p>
+    <div class="image-block">
+      <img src="https://www.ganoexcel.com/images/ganoderma-farm.jpg" alt="Plantación de Ganoderma">
+    </div>
 
     <div class="section-title">Misión, Visión y Valores</div>
     <div class="info-grid">
       <div class="info-card">
         <i class="lucide lucide-flag"></i>
         <h3>Misión</h3>
-        <p>Elevar la calidad de vida mediante productos de Ganoderma de alta calidad y un modelo de negocio que empodera a las familias.</p>
+        <p>Elevar la calidad de vida mediante productos de Ganoderma de alta calidad y un modelo de negocio que empodera familias.</p>
       </div>
       <div class="info-card">
         <i class="lucide lucide-eye"></i>
@@ -231,30 +85,49 @@
       <div class="info-card">
         <i class="lucide lucide-star"></i>
         <h3>Valores</h3>
-        <p>Liderazgo, integridad, innovación, excelencia, calidad, compromiso y unidad como base de nuestra cultura empresarial.</p>
+        <p>Liderazgo, integridad, innovación, excelencia y compromiso social.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Productos Destacados</div>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://colombia.ganoexcel.com/wp-content/uploads/2023/09/3-in-1.png" alt="Café 3 en 1">
+        <div class="p-body">
+          <h4>Café 3 en 1</h4>
+          <p>La mezcla perfecta de café, crema y Ganoderma para energía y bienestar diario.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://colombia.ganoexcel.com/wp-content/uploads/2023/09/cafe-clasico.png" alt="Café Clásico">
+        <div class="p-body">
+          <h4>Café Clásico</h4>
+          <p>Sabor intenso y suave con el poder del Ganoderma, ideal para los amantes del café puro.</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="https://colombia.ganoexcel.com/wp-content/uploads/2023/09/ganocafe-mocha.png" alt="Café Mocha">
+        <div class="p-body">
+          <h4>Gano Mocha</h4>
+          <p>Delicioso chocolate con café y Ganoderma, un placer saludable para cada día.</p>
+        </div>
       </div>
     </div>
 
     <div class="section-title">Alcance Global</div>
-    <ul class="check-list">
-      <li>Presencia en más de 60 países.</li>
-      <li>Plantación de Ganoderma más grande del mundo.</li>
-      <li>Sistema de distribución que combina productos, educación y crecimiento financiero.</li>
-      <li>Compromiso con la ética y la responsabilidad social en cada mercado.</li>
-    </ul>
-
-    <div class="section-title">Oportunidad de Negocio</div>
-    <p>Gano Excel ofrece la posibilidad de iniciar un negocio independiente como distribuidor, generando ingresos mientras ayudas a otros a transformar su vida con productos confiables y un modelo probado de crecimiento en equipo.</p>
+    <div class="image-block">
+      <img src="https://www.ganoexcel.com/images/global-map.jpg" alt="Mapa global Gano Excel">
+    </div>
+    <p style="text-align:center;">Presencia en más de 60 países, llevando salud y oportunidades a millones de familias.</p>
 
     <a href="Index.html" class="cta-btn"><i class="lucide lucide-edit"></i> Quiero unirme a la Red</a>
   </div>
 
-  <footer>
-    &copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀
-  </footer>
+  <footer>&copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
   <script>window.addEventListener("DOMContentLoaded",()=>{lucide.createIcons();});</script>
 </body>
 </html>
+
 
