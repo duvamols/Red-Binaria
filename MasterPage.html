@@ -360,6 +360,104 @@
   font-size: 1.01rem;
   line-height: 1.36;
 }
+    /* === SOBRE MÍ / MENTOR === */
+.about-mentor {
+  width: 100%;
+  max-width: 980px;
+  margin: 26px auto 0 auto;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-neu);
+  border: 1.6px solid #eef3fb;
+  padding: 1.8rem 1.6rem;
+}
+
+.about-title {
+  color: var(--primary);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 16px 0;
+  letter-spacing: .2px;
+}
+
+.about-wrap {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.about-photo {
+  width: 230px;
+  height: 230px;
+  border-radius: 22px;
+  object-fit: cover;
+  box-shadow: 0 6px 18px #2563eb25, 0 0 0 6px #f5fbff;
+  border: 1.4px solid #e6efff;
+}
+
+.about-card {
+  flex: 1 1 360px;
+  max-width: 560px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1.3px solid #ecf0fa;
+  box-shadow: 0 6px 18px #dde8fc55, 0 1.5px 0 #fff inset;
+  padding: 1.2rem 1.3rem 1.1rem 1.3rem;
+}
+
+.about-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0 0 6px 0;
+}
+
+.about-role {
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 8px;
+}
+
+.about-text {
+  color: #334155;
+  font-size: 1.03rem;
+  line-height: 1.55;
+}
+
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 18px;
+  font-weight: 800;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%);
+  box-shadow: 0 4px 14px #2563eb33;
+  transition: transform .12s, box-shadow .16s;
+}
+.about-cta:hover { transform: translateY(-1.5px) scale(1.02); box-shadow: 0 8px 22px #2563eb29; }
+
+/* etiqueta mini con borde para credenciales */
+.badges {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 2px 0;
+}
+.badge {
+  font-size: .88rem; font-weight: 700; color: #2563eb;
+  background: #f0f6ff;
+  border: 1px solid #cfe2ff;
+  padding: 6px 10px; border-radius: 999px;
+}
+@media (max-width: 700px) {
+  .about-photo { width: 210px; height: 210px; border-radius: 18px; }
+}
   </style>
 </head>
 <body>
@@ -465,6 +563,43 @@
     </div>
   </div>
 </div>
+    <!-- SOBRE MÍ / MENTOR -->
+<section class="about-mentor">
+  <div class="about-title">Conoce a tu Mentor</div>
+
+  <div class="about-wrap">
+    <!-- FOTO (súbela a img/duvan.jpg o cambia el src) -->
+    <img src="img/duvan.jpg" alt="Duvan Molina" class="about-photo">
+
+    <!-- TARJETA DE PERFIL -->
+    <div class="about-card">
+      <div class="about-name">Soy Duvan Molina</div>
+      <div class="about-role">Docente • Mentor • Networker</div>
+
+      <div class="badges">
+        <div class="badge"><i class="lucide lucide-graduation-cap"></i> Formación y Mentoría</div>
+        <div class="badge"><i class="lucide lucide-users"></i> Red en Crecimiento</div>
+        <div class="badge"><i class="lucide lucide-camera"></i> Contenido en TikTok</div>
+      </div>
+
+      <p class="about-text">
+        Decidí no vivir con las limitaciones del tiempo y el dinero. Por eso creé un método que
+        acompaña a personas <b>desde cero</b> a construir tranquilidad económica con una red que
+        educa, apoya y trabaja en bloque. Si tienes disciplina y ganas de crecer, te llevo paso a paso.
+      </p>
+      <p class="about-text" style="margin-top:6px;">
+        He guiado a decenas de personas a lanzar sus primeros resultados sin experiencia previa,
+        combinando <b>educación práctica</b>, <b>acciones diarias</b> y <b>acompañamiento real</b>.
+      </p>
+
+      <a class="about-cta"
+         href="https://wa.me/3102586718?text=Hola%20Duvan%2C%20quiero%20conocer%20tu%20m%C3%A9todo%20y%20sumarme%20a%20la%20Red"
+         target="_blank">
+        <i class="lucide lucide-message-circle"></i> Hablar con Duvan
+      </a>
+    </div>
+  </div>
+</section>
     <!-- CTA FINAL -->
     <a href="Index.html" class="cta-btn" style="margin-top: 23px;"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
   </div>
@@ -485,6 +620,7 @@
   </script>
 </body>
 </html>
+
 
 
 
