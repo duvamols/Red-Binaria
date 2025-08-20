@@ -11,9 +11,9 @@
       --primary:#2563eb;
       --primary-dark:#1d4ed8;
       --accent:#22c55e;
-      --sidebar: #0f172a;
-      --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
-      --card-bg: #f8faff;
+      --sidebar:#0f172a;
+      --bg:linear-gradient(135deg,#ecf0fa 0%,#f5fbff 100%);
+      --card-bg:#f8faff;
       --surface:#fff;
       --text:#0f172a;
       --text-light:#64748b;
@@ -21,207 +21,86 @@
       --radius:28px;
       --radius-md:20px;
       --radius-sm:14px;
-      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
-      --shadow-soft: 0 8px 24px 0 #dde8fc, 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
+      --shadow-neu:8px 8px 16px #dde5f0,-8px -8px 18px #fff;
+      --shadow-soft:0 8px 24px 0 #dde8fc,0 1.5px 0 #fff inset,0 0.5px 2.5px #b9c6d8 inset;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     html,body{height:100%;scroll-behavior:smooth;}
     body{
-      font-family:'Inter', Arial, sans-serif;
+      font-family:'Inter',Arial,sans-serif;
       color:var(--text);
       background:var(--bg);
       min-height:100vh;
-      display:flex;
-      flex-direction:column;
+      display:flex;flex-direction:column;
     }
     /* NAVBAR */
     .navbar{
-      background: var(--sidebar);
-      box-shadow: var(--shadow-soft);
-      padding: 0.9rem 2.2rem 0.9rem 2.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      border-radius: 0 0 var(--radius) var(--radius);
+      background:var(--sidebar);
+      box-shadow:var(--shadow-soft);
+      padding:0.9rem 2.2rem;
+      display:flex;align-items:center;justify-content:flex-start;
+      position:sticky;top:0;z-index:30;border-radius:0 0 var(--radius) var(--radius);
     }
     .brand{
-      font-family:'Montserrat', sans-serif;
-      font-size:1.38rem;
-      font-weight:700;
-      color:var(--primary);
-      display:flex; align-items:center; gap:13px;
-      text-decoration:none;
+      font-family:'Montserrat',sans-serif;font-size:1.38rem;font-weight:700;color:var(--primary);
+      display:flex;align-items:center;gap:13px;text-decoration:none;
     }
     .brand::before{
-      content:"";
-      width:32px;height:32px;border-radius:50%;
+      content:"";width:32px;height:32px;border-radius:50%;
       background:linear-gradient(135deg,var(--primary),var(--accent));
-      display:inline-block;
-      box-shadow: 0 4px 18px #dde8fc, 0 0 0 4px #fff;
+      display:inline-block;box-shadow:0 4px 18px #dde8fc,0 0 0 4px #fff;
     }
     /* HERO */
     .hero{
       width:100%;
-      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 60%, #0ea5e9 120%);
-      color:#fff;
-      padding:3.5rem 1.2rem 4.2rem 1.2rem;
-      text-align:center;
+      background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 60%,#0ea5e9 120%);
+      color:#fff;padding:3.5rem 1.2rem 4.2rem;text-align:center;
     }
     .hero h1{
-      font-family:'Montserrat', sans-serif;
-      font-size:2.2rem;
-      font-weight:700;
-      margin-bottom:.6rem;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 10px #1d4ed833;
+      font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:.6rem;
+      letter-spacing:1px;text-shadow:0 2px 10px #1d4ed833;
     }
-    .hero p{
-      font-size:1.09rem;
-      opacity:.93;
-      max-width:680px;
-      margin:0 auto;
-      font-weight: 500;
-    }
-    /* CONTENEDOR DEL FORM */
-    .wrapper{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      padding:0 1.2vw;
-      transform:translateY(-60px);
-      margin-bottom:-60px;
-    }
+    .hero p{font-size:1.09rem;opacity:.93;max-width:680px;margin:0 auto;font-weight:500;}
+    /* FORM WRAPPER */
+    .wrapper{flex:1;display:flex;justify-content:center;padding:0 1.2vw;transform:translateY(-60px);margin-bottom:-60px;}
     .card{
-      width:100%;
-      max-width:470px;
-      background:var(--card-bg);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow-neu);
-      padding:2.4rem 2rem 2.6rem 2rem;
-      border: 1.8px solid #eef3fb;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: box-shadow .14s;
-      backdrop-filter: blur(7px);
+      width:100%;max-width:470px;background:var(--card-bg);border-radius:var(--radius);
+      box-shadow:var(--shadow-neu);padding:2.4rem 2rem 2.6rem;border:1.8px solid #eef3fb;
+      display:flex;flex-direction:column;align-items:center;transition:box-shadow .14s;backdrop-filter:blur(7px);
     }
-    .card h2{
-      font-family:'Montserrat', sans-serif;
-      color:var(--primary);
-      font-size:1.6rem;
-      margin-bottom:1.4rem;
-      text-align:center;
-      font-weight: 700;
-      letter-spacing: .2px;
+    .card h2{font-family:'Montserrat',sans-serif;color:var(--primary);font-size:1.6rem;margin-bottom:1.4rem;text-align:center;font-weight:700;letter-spacing:.2px;}
+    label{font-size:.97rem;font-weight:600;color:var(--text);margin-bottom:4px;margin-top:5px;display:block;letter-spacing:.01em;}
+    input[type="text"],input[type="tel"],select{
+      width:100%;padding:11px 12px;border:1.6px solid #cbd5e1;border-radius:12px;font-size:1.02rem;background:#f8fafc;
+      transition:border .2s,box-shadow .2s;margin-bottom:17px;outline:none;font-family:'Inter',Arial,sans-serif;
     }
-    label{
-      font-size:.97rem;
-      font-weight:600;
-      color:var(--text);
-      margin-bottom:4px;
-      margin-top:5px;
-      display:block;
-      letter-spacing: .01em;
-    }
-    input[type="text"],
-    input[type="tel"],
-    select{
-      width:100%;
-      padding:11px 12px;
-      border:1.6px solid #cbd5e1;
-      border-radius:12px;
-      font-size:1.02rem;
-      background:#f8fafc;
-      transition:border .2s, box-shadow .2s;
-      margin-bottom:17px;
-      outline:none;
-      font-family:'Inter', Arial, sans-serif;
-    }
-    input:focus,select:focus{
-      border-color:var(--primary-dark);
-      box-shadow:0 0 0 2px #2563eb22;
-      background:#fff;
-    }
-    .hint{font-size:.88rem;color:#64748b;margin:-10px 0 12px 0;}
+    input:focus,select:focus{border-color:var(--primary-dark);box-shadow:0 0 0 2px #2563eb22;background:#fff;}
+    .hint{font-size:.88rem;color:#64748b;margin:-10px 0 12px;}
     button[type="submit"]{
-      width:100%;
-      padding:13px 0;
-      border:none;
-      border-radius:14px;
-      background:linear-gradient(90deg,var(--primary) 10%, var(--accent) 140%);
-      color:#fff;
-      font-size:1.09rem;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 4px 16px #22c55e44;
-      transition:transform .12s, box-shadow .15s, opacity .15s;
-      margin-top:5px;
-      letter-spacing:.2px;
+      width:100%;padding:13px 0;border:none;border-radius:14px;background:linear-gradient(90deg,var(--primary) 10%,var(--accent) 140%);
+      color:#fff;font-size:1.09rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px #22c55e44;
+      transition:transform .12s,box-shadow .15s,opacity .15s;margin-top:5px;letter-spacing:.2px;
     }
-    button[type="submit"]:hover{
-      box-shadow:0 6px 24px #22c55e45;
-      transform:translateY(-1px) scale(1.011);
-    }
-    button[type="submit"]:active{
-      transform:scale(.97);
-      box-shadow:0 3px 12px #22c55e33;
-    }
-    button[disabled]{opacity:.65; cursor:not-allowed;}
-    #msgError{
-      color:var(--error);
-      margin-bottom:10px;
-      font-size:.98rem;
-      text-align:center;
-      min-height:18px;
-      font-weight: 600;
-    }
+    button[type="submit"]:hover{box-shadow:0 6px 24px #22c55e45;transform:translateY(-1px) scale(1.011);}
+    button[type="submit"]:active{transform:scale(.97);box-shadow:0 3px 12px #22c55e33;}
+    button[disabled]{opacity:.65;cursor:not-allowed;}
+    #msgError{color:var(--error);margin-bottom:10px;font-size:.98rem;text-align:center;min-height:18px;font-weight:600;}
     .muted{color:#64748b;font-size:.92rem;text-align:center;margin-top:6px;}
     /* ÉXITO */
-    #codigoGenerado{
-      display:none;
-      margin-top:1.6rem;
-      text-align:center;
-    }
-    #codigoGenerado h3{
-      color:var(--primary);
-      margin-bottom:.5rem;
-      font-size:1.35rem;
-    }
-    #codigo{
-      font-size:2.1rem;
-      font-weight:700;
-      color:var(--accent);
-      margin-top:.7rem;
-      letter-spacing:1px;
-    }
-    .ok-icon{
-      font-size:2.3rem;
-      color:var(--accent);
-      margin-bottom:.6rem;
-    }
+    #codigoGenerado{display:none;margin-top:1.6rem;text-align:center;}
+    #codigoGenerado h3{color:var(--primary);margin-bottom:.5rem;font-size:1.35rem;}
+    #codigo{font-size:2.1rem;font-weight:700;color:var(--accent);margin-top:.7rem;letter-spacing:1px;}
+    .ok-icon{font-size:2.3rem;color:var(--accent);margin-bottom:.6rem;}
     footer{
-      width:100%;
-      background:var(--card-bg);
-      color:#94a3b8;
-      text-align:center;
-      font-size:1.04rem;
-      padding:18px 0 14px 0;
-      letter-spacing: 0.2px;
-      border-top: 1.5px solid #e6ecf5;
-      box-shadow: 0 -4px 20px #dde8fc2c;
-      border-radius: 22px 22px 0 0;
-      z-index: 100;
-      margin-top:40px;
+      width:100%;background:var(--card-bg);color:#94a3b8;text-align:center;font-size:1.04rem;
+      padding:18px 0 14px;letter-spacing:.2px;border-top:1.5px solid #e6ecf5;box-shadow:0 -4px 20px #dde8fc2c;border-radius:22px 22px 0 0;z-index:100;margin-top:40px;
     }
-    footer a{color:var(--primary); text-decoration:none;}
+    footer a{color:var(--primary);text-decoration:none;}
     @media (max-width:600px){
       .hero h1{font-size:1.7rem;}
-      .card{padding:1.3rem 0.8rem 1.7rem 0.8rem;}
+      .card{padding:1.3rem .8rem 1.7rem;}
       .brand{font-size:1.04rem;}
-      .navbar{padding:1.1rem 1vw 1.1rem 1vw;}
+      .navbar{padding:1.1rem 1vw;}
     }
   </style>
 </head>
@@ -230,19 +109,23 @@
   <header class="navbar">
     <a class="brand" href="#">Red de Acción Masiva</a>
   </header>
+
   <!-- HERO -->
   <section class="hero">
     <h1>Preinscripción a la Red</h1>
     <p>Da el primer paso. Regístrate con tus datos y el código de tu patrocinador para reservar tu lugar.</p>
   </section>
+
   <!-- FORM -->
   <main class="wrapper">
     <div class="card" id="formCard">
       <h2>Formulario de Preinscripción</h2>
       <div id="msgError"></div>
+
       <form id="preForm" autocomplete="off">
         <label for="nombre">Nombre completo</label>
         <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+
         <label for="telefono">Teléfono (WhatsApp)</label>
         <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{7,15}" placeholder="Ej: 3121234567">
         <div class="hint">Usa solo números, sin espacios ni signos.</div>
@@ -254,26 +137,11 @@
         <label for="pais">País</label>
         <select id="pais" name="pais" required>
           <option value="">Selecciona tu país</option>
-          <option>Argentina</option>
-          <option>Bolivia</option>
-          <option>Brasil</option>
-          <option>Chile</option>
-          <option>Colombia</option>
-          <option>Costa Rica</option>
-          <option>Ecuador</option>
-          <option>El Salvador</option>
-          <option>Estados Unidos</option>
-          <option>Guatemala</option>
-          <option>Honduras</option>
-          <option>México</option>
-          <option>Nicaragua</option>
-          <option>Panamá</option>
-          <option>Paraguay</option>
-          <option>Perú</option>
-          <option>Puerto Rico</option>
-          <option>República Dominicana</option>
-          <option>Uruguay</option>
-          <option>Venezuela</option>
+          <option>Argentina</option><option>Bolivia</option><option>Brasil</option><option>Chile</option>
+          <option>Colombia</option><option>Costa Rica</option><option>Ecuador</option><option>El Salvador</option>
+          <option>Estados Unidos</option><option>Guatemala</option><option>Honduras</option><option>México</option>
+          <option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option>
+          <option>Puerto Rico</option><option>República Dominicana</option><option>Uruguay</option><option>Venezuela</option>
         </select>
 
         <label for="paquete">¿Con qué paquete vas a hacer la inscripción?</label>
@@ -296,6 +164,7 @@
       </div>
     </div>
   </main>
+
   <footer>
     &copy; 2025 Red de Acción Masiva. Todos los derechos reservados.
   </footer>
@@ -304,139 +173,106 @@
   <script>
     window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
 
-    // 👉 Ajusta esta URL a TU Apps Script publicado:
+    // ⬅️ Reemplaza por tu URL /exec más reciente (Web App publicado como "Anyone")
     const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdhLfZxyzLJRsNaQHo4HAL0S5EqY3iyIEBA2LM2Y4__t6usmbw9jqvfQMScADjysk/exec";
 
     let enviando = false;
 
-    function normalizarNombre(str){
-      return str
-        .toLowerCase()
-        .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // quita acentos
-        .replace(/\s+/g," ") // colapsa espacios
-        .trim();
-    }
-    function limpiarTelefono(str){
-      return (str||"").replace(/\D/g,"").trim(); // solo dígitos
-    }
-    function normalizarPatrocinador(str){
-      return (str||"").toUpperCase().trim();
-    }
+    const $ = id => document.getElementById(id);
+    function normalizarNombre(s){ return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim(); }
+    function limpiarTelefono(s){ return (s||"").replace(/\D/g,"").trim(); }
+    function normalizarPatrocinador(s){ return (s||"").toUpperCase().trim(); }
+    function mostrarError(msg){ $("msgError").textContent = msg; window.scrollTo({top:0,behavior:'smooth'}); }
 
+    // Valida en servidor y confirma que el backend devuelve JSON
     async function validarServidor(nombreNorm, telefonoNum, patrocinadorCode){
-      const params = new URLSearchParams({
-        action: "validate",
-        nombre: nombreNorm,
-        telefono: telefonoNum,
-        patrocinador: patrocinadorCode
-      });
-      const url = `${APP_SCRIPT_URL}?${params.toString()}`;
-      const res = await fetch(url, { method: "GET", mode: "cors" });
-      if(!res.ok){
-        throw new Error("No se pudo validar en el servidor");
+      const params = new URLSearchParams({ action:"validate", nombre:nombreNorm, telefono:telefonoNum, patrocinador:patrocinadorCode });
+      const res = await fetch(`${APP_SCRIPT_URL}?${params.toString()}`, { method:"GET" });
+
+      const ctype = res.headers.get("content-type") || "";
+      if (!res.ok || !ctype.includes("application/json")) {
+        throw new Error("VALIDATE_NOT_JSON_OR_403");
       }
-      // Espera un JSON con: { existsByPhone: bool, existsByName: bool, sponsorDirectsCount: number }
-      const data = await res.json();
-      return data;
+      return await res.json(); // {status, existsByPhone, existsByName, sponsorDirectsCount}
     }
 
-    function mostrarError(msg){
-      const msgError = document.getElementById('msgError');
-      msgError.textContent = msg;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.getElementById('preForm').addEventListener('submit', async function(e){
+    $("preForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
       if (enviando) return;
 
-      const nombreRaw     = document.getElementById('nombre').value;
-      const telefonoRaw   = document.getElementById('telefono').value;
-      const patrocinadorRaw = document.getElementById('patrocinador').value;
-      const pais          = document.getElementById('pais').value;
-      const paqueteRaw    = document.getElementById('paquete').value;
+      $("msgError").textContent = "";
 
-      const btn      = document.getElementById('enviarBtn');
-      const msgError = document.getElementById('msgError');
-      msgError.textContent = '';
+      const nombreRaw   = $("nombre").value;
+      const telefonoRaw = $("telefono").value;
+      const patRaw      = $("patrocinador").value;
+      const pais        = $("pais").value;
+      const paqueteRaw  = $("paquete").value;
 
-      // Normalizaciones
-      const nombreNorm     = normalizarNombre(nombreRaw);
-      const telefonoNum    = limpiarTelefono(telefonoRaw);
-      const patrocinador   = normalizarPatrocinador(patrocinadorRaw);
+      const nombreNorm   = normalizarNombre(nombreRaw);
+      const telefonoNum  = limpiarTelefono(telefonoRaw);
+      const patrocinador = normalizarPatrocinador(patRaw);
 
-      // Validaciones de cliente
-      if(!nombreNorm || !telefonoNum || !patrocinador || !pais || !paqueteRaw){
-        return mostrarError('Por favor, completa todos los campos.');
-      }
-      if(!/^[0-9]{7,15}$/.test(telefonoNum)){
-        return mostrarError('El teléfono debe tener entre 7 y 15 dígitos, sin espacios ni signos.');
-      }
-      if(!/^RM-\d{4}$/i.test(patrocinador)){
-        return mostrarError('Código de patrocinador inválido. Usa el formato RM-1234.');
-      }
+      if(!nombreNorm || !telefonoNum || !patrocinador || !pais || !paqueteRaw) return mostrarError("Por favor, completa todos los campos.");
+      if(!/^[0-9]{7,15}$/.test(telefonoNum)) return mostrarError("El teléfono debe tener entre 7 y 15 dígitos, sin espacios ni signos.");
+      if(!/^RM-\d{4}$/i.test(patrocinador))  return mostrarError("Código de patrocinador inválido. Usa el formato RM-1234.");
 
-      // Llama al servidor para validar duplicados y capacidad del patrocinador
+      const btn = $("enviarBtn");
+
       try{
         enviando = true;
         btn.disabled = true;
-        btn.innerText = 'Validando...';
+        btn.innerText = "Validando...";
 
         const v = await validarServidor(nombreNorm, telefonoNum, patrocinador);
 
-        if(v && (v.existsByPhone || v.existsByName)){
-          let causa = v.existsByPhone ? 'teléfono' : 'nombre';
-          btn.disabled = false;
-          btn.innerText = 'Enviar Preinscripción';
-          enviando = false;
-          return mostrarError(`Ya existe una preinscripción con ese ${causa}. Si crees que es un error, contáctanos.`);
+        if (v.existsByPhone || v.existsByName) {
+          const causa = v.existsByPhone ? "teléfono" : "nombre";
+          throw new Error(`Ya existe una preinscripción con ese ${causa}.`);
+        }
+        if (typeof v.sponsorDirectsCount === "number" && v.sponsorDirectsCount >= 2) {
+          throw new Error("El patrocinador indicado ya tiene 2 directos asignados. Solicita un nuevo código.");
         }
 
-        if(v && typeof v.sponsorDirectsCount === 'number' && v.sponsorDirectsCount >= 2){
-          btn.disabled = false;
-          btn.innerText = 'Enviar Preinscripción';
-          enviando = false;
-          return mostrarError('El patrocinador indicado ya tiene 2 directos asignados. Por favor, solicita un nuevo código.');
-        }
-
-        // Si pasa validaciones, procede a crear
-        btn.innerText = 'Enviando...';
-
-        const [paquete, puntos] = paqueteRaw.split('|');
-        const codigoNuevo = 'RM-' + Math.floor(1000 + Math.random() * 9000);
+        // Envío
+        btn.innerText = "Enviando...";
+        const [paquete, puntos] = paqueteRaw.split("|");
+        const codigoNuevo = "RM-" + Math.floor(1000 + Math.random() * 9000);
 
         const payload = {
-          action: 'create',
-          nombre: nombreRaw.trim(),
-          nombre_norm: nombreNorm, // útil para el backend
-          telefono: telefonoNum,
+          action:"create",
+          nombre:nombreRaw.trim(),
+          nombre_norm:nombreNorm,
+          telefono:telefonoNum,
           patrocinador,
           pais,
           paquete,
           puntos,
-          codigoAsignado: codigoNuevo,
-          ts: new Date().toISOString()
+          codigoAsignado:codigoNuevo,
+          ts:new Date().toISOString()
         };
 
-        // Envío (no-cors como tenías). El backend guarda y no necesitamos leer respuesta.
         await fetch(APP_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          method:"POST",
+          mode:"no-cors",
+          headers:{ "Content-Type":"application/json" },
+          body:JSON.stringify(payload)
         });
 
-        // UI de éxito
-        document.getElementById('preForm').style.display = 'none';
-        document.getElementById('codigoGenerado').style.display = 'block';
-        document.getElementById('codigo').textContent = codigoNuevo;
-        btn.innerText = 'Enviar Preinscripción';
+        // Éxito UI
+        $("preForm").style.display = "none";
+        $("codigoGenerado").style.display = "block";
+        $("codigo").textContent = codigoNuevo;
+        btn.innerText = "Enviar Preinscripción";
 
       } catch(err){
         console.error(err);
-        mostrarError('No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.');
-        btn.disabled = false;
-        btn.innerText = 'Enviar Preinscripción';
+        if (String(err.message) === "VALIDATE_NOT_JSON_OR_403") {
+          mostrarError("No se pudo validar tu preinscripción: usa el URL /exec más reciente del Web App y publícalo como 'Anyone'.");
+        } else {
+          mostrarError(err.message || "No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.");
+        }
+        $("enviarBtn").disabled = false;
+        $("enviarBtn").innerText = "Enviar Preinscripción";
         enviando = false;
       }
     });
