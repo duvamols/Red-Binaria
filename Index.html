@@ -170,115 +170,51 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
-  <script>
-    window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
+<script>
+  // Reemplaza APP_SCRIPT_URL por el tuyo
+  const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjSoGtkDrcOePnyBO_uTeio6Ufk4NzAAajAq35SE0URoaC9ekspQjCvUebB8hlBJ3/exec";
 
-    // ⬅️ Reemplaza por tu URL /exec más reciente (Web App publicado como "Anyone")
-    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdhLfZxyzLJRsNaQHo4HAL0S5EqY3iyIEBA2LM2Y4__t6usmbw9jqvfQMScADjysk/exec";
-
-    let enviando = false;
-
-    const $ = id => document.getElementById(id);
-    function normalizarNombre(s){ return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim(); }
-    function limpiarTelefono(s){ return (s||"").replace(/\D/g,"").trim(); }
-    function normalizarPatrocinador(s){ return (s||"").toUpperCase().trim(); }
-    function mostrarError(msg){ $("msgError").textContent = msg; window.scrollTo({top:0,behavior:'smooth'}); }
-
-    // Valida en servidor y confirma que el backend devuelve JSON
-    async function validarServidor(nombreNorm, telefonoNum, patrocinadorCode){
-      const params = new URLSearchParams({ action:"validate", nombre:nombreNorm, telefono:telefonoNum, patrocinador:patrocinadorCode });
-      const res = await fetch(`${APP_SCRIPT_URL}?${params.toString()}`, { method:"GET" });
-
-      const ctype = res.headers.get("content-type") || "";
-      if (!res.ok || !ctype.includes("application/json")) {
-        throw new Error("VALIDATE_NOT_JSON_OR_403");
-      }
-      return await res.json(); // {status, existsByPhone, existsByName, sponsorDirectsCount}
-    }
-
-    $("preForm").addEventListener("submit", async (e)=>{
-      e.preventDefault();
-      if (enviando) return;
-
-      $("msgError").textContent = "";
-
-      const nombreRaw   = $("nombre").value;
-      const telefonoRaw = $("telefono").value;
-      const patRaw      = $("patrocinador").value;
-      const pais        = $("pais").value;
-      const paqueteRaw  = $("paquete").value;
-
-      const nombreNorm   = normalizarNombre(nombreRaw);
-      const telefonoNum  = limpiarTelefono(telefonoRaw);
-      const patrocinador = normalizarPatrocinador(patRaw);
-
-      if(!nombreNorm || !telefonoNum || !patrocinador || !pais || !paqueteRaw) return mostrarError("Por favor, completa todos los campos.");
-      if(!/^[0-9]{7,15}$/.test(telefonoNum)) return mostrarError("El teléfono debe tener entre 7 y 15 dígitos, sin espacios ni signos.");
-      if(!/^RM-\d{4}$/i.test(patrocinador))  return mostrarError("Código de patrocinador inválido. Usa el formato RM-1234.");
-
-      const btn = $("enviarBtn");
-
-      try{
-        enviando = true;
-        btn.disabled = true;
-        btn.innerText = "Validando...";
-
-        const v = await validarServidor(nombreNorm, telefonoNum, patrocinador);
-
-        if (v.existsByPhone || v.existsByName) {
-          const causa = v.existsByPhone ? "teléfono" : "nombre";
-          throw new Error(`Ya existe una preinscripción con ese ${causa}.`);
-        }
-        if (typeof v.sponsorDirectsCount === "number" && v.sponsorDirectsCount >= 2) {
-          throw new Error("El patrocinador indicado ya tiene 2 directos asignados. Solicita un nuevo código.");
-        }
-
-        // Envío
-        btn.innerText = "Enviando...";
-        const [paquete, puntos] = paqueteRaw.split("|");
-        const codigoNuevo = "RM-" + Math.floor(1000 + Math.random() * 9000);
-
-        const payload = {
-          action:"create",
-          nombre:nombreRaw.trim(),
-          nombre_norm:nombreNorm,
-          telefono:telefonoNum,
-          patrocinador,
-          pais,
-          paquete,
-          puntos,
-          codigoAsignado:codigoNuevo,
-          ts:new Date().toISOString()
-        };
-
-        await fetch(APP_SCRIPT_URL, {
-          method:"POST",
-          mode:"no-cors",
-          headers:{ "Content-Type":"application/json" },
-          body:JSON.stringify(payload)
-        });
-
-        // Éxito UI
-        $("preForm").style.display = "none";
-        $("codigoGenerado").style.display = "block";
-        $("codigo").textContent = codigoNuevo;
-        btn.innerText = "Enviar Preinscripción";
-
-      } catch(err){
-        console.error(err);
-        if (String(err.message) === "VALIDATE_NOT_JSON_OR_403") {
-          mostrarError("No se pudo validar tu preinscripción: usa el URL /exec más reciente del Web App y publícalo como 'Anyone'.");
-        } else {
-          mostrarError(err.message || "No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.");
-        }
-        $("enviarBtn").disabled = false;
-        $("enviarBtn").innerText = "Enviar Preinscripción";
-        enviando = false;
-      }
+  async function validarServidor(nombreNorm, telefonoNum, patrocinadorCode){
+    const params = new URLSearchParams({
+      action: "validate",
+      nombre: nombreNorm,
+      telefono: telefonoNum,
+      patrocinador: patrocinadorCode
     });
-  </script>
+    const url = `${APP_SCRIPT_URL}?${params.toString()}`;
+
+    // No especifiques mode aquí: deja que el navegador gestione CORS
+    const res = await fetch(url, { method: "GET" }).catch(() => {
+      // Si hay error de red/CORS, lanzamos uno más claro
+      throw new Error("FETCH_NETWORK");
+    });
+
+    const ctype = res.headers.get("content-type") || "";
+    if (!res.ok || !ctype.includes("application/json")) {
+      // Esto suele pasar cuando usas un /exec viejo o tu Web App no está en “Anyone”
+      throw new Error("FETCH_NOT_JSON");
+    }
+    return await res.json();
+  }
+
+  // Dentro del submit, en el catch:
+  } catch(err){
+    console.error(err);
+    if (err.message === "FETCH_NETWORK") {
+      mostrarError("No se pudo conectar con el servidor. Verifica tu conexión y que el URL del Web App (/exec) sea correcto.");
+    } else if (err.message === "FETCH_NOT_JSON") {
+      mostrarError("Tu Web App no está devolviendo JSON. Revisa que esté desplegado como Web App (Anyone) y usa el URL /exec más reciente.");
+    } else {
+      mostrarError(err.message || "No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.");
+    }
+    $("enviarBtn").disabled = false;
+    $("enviarBtn").innerText = "Enviar Preinscripción";
+    enviando = false;
+  }
+</script>
 </body>
 </html>
+
 
 
 
