@@ -4,10 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Red de Acción Masiva | Preinscripción</title>
+
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Iconos -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.349.0/dist/lucide.css" />
+
   <style>
-    :root{
+    :root {
       --primary:#2563eb;
       --primary-dark:#1d4ed8;
       --accent:#22c55e;
@@ -24,84 +28,160 @@
       --shadow-neu:8px 8px 16px #dde5f0,-8px -8px 18px #fff;
       --shadow-soft:0 8px 24px 0 #dde8fc,0 1.5px 0 #fff inset,0 0.5px 2.5px #b9c6d8 inset;
     }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    html,body{height:100%;scroll-behavior:smooth;}
-    body{
-      font-family:'Inter',Arial,sans-serif;
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html,body { height:100%; scroll-behavior:smooth; }
+    body {
+      font-family:'Inter', Arial, sans-serif;
       color:var(--text);
       background:var(--bg);
       min-height:100vh;
-      display:flex;flex-direction:column;
+      display:flex;
+      flex-direction:column;
     }
     /* NAVBAR */
-    .navbar{
-      background:var(--sidebar);
-      box-shadow:var(--shadow-soft);
-      padding:0.9rem 2.2rem;
-      display:flex;align-items:center;justify-content:flex-start;
-      position:sticky;top:0;z-index:30;border-radius:0 0 var(--radius) var(--radius);
+    .navbar {
+      background: var(--sidebar);
+      box-shadow: var(--shadow-soft);
+      padding: 0.9rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-radius: 0 0 var(--radius) var(--radius);
     }
-    .brand{
-      font-family:'Montserrat',sans-serif;font-size:1.38rem;font-weight:700;color:var(--primary);
-      display:flex;align-items:center;gap:13px;text-decoration:none;
+    .brand {
+      font-family:'Montserrat', sans-serif;
+      font-size:1.38rem;
+      font-weight:700;
+      color:var(--primary);
+      display:flex;
+      align-items:center;
+      gap:13px;
+      text-decoration:none;
     }
-    .brand::before{
-      content:"";width:32px;height:32px;border-radius:50%;
+    .brand::before {
+      content:"";
+      width:32px; height:32px;
+      border-radius:50%;
       background:linear-gradient(135deg,var(--primary),var(--accent));
-      display:inline-block;box-shadow:0 4px 18px #dde8fc,0 0 0 4px #fff;
+      display:inline-block;
+      box-shadow:0 4px 18px #dde8fc,0 0 0 4px #fff;
     }
     /* HERO */
-    .hero{
+    .hero {
       width:100%;
       background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 60%,#0ea5e9 120%);
-      color:#fff;padding:3.5rem 1.2rem 4.2rem;text-align:center;
+      color:#fff;
+      padding:3.5rem 1.2rem 4.2rem;
+      text-align:center;
     }
-    .hero h1{
-      font-family:'Montserrat',sans-serif;font-size:2.2rem;font-weight:700;margin-bottom:.6rem;
-      letter-spacing:1px;text-shadow:0 2px 10px #1d4ed833;
+    .hero h1 {
+      font-family:'Montserrat', sans-serif;
+      font-size:2.2rem;
+      font-weight:700;
+      margin-bottom:.6rem;
+      letter-spacing:1px;
+      text-shadow:0 2px 10px #1d4ed833;
     }
-    .hero p{font-size:1.09rem;opacity:.93;max-width:680px;margin:0 auto;font-weight:500;}
-    /* FORM WRAPPER */
-    .wrapper{flex:1;display:flex;justify-content:center;padding:0 1.2vw;transform:translateY(-60px);margin-bottom:-60px;}
-    .card{
-      width:100%;max-width:470px;background:var(--card-bg);border-radius:var(--radius);
-      box-shadow:var(--shadow-neu);padding:2.4rem 2rem 2.6rem;border:1.8px solid #eef3fb;
-      display:flex;flex-direction:column;align-items:center;transition:box-shadow .14s;backdrop-filter:blur(7px);
+    .hero p {
+      font-size:1.09rem;
+      opacity:.93;
+      max-width:680px;
+      margin:0 auto;
+      font-weight:500;
     }
-    .card h2{font-family:'Montserrat',sans-serif;color:var(--primary);font-size:1.6rem;margin-bottom:1.4rem;text-align:center;font-weight:700;letter-spacing:.2px;}
-    label{font-size:.97rem;font-weight:600;color:var(--text);margin-bottom:4px;margin-top:5px;display:block;letter-spacing:.01em;}
-    input[type="text"],input[type="tel"],select{
-      width:100%;padding:11px 12px;border:1.6px solid #cbd5e1;border-radius:12px;font-size:1.02rem;background:#f8fafc;
-      transition:border .2s,box-shadow .2s;margin-bottom:17px;outline:none;font-family:'Inter',Arial,sans-serif;
+    /* FORM */
+    .wrapper {
+      flex:1;
+      display:flex;
+      justify-content:center;
+      padding:0 1.2vw;
+      transform:translateY(-60px);
+      margin-bottom:-60px;
     }
-    input:focus,select:focus{border-color:var(--primary-dark);box-shadow:0 0 0 2px #2563eb22;background:#fff;}
-    .hint{font-size:.88rem;color:#64748b;margin:-10px 0 12px;}
-    button[type="submit"]{
-      width:100%;padding:13px 0;border:none;border-radius:14px;background:linear-gradient(90deg,var(--primary) 10%,var(--accent) 140%);
-      color:#fff;font-size:1.09rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px #22c55e44;
-      transition:transform .12s,box-shadow .15s,opacity .15s;margin-top:5px;letter-spacing:.2px;
+    .card {
+      width:100%;
+      max-width:470px;
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-neu);
+      padding:2.4rem 2rem 2.6rem;
+      border:1.8px solid #eef3fb;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
     }
-    button[type="submit"]:hover{box-shadow:0 6px 24px #22c55e45;transform:translateY(-1px) scale(1.011);}
-    button[type="submit"]:active{transform:scale(.97);box-shadow:0 3px 12px #22c55e33;}
-    button[disabled]{opacity:.65;cursor:not-allowed;}
-    #msgError{color:var(--error);margin-bottom:10px;font-size:.98rem;text-align:center;min-height:18px;font-weight:600;}
-    .muted{color:#64748b;font-size:.92rem;text-align:center;margin-top:6px;}
-    /* ÉXITO */
-    #codigoGenerado{display:none;margin-top:1.6rem;text-align:center;}
-    #codigoGenerado h3{color:var(--primary);margin-bottom:.5rem;font-size:1.35rem;}
-    #codigo{font-size:2.1rem;font-weight:700;color:var(--accent);margin-top:.7rem;letter-spacing:1px;}
-    .ok-icon{font-size:2.3rem;color:var(--accent);margin-bottom:.6rem;}
-    footer{
-      width:100%;background:var(--card-bg);color:#94a3b8;text-align:center;font-size:1.04rem;
-      padding:18px 0 14px;letter-spacing:.2px;border-top:1.5px solid #e6ecf5;box-shadow:0 -4px 20px #dde8fc2c;border-radius:22px 22px 0 0;z-index:100;margin-top:40px;
+    .card h2 {
+      font-family:'Montserrat', sans-serif;
+      color:var(--primary);
+      font-size:1.6rem;
+      margin-bottom:1.4rem;
+      text-align:center;
+      font-weight:700;
     }
-    footer a{color:var(--primary);text-decoration:none;}
-    @media (max-width:600px){
-      .hero h1{font-size:1.7rem;}
-      .card{padding:1.3rem .8rem 1.7rem;}
-      .brand{font-size:1.04rem;}
-      .navbar{padding:1.1rem 1vw;}
+    label {
+      font-size:.97rem;
+      font-weight:600;
+      color:var(--text);
+      margin:5px 0 4px;
+      display:block;
     }
+    input[type="text"], input[type="tel"], select {
+      width:100%;
+      padding:11px 12px;
+      border:1.6px solid #cbd5e1;
+      border-radius:12px;
+      font-size:1.02rem;
+      background:#f8fafc;
+      margin-bottom:17px;
+      outline:none;
+      font-family:'Inter', Arial, sans-serif;
+    }
+    input:focus, select:focus {
+      border-color:var(--primary-dark);
+      box-shadow:0 0 0 2px #2563eb22;
+      background:#fff;
+    }
+    button[type="submit"] {
+      width:100%;
+      padding:13px 0;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(90deg,var(--primary) 10%,var(--accent) 140%);
+      color:#fff;
+      font-size:1.09rem;
+      font-weight:700;
+      cursor:pointer;
+      margin-top:5px;
+    }
+    #msgError {
+      color:var(--error);
+      margin-bottom:10px;
+      font-size:.98rem;
+      text-align:center;
+      min-height:18px;
+      font-weight:600;
+    }
+    #codigoGenerado {
+      display:none;
+      margin-top:1.6rem;
+      text-align:center;
+    }
+    #codigo { font-size:2.1rem; font-weight:700; color:var(--accent); margin-top:.7rem; }
+    .ok-icon { font-size:2.3rem; color:var(--accent); margin-bottom:.6rem; }
+    footer {
+      width:100%;
+      background:var(--card-bg);
+      color:#94a3b8;
+      text-align:center;
+      font-size:1.04rem;
+      padding:18px 0 14px;
+      border-top:1.5px solid #e6ecf5;
+      margin-top:40px;
+    }
+    footer a { color:var(--primary); text-decoration:none; }
   </style>
 </head>
 <body>
@@ -121,27 +201,26 @@
     <div class="card" id="formCard">
       <h2>Formulario de Preinscripción</h2>
       <div id="msgError"></div>
-
       <form id="preForm" autocomplete="off">
         <label for="nombre">Nombre completo</label>
         <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
 
         <label for="telefono">Teléfono (WhatsApp)</label>
         <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{7,15}" placeholder="Ej: 3121234567">
-        <div class="hint">Usa solo números, sin espacios ni signos.</div>
 
         <label for="patrocinador">Código de tu patrocinador</label>
         <input type="text" id="patrocinador" name="patrocinador" required placeholder="Ej: RM-1234">
-        <div class="hint">Formato sugerido: <b>RM-####</b></div>
 
         <label for="pais">País</label>
         <select id="pais" name="pais" required>
           <option value="">Selecciona tu país</option>
-          <option>Argentina</option><option>Bolivia</option><option>Brasil</option><option>Chile</option>
-          <option>Colombia</option><option>Costa Rica</option><option>Ecuador</option><option>El Salvador</option>
-          <option>Estados Unidos</option><option>Guatemala</option><option>Honduras</option><option>México</option>
-          <option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option>
-          <option>Puerto Rico</option><option>República Dominicana</option><option>Uruguay</option><option>Venezuela</option>
+          <option>Argentina</option><option>Bolivia</option><option>Brasil</option>
+          <option>Chile</option><option>Colombia</option><option>Costa Rica</option>
+          <option>Ecuador</option><option>El Salvador</option><option>Estados Unidos</option>
+          <option>Guatemala</option><option>Honduras</option><option>México</option>
+          <option>Nicaragua</option><option>Panamá</option><option>Paraguay</option>
+          <option>Perú</option><option>Puerto Rico</option><option>República Dominicana</option>
+          <option>Uruguay</option><option>Venezuela</option>
         </select>
 
         <label for="paquete">¿Con qué paquete vas a hacer la inscripción?</label>
@@ -160,7 +239,6 @@
         <h3>¡Preinscripción exitosa!</h3>
         <p>Tu código asignado es:</p>
         <div id="codigo"></div>
-        <div class="muted">Guárdalo y compártelo con tu patrocinador.</div>
       </div>
     </div>
   </main>
@@ -169,58 +247,57 @@
     &copy; 2025 Red de Acción Masiva. Todos los derechos reservados.
   </footer>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
-<script>
-  // Reemplaza APP_SCRIPT_URL por el tuyo
-  const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxm8x1DI3iEQuQFMKTowQ11loVS9HvlSQOvr7to6B3XnF0f4dDZV25eGj5lGKacUssY/exec";
+  <script>
+    window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
+    let enviando = false;
 
-  async function validarServidor(nombreNorm, telefonoNum, patrocinadorCode){
-    const params = new URLSearchParams({
-      action: "validate",
-      nombre: nombreNorm,
-      telefono: telefonoNum,
-      patrocinador: patrocinadorCode
+    document.getElementById('preForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      if (enviando) return;
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const patrocinador = document.getElementById('patrocinador').value.trim();
+      const pais = document.getElementById('pais').value;
+      const paqueteRaw = document.getElementById('paquete').value;
+      const btn = document.getElementById('enviarBtn');
+      const msgError = document.getElementById('msgError');
+      msgError.textContent = '';
+
+      if(!nombre || !telefono || !patrocinador || !pais || !paqueteRaw){
+        msgError.textContent = 'Por favor, completa todos los campos.';
+        return;
+      }
+
+      const [paquete, puntos] = paqueteRaw.split('|');
+      enviando = true;
+      btn.disabled = true;
+      btn.innerText = 'Enviando...';
+
+      // Generar código único
+      const codigoNuevo = 'RM-' + Math.floor(1000 + Math.random() * 9000);
+
+      const data = { nombre, telefono, patrocinador, pais, paquete, puntos, codigoAsignado: codigoNuevo };
+
+      fetch('https://script.google.com/macros/s/AKfycbzdhLfZxyzLJRsNaQHo4HAL0S5EqY3iyIEBA2LM2Y4__t6usmbw9jqvfQMScADjysk/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(() => {
+        document.getElementById('preForm').style.display = 'none';
+        document.getElementById('codigoGenerado').style.display = 'block';
+        document.getElementById('codigo').textContent = codigoNuevo;
+      }).catch(err => {
+        console.error(err);
+        msgError.textContent = 'Hubo un error enviando tu preinscripción, inténtalo más tarde.';
+        btn.disabled = false;
+        btn.innerText = 'Enviar Preinscripción';
+        enviando = false;
+      });
     });
-    const url = `${APP_SCRIPT_URL}?${params.toString()}`;
-
-    // No especifiques mode aquí: deja que el navegador gestione CORS
-    const res = await fetch(url, { method: "GET" }).catch(() => {
-      // Si hay error de red/CORS, lanzamos uno más claro
-      throw new Error("FETCH_NETWORK");
-    });
-
-    const ctype = res.headers.get("content-type") || "";
-    if (!res.ok || !ctype.includes("application/json")) {
-      // Esto suele pasar cuando usas un /exec viejo o tu Web App no está en “Anyone”
-      throw new Error("FETCH_NOT_JSON");
-    }
-    return await res.json();
-  }
-
-  // Dentro del submit, en el catch:
-  } catch(err){
-    console.error(err);
-    if (err.message === "FETCH_NETWORK") {
-      mostrarError("No se pudo conectar con el servidor. Verifica tu conexión y que el URL del Web App (/exec) sea correcto.");
-    } else if (err.message === "FETCH_NOT_JSON") {
-      mostrarError("Tu Web App no está devolviendo JSON. Revisa que esté desplegado como Web App (Anyone) y usa el URL /exec más reciente.");
-    } else {
-      mostrarError(err.message || "No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.");
-    }
-    $("enviarBtn").disabled = false;
-    $("enviarBtn").innerText = "Enviar Preinscripción";
-    enviando = false;
-  }
-</script>
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
