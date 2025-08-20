@@ -145,6 +145,7 @@
       box-shadow:0 0 0 2px #2563eb22;
       background:#fff;
     }
+    .hint{font-size:.88rem;color:#64748b;margin:-10px 0 12px 0;}
     button[type="submit"]{
       width:100%;
       padding:13px 0;
@@ -177,6 +178,7 @@
       min-height:18px;
       font-weight: 600;
     }
+    .muted{color:#64748b;font-size:.92rem;text-align:center;margin-top:6px;}
     /* ÉXITO */
     #codigoGenerado{
       display:none;
@@ -243,8 +245,12 @@
         <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
         <label for="telefono">Teléfono (WhatsApp)</label>
         <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{7,15}" placeholder="Ej: 3121234567">
+        <div class="hint">Usa solo números, sin espacios ni signos.</div>
+
         <label for="patrocinador">Código de tu patrocinador</label>
         <input type="text" id="patrocinador" name="patrocinador" required placeholder="Ej: RM-1234">
+        <div class="hint">Formato sugerido: <b>RM-####</b></div>
+
         <label for="pais">País</label>
         <select id="pais" name="pais" required>
           <option value="">Selecciona tu país</option>
@@ -269,6 +275,7 @@
           <option>Uruguay</option>
           <option>Venezuela</option>
         </select>
+
         <label for="paquete">¿Con qué paquete vas a hacer la inscripción?</label>
         <select id="paquete" name="paquete" required>
           <option value="">Selecciona un paquete</option>
@@ -276,73 +283,168 @@
           <option value="ESP 2|250">ESP 2 (250 puntos)</option>
           <option value="ESP 3|500">ESP 3 (500 puntos)</option>
         </select>
+
         <button type="submit" id="enviarBtn">Enviar Preinscripción</button>
       </form>
+
       <div id="codigoGenerado">
         <i class="lucide lucide-badge-check ok-icon"></i>
         <h3>¡Preinscripción exitosa!</h3>
         <p>Tu código asignado es:</p>
         <div id="codigo"></div>
+        <div class="muted">Guárdalo y compártelo con tu patrocinador.</div>
       </div>
     </div>
   </main>
   <footer>
     &copy; 2025 Red de Acción Masiva. Todos los derechos reservados.
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
+
+    // 👉 Ajusta esta URL a TU Apps Script publicado:
+    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdhLfZxyzLJRsNaQHo4HAL0S5EqY3iyIEBA2LM2Y4__t6usmbw9jqvfQMScADjysk/exec";
+
     let enviando = false;
-    document.getElementById('preForm').addEventListener('submit', function(e){
+
+    function normalizarNombre(str){
+      return str
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // quita acentos
+        .replace(/\s+/g," ") // colapsa espacios
+        .trim();
+    }
+    function limpiarTelefono(str){
+      return (str||"").replace(/\D/g,"").trim(); // solo dígitos
+    }
+    function normalizarPatrocinador(str){
+      return (str||"").toUpperCase().trim();
+    }
+
+    async function validarServidor(nombreNorm, telefonoNum, patrocinadorCode){
+      const params = new URLSearchParams({
+        action: "validate",
+        nombre: nombreNorm,
+        telefono: telefonoNum,
+        patrocinador: patrocinadorCode
+      });
+      const url = `${APP_SCRIPT_URL}?${params.toString()}`;
+      const res = await fetch(url, { method: "GET", mode: "cors" });
+      if(!res.ok){
+        throw new Error("No se pudo validar en el servidor");
+      }
+      // Espera un JSON con: { existsByPhone: bool, existsByName: bool, sponsorDirectsCount: number }
+      const data = await res.json();
+      return data;
+    }
+
+    function mostrarError(msg){
+      const msgError = document.getElementById('msgError');
+      msgError.textContent = msg;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('preForm').addEventListener('submit', async function(e){
       e.preventDefault();
       if (enviando) return;
-      const nombre       = document.getElementById('nombre').value.trim();
-      const telefono     = document.getElementById('telefono').value.trim();
-      const patrocinador = document.getElementById('patrocinador').value.trim();
-      const pais         = document.getElementById('pais').value;
-      const paqueteRaw   = document.getElementById('paquete').value;
+
+      const nombreRaw     = document.getElementById('nombre').value;
+      const telefonoRaw   = document.getElementById('telefono').value;
+      const patrocinadorRaw = document.getElementById('patrocinador').value;
+      const pais          = document.getElementById('pais').value;
+      const paqueteRaw    = document.getElementById('paquete').value;
+
       const btn      = document.getElementById('enviarBtn');
       const msgError = document.getElementById('msgError');
       msgError.textContent = '';
-      if(!nombre || !telefono || !patrocinador || !pais || !paqueteRaw){
-        msgError.textContent = 'Por favor, completa todos los campos.';
-        return;
+
+      // Normalizaciones
+      const nombreNorm     = normalizarNombre(nombreRaw);
+      const telefonoNum    = limpiarTelefono(telefonoRaw);
+      const patrocinador   = normalizarPatrocinador(patrocinadorRaw);
+
+      // Validaciones de cliente
+      if(!nombreNorm || !telefonoNum || !patrocinador || !pais || !paqueteRaw){
+        return mostrarError('Por favor, completa todos los campos.');
       }
-      const [paquete, puntos] = paqueteRaw.split('|');
-      enviando = true;
-      btn.disabled = true;
-      btn.innerText = 'Enviando...';
-      // código único
-      const codigoNuevo = 'RM-' + Math.floor(1000 + Math.random() * 9000);
-      const data = {
-        nombre,
-        telefono,
-        patrocinador,
-        pais,
-        paquete,
-        puntos,
-        codigoAsignado: codigoNuevo
-      };
-      fetch('https://script.google.com/macros/s/AKfycbzdhLfZxyzLJRsNaQHo4HAL0S5EqY3iyIEBA2LM2Y4__t6usmbw9jqvfQMScADjysk/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(() => {
+      if(!/^[0-9]{7,15}$/.test(telefonoNum)){
+        return mostrarError('El teléfono debe tener entre 7 y 15 dígitos, sin espacios ni signos.');
+      }
+      if(!/^RM-\d{4}$/i.test(patrocinador)){
+        return mostrarError('Código de patrocinador inválido. Usa el formato RM-1234.');
+      }
+
+      // Llama al servidor para validar duplicados y capacidad del patrocinador
+      try{
+        enviando = true;
+        btn.disabled = true;
+        btn.innerText = 'Validando...';
+
+        const v = await validarServidor(nombreNorm, telefonoNum, patrocinador);
+
+        if(v && (v.existsByPhone || v.existsByName)){
+          let causa = v.existsByPhone ? 'teléfono' : 'nombre';
+          btn.disabled = false;
+          btn.innerText = 'Enviar Preinscripción';
+          enviando = false;
+          return mostrarError(`Ya existe una preinscripción con ese ${causa}. Si crees que es un error, contáctanos.`);
+        }
+
+        if(v && typeof v.sponsorDirectsCount === 'number' && v.sponsorDirectsCount >= 2){
+          btn.disabled = false;
+          btn.innerText = 'Enviar Preinscripción';
+          enviando = false;
+          return mostrarError('El patrocinador indicado ya tiene 2 directos asignados. Por favor, solicita un nuevo código.');
+        }
+
+        // Si pasa validaciones, procede a crear
+        btn.innerText = 'Enviando...';
+
+        const [paquete, puntos] = paqueteRaw.split('|');
+        const codigoNuevo = 'RM-' + Math.floor(1000 + Math.random() * 9000);
+
+        const payload = {
+          action: 'create',
+          nombre: nombreRaw.trim(),
+          nombre_norm: nombreNorm, // útil para el backend
+          telefono: telefonoNum,
+          patrocinador,
+          pais,
+          paquete,
+          puntos,
+          codigoAsignado: codigoNuevo,
+          ts: new Date().toISOString()
+        };
+
+        // Envío (no-cors como tenías). El backend guarda y no necesitamos leer respuesta.
+        await fetch(APP_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // UI de éxito
         document.getElementById('preForm').style.display = 'none';
         document.getElementById('codigoGenerado').style.display = 'block';
         document.getElementById('codigo').textContent = codigoNuevo;
-      }).catch(err => {
+        btn.innerText = 'Enviar Preinscripción';
+
+      } catch(err){
         console.error(err);
-        msgError.textContent = 'Hubo un error enviando tu preinscripción, inténtalo más tarde.';
+        mostrarError('No se pudo validar/enviar tu preinscripción. Inténtalo de nuevo en unos minutos.');
         btn.disabled = false;
         btn.innerText = 'Enviar Preinscripción';
         enviando = false;
-      });
+      }
     });
   </script>
 </body>
 </html>
+
+
 
 
 
