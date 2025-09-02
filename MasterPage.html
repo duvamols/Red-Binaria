@@ -4,622 +4,540 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Red de Acción Masiva | Tu mejor oportunidad</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.349.0/dist/lucide.css" />
+
   <style>
-    :root {
-      --primary: #2563eb;
-      --accent: #22c55e;
-      --sidebar: #0f172a;
-      --sidebar-active: #2563eb;
-      --bg: linear-gradient(135deg, #ecf0fa 0%, #f5fbff 100%);
-      --card-bg: #f8faff;
-      --glass: rgba(255,255,255,0.60);
-      --surface: #fff;
-      --success-bg: #e2fbe2;
-      --success-txt: #15803d;
-      --shadow-soft: 0 8px 24px 0 #dde8fc, 0 1.5px 0 #fff inset, 0 0.5px 2.5px #b9c6d8 inset;
-      --shadow-neu: 8px 8px 16px #dde5f0, -8px -8px 18px #fff;
-      --radius: 28px;
-      --radius-md: 20px;
-      --radius-sm: 14px;
-      --transition: 0.16s cubic-bezier(.6,.2,.29,.97);
+    :root{
+      /* Paleta premium */
+      --primary: #3b82f6;           /* Azul vivo */
+      --primary-600:#2563eb;
+      --primary-700:#1d4ed8;
+      --accent: #22c55e;            /* Lima/verde */
+      --ink: #0b1220;
+      --muted:#6b7280;
+
+      /* Fondos y glass */
+      --bg: #0b1020;
+      --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #6366f1 38%, #9333ea 70%, #3b82f6 100%);
+      --gradient-2: radial-gradient(1200px 600px at 80% -10%, #22c55e20, transparent 60%),
+                    radial-gradient(900px 500px at 10% 120%, #3b82f615, transparent 60%);
+      --surface: #0f172a;
+      --card: #0b1224;
+      --glass: rgba(255,255,255,.08);
+
+      /* Bordes/ sombras / radios */
+      --border: 1px solid rgba(255,255,255,.08);
+      --radius-xl: 26px; --radius-lg:18px; --radius-md:14px;
+      --shadow-hero: 0 20px 60px rgba(17,24,39,.35);
+      --shadow-soft: 0 10px 30px rgba(2,6,23,.35);
+
+      /* Transiciones */
+      --t: .18s cubic-bezier(.22,.61,.36,1);
     }
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', Arial, sans-serif;
-      background: var(--bg);
-      color: #23272f;
+
+    /* Auto dark/light y toggle */
+    :root[data-theme="light"]{
+      --bg:#ecf2ff;
+      --ink:#0f172a;
+      --surface:#ffffff;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,.65);
+      --border: 1px solid #e8eefc;
+      --shadow-hero: 0 20px 60px rgba(37, 99, 235, .25);
+      --shadow-soft: 0 6px 28px rgba(37,99,235,.18);
     }
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    @media (prefers-color-scheme: light){
+      :root { color-scheme: light; }
+      body:not([data-force-dark="true"]) :root{}
     }
-    .navbar {
-      background: var(--sidebar);
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#e5e7eb; background: var(--bg);
+      background-image: var(--gradient-2);
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:40;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px clamp(14px,4vw,28px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: color-mix(in oklab, var(--glass), transparent 28%);
+      border-bottom: var(--border);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none;
+    }
+    .brand-badge{
+      width:34px;height:34px;border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      box-shadow: 0 0 0 5px rgba(255,255,255,.08), 0 10px 30px rgba(34,197,94,.35);
+    }
+    .brand-title{
+      font-family: Montserrat, sans-serif; font-weight:800; letter-spacing:.6px; font-size:1.15rem;
+    }
+    .nav-links{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .nav-links a{
+      text-decoration:none; color:#cbd5e1; font-weight:600; font-size:.98rem;
+      padding:10px 14px; border-radius:12px; border:1px solid transparent;
+      transition: var(--t);
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .nav-links a:hover, .nav-links a.active{
+      color:#fff; background: #1e293b; border-color:#334155;
+      box-shadow: 0 6px 18px rgba(2,6,23,.25);
+    }
+
+    /* THEME TOGGLE */
+    .toggle{
+      appearance:none; width:46px; height:28px; border-radius:999px;
+      position:relative; background:#0b1224; border:1px solid #334155; cursor:pointer;
+      display:inline-block; margin-left:8px;
+    }
+    .toggle::after{
+      content:""; position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%;
+      background:linear-gradient(135deg,#fff,#e2e8f0); transition: var(--t); box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    }
+    .toggle:checked{ background:#e2e8f0; }
+    .toggle:checked::after{ transform: translateX(18px); }
+
+    /* HERO */
+    .hero{
+      position:relative; overflow:hidden; color:#fff;
+      background: var(--gradient-1);
+      box-shadow: var(--shadow-hero);
+      border-bottom: var(--border);
+    }
+    .hero::before, .hero::after{
+      content:""; position:absolute; inset:-10%;
+      background: radial-gradient(800px 300px at 10% 20%, #22c55e22, transparent 55%),
+                  radial-gradient(900px 420px at 90% 10%, #0ea5e955, transparent 60%);
+      filter: blur(20px); opacity:.6; animation: float 18s ease-in-out infinite alternate;
+    }
+    .hero::after{ animation-duration: 24s; mix-blend-mode: screen; }
+    @keyframes float{ from{ transform: translateY(-10px)} to{ transform: translateY(10px)} }
+
+    .hero-wrap{
+      max-width:1100px; margin:0 auto; padding: clamp(38px, 8vw, 86px) 16px;
+      text-align:center;
+    }
+    .hero h1{
+      font-family: Montserrat, sans-serif; font-weight:800;
+      font-size: clamp(1.9rem, 3.6vw, 3rem);
+      letter-spacing:.4px; margin:0 0 10px 0; text-shadow: 0 4px 16px rgba(0,0,0,.25);
+    }
+    .hero p{
+      font-size: clamp(1.02rem,1.4vw,1.2rem); opacity:.96; max-width: 820px; margin:0 auto 18px auto;
+      line-height:1.6;
+    }
+    .cta{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:14px 24px; border-radius:14px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      color:#fff; font-weight:800; font-family: Montserrat, sans-serif; text-decoration:none;
+      box-shadow: 0 10px 24px rgba(59,130,246,.35);
+      transition: var(--t); letter-spacing:.2px;
+    }
+    .cta:hover{ transform: translateY(-2px) scale(1.01); box-shadow: 0 16px 30px rgba(59,130,246,.45); }
+
+    /* MAIN CARD CONTENIDO */
+    .content{
+      max-width: 1100px; margin: -40px auto 40px auto; padding: 0 16px;
+    }
+    .card{
+      background: color-mix(in oklab, var(--surface), transparent 0%);
+      border: var(--border);
+      border-radius: var(--radius-xl);
       box-shadow: var(--shadow-soft);
-      padding: 0.9rem 2.2rem 0.9rem 2.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      border-radius: 0 0 var(--radius) var(--radius);
+      padding: clamp(18px, 3.8vw, 32px);
     }
-    .logo {
-      font-size: 1.38rem;
-      font-family: 'Montserrat',sans-serif;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      margin-right: 46px;
-    }
-    .logo::before {
-      content: '';
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      margin-right: 13px;
-      box-shadow: 0 4px 18px #dde8fc, 0 0 0 4px #fff;
-      display: inline-block;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.4rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: #cbd5e1;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      font-size: 1.07rem;
-      border-radius: var(--radius-md);
-      padding: 7px 17px;
-      transition: background var(--transition), color var(--transition);
-      border-left: 4px solid transparent;
-      display: flex;
-      align-items: center;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      background: rgba(37,99,235,0.13);
-      color: #fff;
-      border-color: var(--sidebar-active);
-      box-shadow: 0 2px 10px #2563eb19;
-    }
-    .hero-home {
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary) 55%, #0ea5e9 130%);
-      color: #fff;
-      padding: 3.2rem 1.3rem 2.7rem 1.3rem;
-      text-align: center;
-    }
-    .hero-home h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.25rem;
-      font-weight: 800;
-      margin-bottom: 0.72rem;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 10px #1d4ed899;
-    }
-    .hero-home p {
-      font-size: 1.13rem;
-      opacity: .96;
-      max-width: 670px;
-      margin: 0 auto 1.5rem auto;
-      font-weight: 500;
-      line-height: 1.56;
-    }
-    .cta-btn {
-      display: inline-block;
-      margin-top: 0.7rem;
-      padding: 13px 42px;
-      font-size: 1.13rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(90deg,var(--accent) 10%, var(--primary) 140%);
-      border: none;
-      border-radius: 22px;
-      box-shadow: 0 4px 18px #2563eb55;
-      transition: background .16s, box-shadow .18s, transform .12s;
-      text-decoration: none;
-      letter-spacing: .5px;
-    }
-    .cta-btn:hover {
-      background: linear-gradient(90deg, var(--primary) 20%, var(--accent) 140%);
-      box-shadow: 0 8px 28px #2563eb33;
-      transform: translateY(-2px) scale(1.01);
-    }
-    .content-section {
-      max-width: 980px;
-      margin: 0 auto;
-      margin-top: -38px;
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-neu);
-      border: 1.6px solid #eef3fb;
-      padding: 2.3rem 2.1rem 1.7rem 2.1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .benefits-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-      justify-content: center;
-      margin-top: 8px;
-      margin-bottom: 8px;
-    }
-    .benefit-card {
-      background: #fff;
-      border-radius: var(--radius-md);
-      box-shadow: 0 3px 16px #dde5f04b;
-      padding: 1.18rem 1.3rem;
-      max-width: 240px;
-      min-width: 170px;
-      flex: 1 1 170px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1.3px solid #ecf0fa;
-      font-weight: 600;
-      font-size: 1.08rem;
-      color: #2563eb;
-      text-align: center;
-      gap: 10px;
-      transition: box-shadow .14s;
-    }
-    .benefit-card i {
-      font-size: 2.4rem;
-      color: var(--primary);
-      margin-bottom: 7px;
-    }
-    .section-title {
-      color: var(--primary);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.33rem;
-      font-weight: 700;
-      margin: 25px 0 8px 0;
-      letter-spacing: .1px;
-      text-align: center;
-    }
-    .panel-liderespro {
-      width: 100%;
-      max-width: 430px;
-      background: #fff;
-      border-radius: var(--radius-md);
-      box-shadow: 0 6px 18px #2563eb29, 0 1.5px 0 #fff inset;
-      border: 1.5px solid #c8e3f7;
-      padding: 1.38rem 1.18rem 1.25rem 1.18rem;
-      margin: 23px auto 25px auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .panel-liderespro img {
-      width: 94%;
-      max-width: 350px;
-      border-radius: 14px;
-      margin-bottom: 11px;
-      border: 1.2px solid #e0eaff;
-      box-shadow: 0 2px 9px #2563eb15;
-    }
-    .panel-liderespro .panel-title {
-      color: #2563eb;
-      font-size: 1.07rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .panel-liderespro .panel-btn {
-      margin-top: 10px;
-      padding: 9px 30px;
-      border-radius: 16px;
-      border: none;
-      background: linear-gradient(90deg, #22c55e 10%, #2563eb 140%);
-      color: #fff;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background .15s, box-shadow .13s, transform .12s;
-      box-shadow: 0 3px 12px #dde8fc65;
-      text-decoration: none;
-    }
-    .panel-liderespro .panel-btn:hover {
-      background: linear-gradient(90deg, #2563eb 10%, #22c55e 140%);
-      transform: translateY(-1.5px) scale(1.01);
-      box-shadow: 0 7px 16px #22c55e44;
-    }
-    /* WhatsApp floating button */
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 38px;
-      right: 32px;
-      background: #25D366;
-      color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 4px 18px #25d36660;
-      width: 62px;
-      height: 62px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.45rem;
-      z-index: 2000;
-      cursor: pointer;
-      transition: background .14s, box-shadow .13s, transform .12s;
-      border: none;
-      outline: none;
-      text-decoration: none;
-    }
-    .whatsapp-btn:hover {
-      background: #128C7E;
-      box-shadow: 0 8px 22px #25d36633;
-      transform: scale(1.06);
-    }
-    @media (max-width: 700px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.2rem 0.8rem 1.2rem 1rem;
-      }
-      .logo {
-        margin-bottom: 13px;
-        margin-right: 0;
-      }
-      .content-section {
-        padding: 0.7rem 1vw 0.9rem 1vw;
-        border-radius: 13px;
-        margin-top: -22px;
-      }
-      .panel-liderespro {max-width: 99vw;}
-      .main-content {max-width: 99vw;}
-    }
-    .testimonials-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  justify-content: center;
-  margin-top: 10px;
-}
-.testimonial-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 3px 16px #dde5f04b;
-  padding: 1.5rem 1.2rem 1rem 1.2rem;
-  max-width: 240px;
-  min-width: 170px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1.3px solid #ecf0fa;
-  text-align: center;
-}
-.testimonial-photo {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 9px #2563eb22;
-  border: 3px solid #f5fbff;
-}
-.testimonial-text {
-  font-size: 1.03rem;
-  color: #23272f;
-  margin-bottom: 0.9rem;
-}
-.testimonial-name {
-  color: #2563eb;
-  font-family: 'Montserrat',sans-serif;
-  font-weight: 700;
-  font-size: 1.05rem;
-}
 
-.faq-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 10px;
-}
-.faq-card {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 10px #dde5f041;
-  border: 1.1px solid #e4ecf8;
-  padding: 1rem 1.1rem 1rem 1.1rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  min-width: 225px;
-  max-width: 320px;
-  flex: 1 1 225px;
-}
-.faq-card i {
-  font-size: 2.1rem;
-  color: #2563eb;
-  margin-top: 2px;
-}
-.faq-q {
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: #2563eb;
-  margin-bottom: 6px;
-}
-.faq-a {
-  color: #23272f;
-  font-size: 1.01rem;
-  line-height: 1.36;
-}
-    /* === SOBRE MÍ / MENTOR === */
-.about-mentor {
-  width: 100%;
-  max-width: 980px;
-  margin: 26px auto 0 auto;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-neu);
-  border: 1.6px solid #eef3fb;
-  padding: 1.8rem 1.6rem;
-}
+    /* Panel LideresPro (no se cambia funcionalidad) */
+    .panel{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(16px,3vw,24px);
+      align-items:center; margin-top: 8px;
+    }
+    .panel img{
+      width: 100%; border-radius: 16px; border: var(--border);
+      box-shadow: 0 10px 26px rgba(37,99,235,.22);
+    }
+    .panel .info h3{
+      margin:0 0 8px 0; color:#c7d2fe; font-size:1.12rem; letter-spacing:.2px;
+      font-weight:800; font-family: Montserrat, sans-serif;
+    }
+    .panel .info p{ color:#e5e7eb; opacity:.9; line-height:1.55; margin:0 0 10px 0}
+    .panel .panel-btn{
+      display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:800;
+      padding:10px 18px; border-radius:12px; color:#fff; background:linear-gradient(90deg,#22c55e, #2563eb);
+      box-shadow: 0 10px 24px rgba(34,197,94,.22); transition: var(--t);
+    }
+    .panel .panel-btn:hover{ transform: translateY(-2px); }
 
-.about-title {
-  color: var(--primary);
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  text-align: center;
-  margin: 0 0 16px 0;
-  letter-spacing: .2px;
-}
+    /* Números/ métricas */
+    .metrics{
+      display:grid; grid-template-columns: repeat(4,1fr); gap:14px; margin-top: 22px;
+    }
+    .metric{
+      background: color-mix(in oklab, var(--glass), transparent 10%); border: var(--border);
+      padding:16px; border-radius: 16px; text-align:center;
+    }
+    .metric .n{ font-size: clamp(1.4rem,3.2vw,2rem); font-weight:800; color:#fff; font-family: Montserrat, sans-serif; }
+    .metric .d{ color:#aab4c8; font-weight:600; }
 
-.about-wrap {
-  display: flex;
-  gap: 22px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    /* Beneficios */
+    .section-title{
+      text-align:center; margin: 28px 0 12px 0;
+      color:#c7d2fe; font-family: Montserrat, sans-serif; font-weight:800; letter-spacing:.3px;
+      font-size: clamp(1.2rem,2.2vw,1.4rem);
+    }
+    .benefits{
+      display:grid; grid-template-columns: repeat(6, minmax(160px,1fr));
+      gap:12px; justify-items:stretch;
+    }
+    .benefit{
+      background: #0b1224; border: var(--border); border-radius:16px; padding:16px;
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+      transition: var(--t);
+    }
+    .benefit:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(2,6,23,.35); }
+    .benefit i{ font-size:1.6rem; color: var(--primary); }
+    .benefit b{ color:#e5e7eb; font-size:1.02rem }
+    .benefit p{ color:#aab4c8; margin:0; font-size:.98rem; line-height:1.45 }
 
-.about-photo {
-  width: 230px;
-  height: 230px;
-  border-radius: 22px;
-  object-fit: cover;
-  box-shadow: 0 6px 18px #2563eb25, 0 0 0 6px #f5fbff;
-  border: 1.4px solid #e6efff;
-}
+    /* Cómo funciona (pasos) */
+    .steps{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; margin-top: 6px;}
+    .step{
+      background:#0b1224; border: var(--border); border-radius:16px; padding:18px;
+    }
+    .step .k{ width:34px;height:34px;border-radius:10px; display:inline-grid; place-items:center;
+      background:linear-gradient(135deg,#22c55e,#3b82f6); font-weight:800;
+      box-shadow: 0 10px 20px rgba(59,130,246,.25); margin-bottom:10px;
+    }
+    .step h4{ margin:0 0 6px 0; color:#e5e7eb; font-size:1.06rem }
+    .step p{ margin:0; color:#aab4c8; line-height:1.5 }
 
-.about-card {
-  flex: 1 1 360px;
-  max-width: 560px;
-  background: #fff;
-  border-radius: var(--radius-md);
-  border: 1.3px solid #ecf0fa;
-  box-shadow: 0 6px 18px #dde8fc55, 0 1.5px 0 #fff inset;
-  padding: 1.2rem 1.3rem 1.1rem 1.3rem;
-}
+    /* Testimonios */
+    .testimonials{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; margin-top: 10px;}
+    .tcard{
+      background:#0b1224; border:var(--border); border-radius:18px; padding:18px; text-align:left;
+    }
+    .t-meta{ display:flex; align-items:center; gap:12px; margin-bottom:10px;}
+    .t-meta img{ width:54px; height:54px; border-radius:50%; object-fit:cover; border:1px solid #1f2a44}
+    .t-name{ font-weight:800; color:#e5e7eb }
+    .t-text{ color:#cbd5e1; font-size:1rem; line-height:1.5 }
 
-.about-name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.18rem;
-  font-weight: 800;
-  color: var(--primary);
-  margin: 0 0 6px 0;
-}
+    /* FAQ */
+    .faq{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; }
+    .faq .q{
+      background:#0b1224; border: var(--border); border-radius:14px; padding:16px; display:flex; gap:12px;
+    }
+    .faq i{ color: var(--primary); font-size:1.6rem }
+    .faq b{ color:#e5e7eb }
+    .faq p{ margin:.2rem 0 0 0; color:#aab4c8; }
 
-.about-role {
-  font-weight: 700;
-  color: #16a34a;
-  margin-bottom: 8px;
-}
+    /* About */
+    .about{
+      margin-top: 24px; background:#0b1224; border:var(--border); border-radius:18px; padding:18px;
+      display:grid; grid-template-columns: 240px 1fr; gap:16px; align-items:center;
+    }
+    .about img{ width:100%; height:240px; border-radius:16px; object-fit:cover; border:1px solid #1e2a44}
+    .about h3{ margin:0; color:#e5e7eb; font-family: Montserrat, sans-serif; font-weight:800 }
+    .badges{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 }
+    .badge{ padding:6px 10px; border-radius:999px; border:1px solid #1f2b42; color:#c7d2fe; font-weight:700; font-size:.9rem; background:#0f172a }
+    .about p{ color:#cbd5e1; line-height:1.6 }
+    .about .cta2{
+      display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:#fff; font-weight:800;
+      padding:10px 16px; border-radius:12px; background: linear-gradient(90deg, var(--accent), var(--primary));
+      box-shadow: 0 10px 24px rgba(34,197,94,.2);
+    }
 
-.about-text {
-  color: #334155;
-  font-size: 1.03rem;
-  line-height: 1.55;
-}
+    /* Respaldo (logos/ confianza) */
+    .trust{
+      margin-top: 8px; padding:14px; border:var(--border); border-radius:16px; background:#0b1224;
+      display:grid; grid-template-columns: repeat(5,1fr); gap:12px; align-items:center; justify-items:center;
+      color:#9fb4d9; font-weight:700; font-size:.96rem;
+    }
+    .trust div{ opacity:.8 }
 
-.about-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px 18px;
-  font-weight: 800;
-  border-radius: 16px;
-  text-decoration: none;
-  color: #fff;
-  background: linear-gradient(90deg, var(--accent) 10%, var(--primary) 140%);
-  box-shadow: 0 4px 14px #2563eb33;
-  transition: transform .12s, box-shadow .16s;
-}
-.about-cta:hover { transform: translateY(-1.5px) scale(1.02); box-shadow: 0 8px 22px #2563eb29; }
+    /* CTA final */
+    .cta-final{
+      text-align:center; margin-top:22px;
+    }
 
-/* etiqueta mini con borde para credenciales */
-.badges {
-  display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 2px 0;
-}
-.badge {
-  font-size: .88rem; font-weight: 700; color: #2563eb;
-  background: #f0f6ff;
-  border: 1px solid #cfe2ff;
-  padding: 6px 10px; border-radius: 999px;
-}
-@media (max-width: 700px) {
-  .about-photo { width: 210px; height: 210px; border-radius: 18px; }
-}
+    footer{
+      color:#aab4c8; text-align:center; padding:22px 10px 38px 10px;
+    }
+
+    /* WhatsApp flotante (sin cambios funcionales) */
+    .whatsapp-btn{
+      position: fixed; bottom: 26px; right: 22px; width:64px;height:64px;border-radius:50%;
+      background:#25D366; color:#fff; display:grid; place-items:center; font-size:2rem;
+      box-shadow: 0 10px 30px rgba(37,211,102,.35); z-index:2000; text-decoration:none; transition: var(--t);
+    }
+    .whatsapp-btn:hover{ transform: scale(1.06); background:#128C7E; }
+
+    /* Utilidades */
+    .muted{ color:#aab4c8 }
+    .center{ text-align:center }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .panel{ grid-template-columns:1fr; }
+      .metrics{ grid-template-columns: repeat(2,1fr);}
+      .benefits{ grid-template-columns: repeat(2,1fr); }
+      .steps{ grid-template-columns:1fr; }
+      .testimonials{ grid-template-columns:1fr; }
+      .faq{ grid-template-columns:1fr; }
+      .about{ grid-template-columns: 1fr; }
+      .trust{ grid-template-columns: repeat(2,1fr); }
+    }
   </style>
 </head>
 <body>
+  <!-- NAV -->
   <nav class="navbar">
-    <div class="logo">Red de Acción Masiva</div>
-    <div class="nav-links">
-  <a href="MasterPage.html" class="active">…Inicio</a>
-  <a href="Index.html">…Preinscripción</a>
-  <a href="arbolRed.html">…Ver mi Red</a>
-  <a href="ganoexcel.html"><i class="lucide lucide-info"></i> <span style="margin-left:6px">Sobre Gano Excel</span></a>
-</div>
+    <a class="brand" href="MasterPage.html" aria-label="Inicio">
+      <span class="brand-badge"></span>
+      <span class="brand-title">Red de Acción Masiva</span>
+    </a>
+    <div class="nav-right" style="display:flex; align-items:center; gap:10px;">
+      <div class="nav-links">
+        <a href="MasterPage.html" class="active"><i class="lucide lucide-home"></i><span>Inicio</span></a>
+        <a href="Index.html"><i class="lucide lucide-edit"></i><span>Preinscripción</span></a>
+        <a href="arbolRed.html"><i class="lucide lucide-tree-palm"></i><span>Ver mi Red</span></a>
+        <a href="ganoexcel.html"><i class="lucide lucide-info"></i><span>Sobre Gano Excel</span></a>
+      </div>
+
+      <!-- Toggle de tema -->
+      <label title="Cambiar tema">
+        <input id="themeToggle" type="checkbox" class="toggle" aria-label="Cambiar tema">
+      </label>
     </div>
   </nav>
 
-  <!-- HERO/HEADER -->
-  <section class="hero-home">
-    <h1>Una Red, un Equipo, una Oportunidad Real</h1>
-    <p>
-      La vida cambia cuando te rodeas de personas que quieren crecer.<br>
-      Da el paso hoy y únete a una red de mercadeo donde el apoyo, la educación y el crecimiento sí son prioridad.<br>
-      ¡Construye tu tranquilidad económica desde cero, incluso si nunca has hecho network marketing!
-    </p>
-    <a href="Index.html" class="cta-btn"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
-  </section>
-
-  <div class="content-section">
-
-    <!-- PANEL LIDERESPRO (AVANCE REAL DE LA RED) -->
-    <div class="panel-liderespro">
-      <div class="panel-title">Avance de nuestra red en <b>LideresPro</b></div>
-      <!-- Pon aquí tu captura o imagen real; esto es demo -->
-      <img src=" https://storage.builderall.com//franquias/2/7305446/editor-html/12438312.png" alt="Estadísticas de la Red en LideresPro">
-      <div style="font-size:1.01rem;color:#64748b; margin-bottom:6px;">
-        Más de <b>400 miembros activos</b> y creciendo cada semana.<br>
-        Resultados visibles, crecimiento real. <br>
-        <b>Tú también puedes ser parte.</b>
-      </div>
-      <a class="panel-btn" href="https://liderespro.info/" target="_blank">
-        Ver detalles y ranking en LideresPro
-      </a>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-wrap">
+      <h1>Una Red, un Equipo, una Oportunidad <span style="white-space:nowrap;">100% Real</span></h1>
+      <p>Rodearte de personas que crecen cambia tu vida. Únete hoy a una red donde el apoyo, la educación y el trabajo en bloque se convierten en resultados. <b>Construye tranquilidad económica desde cero</b>, incluso si nunca has hecho network marketing.</p>
+      <a href="Index.html" class="cta"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
     </div>
+  </header>
 
-    <!-- BENEFICIOS -->
-    <div class="section-title">¿Por qué unirte a Red de Acción Masiva?</div>
-    <div class="benefits-list">
-      <div class="benefit-card"><i class="lucide lucide-users"></i>Equipo de apoyo real y mentoría</div>
-      <div class="benefit-card"><i class="lucide lucide-trophy"></i>Sistema que premia el trabajo en equipo</div>
-      <div class="benefit-card"><i class="lucide lucide-graduation-cap"></i>Capacitación desde cero</div>
-      <div class="benefit-card"><i class="lucide lucide-phone"></i>Todo digital y sencillo desde tu celular</div>
-      <div class="benefit-card"><i class="lucide lucide-handshake"></i>Resultados en bloque, no caminas solo</div>
-      <div class="benefit-card"><i class="lucide lucide-shield-check"></i>Red confiable, productos validados</div>
-    </div>
+  <!-- CONTENIDO -->
+  <main class="content">
+    <section class="card">
+      <!-- Panel con tu captura y enlace real -->
+      <div class="panel">
+        <img src="https://storage.builderall.com//franquias/2/7305446/editor-html/12438312.png" alt="Estadísticas de la Red en LideresPro">
+        <div class="info">
+          <h3>Avance real de nuestra red en <b>LideresPro</b></h3>
+          <p>Más de <b>400 miembros activos</b> y creciendo cada semana. Resultados visibles, crecimiento real. <b>Tú también puedes ser parte.</b></p>
+          <a class="panel-btn" href="https://liderespro.info/" target="_blank" rel="noopener">
+            <i class="lucide lucide-line-chart"></i> Ver detalles y ranking en LideresPro
+          </a>
 
-   <!-- TESTIMONIOS -->
-<div class="section-title" style="margin-top:36px;">Testimonios reales</div>
-<div class="testimonials-grid">
-  <div class="testimonial-card">
-    <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-photo" alt="Mariana F.">
-    <div class="testimonial-text">“Entré con miedo, pero aquí sí se siente el respaldo. En mi primer mes logré mis primeros ingresos sin experiencia.”</div>
-    <div class="testimonial-name">Mariana F.</div>
-  </div>
-  <div class="testimonial-card">
-    <img src="https://randomuser.me/api/portraits/men/55.jpg" class="testimonial-photo" alt="Carlos M.">
-    <div class="testimonial-text">“La educación y el acompañamiento diario marcan la diferencia. Por fin encontré un equipo que sí te enseña.”</div>
-    <div class="testimonial-name">Carlos M.</div>
-  </div>
-  <div class="testimonial-card">
-    <img src="https://randomuser.me/api/portraits/women/65.jpg" class="testimonial-photo" alt="Luisa R.">
-    <div class="testimonial-text">“¡Aquí los resultados llegan más rápido porque todos empujamos juntos! Recomiendo la Red a quien quiera de verdad crecer.”</div>
-    <div class="testimonial-name">Luisa R.</div>
-  </div>
-</div>
-
-<!-- PREGUNTAS FRECUENTES -->
-<div class="section-title" style="margin-top:36px;">Preguntas frecuentes</div>
-<div class="faq-grid">
-  <div class="faq-card">
-    <i class="lucide lucide-help-circle"></i>
-    <div>
-      <div class="faq-q"><b>¿Necesito experiencia previa?</b></div>
-      <div class="faq-a">Para nada. Aquí empiezas desde cero y cuentas con mentoría y capacitación personalizada.</div>
-    </div>
-  </div>
-  <div class="faq-card">
-    <i class="lucide lucide-users"></i>
-    <div>
-      <div class="faq-q"><b>¿Qué pasa si no conozco a nadie?</b></div>
-      <div class="faq-a">Nuestro sistema es en bloque: ¡tú no reclutas solo! Recibes ayuda y el apoyo de todo el equipo.</div>
-    </div>
-  </div>
-  <div class="faq-card">
-    <i class="lucide lucide-wallet"></i>
-    <div>
-      <div class="faq-q"><b>¿Cuánto debo invertir?</b></div>
-      <div class="faq-a">Hay paquetes para todos los bolsillos y puedes iniciar de acuerdo a tus posibilidades.</div>
-    </div>
-  </div>
-  <div class="faq-card">
-    <i class="lucide lucide-dollar-sign"></i>
-    <div>
-      <div class="faq-q"><b>¿Realmente puedo ganar dinero?</b></div>
-      <div class="faq-a">Sí. Aquí los ingresos dependen de tu participación y del equipo. Te mostramos el paso a paso.</div>
-    </div>
-  </div>
-</div>
-    <!-- SOBRE MÍ / MENTOR -->
-<section class="about-mentor">
-  <div class="about-title">Conoceme un poco</div>
-
-  <div class="about-wrap">
-    <!-- FOTO (súbela a img/duvan.jpg o cambia el src) -->
-    <img src="https://scontent-bog2-2.xx.fbcdn.net/v/t39.30808-6/517213242_10237784107403210_6915932470975358378_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHrJu6bayjS5ce4SBzz2VTLANrUut1oWvEA2tS63Wha8W-PIfKc-6M-ul33xUreyvo&_nc_ohc=Vas-KFGSYgYQ7kNvwGWsCgx&_nc_oc=AdlM37hxpIkT62VfGe3ybkpR7PvQJ03baLFDaexWUYwye1Q10-BpuKsQGJVWHdI8QTfCZ99MxELkZeQ9zEtNev5s&_nc_zt=23&_nc_ht=scontent-bog2-2.xx&_nc_gid=Idu_0fJ1PAhvDIueqvhjJQ&oh=00_AfWE3hebjwwTmpE6B8B9npHoCkcvAJ0REHeQhKLZXhmTWA&oe=68AB1897" alt="Duvan Molina" class="about-photo">
-
-    <!-- TARJETA DE PERFIL -->
-    <div class="about-card">
-      <div class="about-name">Soy Duvan Molina</div>
-      <div class="about-role">Docente • Mentor • Networker • Coach</div>
-
-      <div class="badges">
-        <div class="badge"><i class="lucide lucide-graduation-cap"></i> Formación y Mentoría</div>
-        <div class="badge"><i class="lucide lucide-users"></i> Red en Crecimiento</div>
-        <div class="badge"><i class="lucide lucide-camera"></i> Contenido en TikTok</div>
+          <!-- Números de confianza -->
+          <div class="metrics">
+            <div class="metric"><div class="n">400+</div><div class="d">Miembros activos</div></div>
+            <div class="metric"><div class="n">30d</div><div class="d">Plan de inicio</div></div>
+            <div class="metric"><div class="n">24/7</div><div class="d">Soporte de la comunidad</div></div>
+            <div class="metric"><div class="n">100%</div><div class="d">Enfoque práctico</div></div>
+          </div>
+        </div>
       </div>
 
-      <p class="about-text">
-        Decidí no vivir con las limitaciones del tiempo y el dinero. Por eso creé un método que
-        acompaña a personas <b>desde cero</b> a construir tranquilidad económica con una red que
-        educa, apoya y trabaja en bloque y que tiene resultados desde sus primeros días. Si tienes disciplina y ganas de crecer, te llevo paso a paso.
-      </p>
-      <p class="about-text" style="margin-top:6px;">
-        He guiado a decenas de personas a lanzar sus primeros resultados sin experiencia previa,
-        combinando <b>educación práctica</b>, <b>acciones diarias</b> y <b>acompañamiento real</b>.
-      </p>
+      <!-- Beneficios -->
+      <h2 class="section-title">¿Por qué unirte a la Red de Acción Masiva?</h2>
+      <div class="benefits" id="benefits">
+        <div class="benefit">
+          <i class="lucide lucide-users"></i>
+          <b>Equipo y mentoría reales</b>
+          <p>Acompañamiento paso a paso para que avances sin sentirte solo.</p>
+        </div>
+        <div class="benefit">
+          <i class="lucide lucide-trophy"></i>
+          <b>El sistema premia el trabajo</b>
+          <p>La cooperación multiplica resultados. Aquí ganar es en bloque.</p>
+        </div>
+        <div class="benefit">
+          <i class="lucide lucide-graduation-cap"></i>
+          <b>Capacitación desde cero</b>
+          <p>Contenido práctico y aplicable desde el primer día.</p>
+        </div>
+        <div class="benefit">
+          <i class="lucide lucide-phone"></i>
+          <b>100% digital</b>
+          <p>Todo desde tu celular, sin complicaciones técnicas.</p>
+        </div>
+        <div class="benefit">
+          <i class="lucide lucide-handshake"></i>
+          <b>Resultados compartidos</b>
+          <p>Avanzas con un equipo que empuja contigo cada semana.</p>
+        </div>
+        <div class="benefit">
+          <i class="lucide lucide-shield-check"></i>
+          <b>Confianza y respaldo</b>
+          <p>Productos validados y procesos claros.</p>
+        </div>
+      </div>
 
-      <a class="about-cta"
-         href="https://wa.me/3102586718?text=Hola%20Duvan%2C%20quiero%20conocer%20tu%20m%C3%A9todo%20y%20sumarme%20a%20la%20Red"
-         target="_blank">
-        <i class="lucide lucide-message-circle"></i> Hablar con Duvan
-      </a>
-    </div>
-  </div>
-</section>
-    <!-- CTA FINAL -->
-    <a href="Index.html" class="cta-btn" style="margin-top: 23px;"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
-  </div>
-<center>
-  <footer>
-    &copy; 2025 Red de Acción Masiva | Creado para crecer juntos 🚀
-  </footer>
-</center>
-  <!-- Botón flotante de WhatsApp -->
-  <a href="https://wa.me/3102586718?text=Hola%20quiero%20más%20información%20sobre%20Red%20de%20Acción%20Masiva"
+      <!-- Cómo funciona -->
+      <h2 class="section-title">Cómo funciona</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="k">1</div>
+          <h4>Preinscríbete</h4>
+          <p>Completa tus datos y recibe tu guía de arranque para los primeros 7 días.</p>
+        </div>
+        <div class="step">
+          <div class="k">2</div>
+          <h4>Plan de 30 días</h4>
+          <p>Accede al plan diario de acciones simples y medibles para generar tracción.</p>
+        </div>
+        <div class="step">
+          <div class="k">3</div>
+          <h4>Progreso en bloque</h4>
+          <p>Te integras a un equipo que te impulsa y te ayuda a alcanzar tus primeros resultados.</p>
+        </div>
+      </div>
+
+      <!-- Testimonios -->
+      <h2 class="section-title">Testimonios reales</h2>
+      <div class="testimonials">
+        <article class="tcard">
+          <div class="t-meta">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Mariana F.">
+            <div>
+              <div class="t-name">Mariana F.</div>
+              <div class="muted">Ingresos desde el primer mes</div>
+            </div>
+          </div>
+          <div class="t-text">“Entré con miedo, pero aquí sí se siente el respaldo. En mi primer mes logré ingresos sin experiencia.”</div>
+        </article>
+        <article class="tcard">
+          <div class="t-meta">
+            <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Carlos M.">
+            <div>
+              <div class="t-name">Carlos M.</div>
+              <div class="muted">Acompañamiento diario</div>
+            </div>
+          </div>
+          <div class="t-text">“La educación y el acompañamiento marcan la diferencia. Por fin un equipo que sí te enseña.”</div>
+        </article>
+        <article class="tcard">
+          <div class="t-meta">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Luisa R.">
+            <div>
+              <div class="t-name">Luisa R.</div>
+              <div class="muted">Resultados en bloque</div>
+            </div>
+          </div>
+          <div class="t-text">“Los resultados llegan más rápido porque todos empujamos juntos. Recomendado para crecer.”</div>
+        </article>
+      </div>
+
+      <!-- FAQ -->
+      <h2 class="section-title">Preguntas frecuentes</h2>
+      <div class="faq">
+        <div class="q">
+          <i class="lucide lucide-help-circle"></i>
+          <div><b>¿Necesito experiencia previa?</b><p>Para nada. Empiezas desde cero con mentoría personalizada.</p></div>
+        </div>
+        <div class="q">
+          <i class="lucide lucide-users"></i>
+          <div><b>¿Y si no conozco a nadie?</b><p>El sistema es en bloque: no reclutas solo, avanzas con apoyo real.</p></div>
+        </div>
+        <div class="q">
+          <i class="lucide lucide-wallet"></i>
+          <div><b>¿Cuánto debo invertir?</b><p>Hay opciones para diferentes presupuestos. Empiezas según tus posibilidades.</p></div>
+        </div>
+        <div class="q">
+          <i class="lucide lucide-dollar-sign"></i>
+          <div><b>¿Puedo ganar dinero?</b><p>Sí. Tus ingresos dependen de tu participación y del equipo. Te mostramos el paso a paso.</p></div>
+        </div>
+      </div>
+
+      <!-- About / Mentor -->
+      <h2 class="section-title">Conóceme un poco</h2>
+      <section class="about">
+        <img src="https://scontent-bog2-2.xx.fbcdn.net/v/t39.30808-6/517213242_10237784107403210_6915932470975358378_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHrJu6bayjS5ce4SBzz2VTLANrUut1oWvEA2tS63Wha8W-PIfKc-6M-ul33xUreyvo&_nc_ohc=Vas-KFGSYgYQ7kNvwGWsCgx&_nc_oc=AdlM37hxpIkT62VfGe3ybkpR7PvQJ03baLFDaexWUYwye1Q10-BpuKsQGJVWHdI8QTfCZ99MxELkZeQ9zEtNev5s&_nc_zt=23&_nc_ht=scontent-bog2-2.xx&_nc_gid=Idu_0fJ1PAhvDIueqvhjJQ&oh=00_AfWE3hebjwwTmpE6B8B9npHoCkcvAJ0REHeQhKLZXhmTWA&oe=68AB1897" alt="Duvan Molina">
+        <div>
+          <h3>Soy Duvan Molina</h3>
+          <div class="badges">
+            <span class="badge"><i class="lucide lucide-graduation-cap"></i> Mentoría práctica</span>
+            <span class="badge"><i class="lucide lucide-users"></i> Red en crecimiento</span>
+            <span class="badge"><i class="lucide lucide-camera"></i> Contenido en TikTok</span>
+          </div>
+          <p>Decidí no vivir con las limitaciones del tiempo y el dinero. Creé un método para acompañar a personas <b>desde cero</b> a construir tranquilidad económica con una red que educa, apoya y trabaja en bloque. Si tienes disciplina y ganas de crecer, te llevo paso a paso.</p>
+          <p>He guiado a decenas de personas a lanzar sus primeros resultados sin experiencia previa, combinando <b>acciones diarias</b>, <b>educación práctica</b> y <b>acompañamiento real</b>.</p>
+          <a class="cta2" href="https://wa.me/3102586718?text=Hola%20Duvan%2C%20quiero%20conocer%20tu%20m%C3%A9todo%20y%20sumarme%20a%20la%20Red" target="_blank" rel="noopener"><i class="lucide lucide-message-circle"></i> Hablar con Duvan</a>
+        </div>
+      </section>
+
+      <!-- Respaldo (logos/placeholder) -->
+      <div class="section-title">Respaldo y comunidad</div>
+      <div class="trust" aria-label="Respaldo">
+        <div>Mentorías semanales</div>
+        <div>Guías 30 días</div>
+        <div>Soporte WhatsApp</div>
+        <div>Ranking público</div>
+        <div>Capacitación continua</div>
+      </div>
+
+      <!-- CTA final -->
+      <div class="cta-final">
+        <a href="Index.html" class="cta"><i class="lucide lucide-edit"></i> Quiero Preinscribirme</a>
+        <p class="muted" style="margin-top:10px">Sin costo de registro. Te contactamos y arrancas con el plan de 30 días.</p>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Red de Acción Masiva · Creado para crecer juntos 🚀
+    </footer>
+  </main>
+
+  <!-- Botón WhatsApp (igual que antes) -->
+  <a href="https://wa.me/3102586718?text=Hola%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Red%20de%20Acci%C3%B3n%20Masiva"
      target="_blank" class="whatsapp-btn" title="¡Escríbenos por WhatsApp!">
     <i class="lucide lucide-message-circle"></i>
   </a>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.349.0/dist/umd/lucide.min.js"></script>
   <script>
+    // Iconos
     window.addEventListener("DOMContentLoaded",()=>{ lucide.createIcons(); });
+
+    // Toggle de tema (light/dark). No altera tu funcionalidad.
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('ram-theme') || 'dark';
+    if(saved==='light'){ root.setAttribute('data-theme','light'); toggle.checked = true; }
+    toggle?.addEventListener('change',()=>{
+      if(toggle.checked){ root.setAttribute('data-theme','light'); localStorage.setItem('ram-theme','light'); }
+      else{ root.removeAttribute('data-theme'); localStorage.setItem('ram-theme','dark'); }
+    });
+
+    // Animaciones en scroll (intersección)
+    const reveal = (el)=>{ el.animate([{opacity:0, transform:'translateY(14px)'},{opacity:1, transform:'translateY(0)'}],
+      {duration:500, easing:'cubic-bezier(.22,.61,.36,1)', fill:'both'});}
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ reveal(e.target); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    document.querySelectorAll('.benefit,.step,.tcard,.q,.metric').forEach(el=>io.observe(el));
   </script>
 </body>
 </html>
+
+
 
 
 
