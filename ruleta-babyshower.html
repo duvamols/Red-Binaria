@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ruleta de Regalos (sin repetidos)</title>
+  <title>Ruleta de Regalos (Baby Shower)</title>
   <style>
     :root{
       --bg:#0b1220;
@@ -38,9 +38,7 @@
       grid-template-columns: 1.05fr .95fr;
       gap:16px;
     }
-    @media (max-width: 980px){
-      .wrap{grid-template-columns:1fr; }
-    }
+    @media (max-width: 980px){ .wrap{grid-template-columns:1fr;} }
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border:1px solid var(--border);
@@ -48,15 +46,11 @@
       box-shadow:var(--shadow);
       padding:16px;
     }
-    h1{
-      margin:0 0 10px;
-      font-size:20px;
-      letter-spacing:.2px;
-    }
-    .sub{color:var(--muted); font-size:13px; margin:0 0 14px; line-height:1.35;}
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    label{font-size:12px; color:var(--muted); display:block; margin:0 0 6px;}
-    input, textarea, select{
+    h1{ margin:0 0 10px; font-size:20px; letter-spacing:.2px; }
+    .sub{ color:var(--muted); font-size:13px; margin:0 0 14px; line-height:1.35; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    label{ font-size:12px; color:var(--muted); display:block; margin:0 0 6px; }
+    input, textarea{
       width:100%;
       border-radius:12px;
       border:1px solid var(--border);
@@ -65,8 +59,8 @@
       padding:10px 12px;
       outline:none;
     }
-    textarea{min-height:140px; resize:vertical;}
-    input::placeholder, textarea::placeholder{color:rgba(159,176,208,.65)}
+    textarea{ min-height:140px; resize:vertical; }
+    input::placeholder, textarea::placeholder{ color:rgba(159,176,208,.65) }
     .btn{
       border:1px solid var(--border);
       background: rgba(255,255,255,.06);
@@ -79,13 +73,13 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      font-weight:600;
+      font-weight:700;
     }
-    .btn:active{transform: translateY(1px);}
-    .btn.primary{background: linear-gradient(90deg, rgba(110,231,255,.22), rgba(167,139,250,.22)); border-color:rgba(110,231,255,.25);}
-    .btn.ok{background: rgba(52,211,153,.18); border-color:rgba(52,211,153,.28);}
-    .btn.danger{background: rgba(255,107,107,.16); border-color:rgba(255,107,107,.25);}
-    .btn:disabled{opacity:.45; cursor:not-allowed}
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ background: linear-gradient(90deg, rgba(110,231,255,.22), rgba(167,139,250,.22)); border-color:rgba(110,231,255,.25); }
+    .btn.ok{ background: rgba(52,211,153,.18); border-color:rgba(52,211,153,.28); }
+    .btn.danger{ background: rgba(255,107,107,.16); border-color:rgba(255,107,107,.25); }
+    .btn:disabled{ opacity:.45; cursor:not-allowed }
     .pill{
       display:inline-flex;
       align-items:center;
@@ -105,6 +99,8 @@
       align-items:center;
       justify-content:center;
       padding:14px;
+      position:relative;
+      overflow:hidden;
     }
     canvas{
       width:min(520px, 100%);
@@ -130,22 +126,20 @@
       padding:12px;
       min-height:78px;
     }
-    .resultTitle{font-size:12px; color:var(--muted); margin-bottom:6px;}
-    .resultGift{font-size:16px; font-weight:800; line-height:1.25;}
-    .resultMeta{margin-top:8px; font-size:12px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap;}
+    .resultTitle{ font-size:12px; color:var(--muted); margin-bottom:6px; }
+    .resultGift{ font-size:16px; font-weight:900; line-height:1.25; }
+    .resultMeta{ margin-top:8px; font-size:12px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap; }
     .tag{
       padding:4px 8px;
       border-radius:999px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.06);
     }
-    .tag.used{border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2;}
-    .tag.free{border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df;}
-    .small{font-size:12px; color:var(--muted);}
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-    @media (max-width: 560px){
-      .grid2{grid-template-columns:1fr;}
-    }
+    .tag.used{ border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2; }
+    .tag.free{ border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df; }
+    .small{ font-size:12px; color:var(--muted); }
+    .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media (max-width: 560px){ .grid2{grid-template-columns:1fr;} }
     .list{
       margin-top:10px;
       border-top:1px dashed rgba(255,255,255,.12);
@@ -163,8 +157,8 @@
       border-radius:12px;
       margin-bottom:8px;
     }
-    .item b{font-size:13px;}
-    .item span{font-size:12px; color:var(--muted);}
+    .item b{ font-size:13px; }
+    .item span{ font-size:12px; color:var(--muted); }
     .item .status{
       font-size:12px;
       padding:4px 8px;
@@ -173,34 +167,81 @@
       white-space:nowrap;
       align-self:center;
     }
-    .item .status.free{border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df;}
-    .item .status.used{border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2;}
-    .footerRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:10px;}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .item .status.free{ border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df; }
+    .item .status.used{ border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2; }
+    .footerRow{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:10px; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* Pantalla inicial */
+    .overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background: radial-gradient(900px 500px at 30% 20%, rgba(110,231,255,.14), transparent 55%),
+                  rgba(0,0,0,.65);
+      backdrop-filter: blur(10px);
+      z-index:10;
+    }
+    .modal{
+      width:min(520px,100%);
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(18,27,47,.92);
+      box-shadow: var(--shadow);
+      padding:16px;
+    }
+    .modal h2{ margin:0 0 8px; font-size:18px; }
+    .modal p{ margin:0 0 12px; color:var(--muted); font-size:13px; line-height:1.4; }
+    .modal .note{
+      margin-top:10px;
+      font-size:12px;
+      color:rgba(159,176,208,.9);
+      border-top:1px dashed rgba(255,255,255,.12);
+      padding-top:10px;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
 
-    <!-- LEFT: RUEDA -->
+    <!-- LEFT: RULETA -->
     <div class="card canvasWrap">
-      <h1>🎡 Ruleta de regalos (sin repetidos)</h1>
-      <p class="sub">
-        Escribe el <b>nombre del invitado</b>, gira la ruleta y luego pulsa <b>Aceptar</b> para bloquear el regalo.
-        Si sale uno ya tomado, tendrás que girar otra vez.
-      </p>
+      <h1>🎡 Ruleta de regalos</h1>
+      <p class="sub">Ingresa tu nombre, gira y luego decide: <b>Cancelar</b> o <b>Escoger/Aceptar</b>.</p>
+
+      <!-- Overlay inicial -->
+      <div class="overlay" id="startOverlay">
+        <div class="modal">
+          <h2>¡Bienvenido/a! 👶🎁</h2>
+          <p>
+            Para el baby shower vamos a asignar los regalos por <b>sorteo</b>.
+            Escribe tu <b>nombre</b> y gira la ruleta: así evitamos que los regalos se repitan.
+          </p>
+          <label>Tu nombre</label>
+          <input id="startName" placeholder="Escribe tu nombre aquí" />
+          <div class="row" style="margin-top:12px; justify-content:flex-end;">
+            <button class="btn primary" id="btnStart">Entrar a la ruleta</button>
+          </div>
+          <div class="note">
+            Si no te gusta lo que te sale, pulsa <b>Cancelar</b> y puedes girar otra vez.
+            Cuando pulses <b>Escoger/Aceptar</b>, el regalo se <b>bloquea</b> y nadie más podrá escogerlo.
+          </div>
+        </div>
+      </div>
 
       <div class="pointer" aria-hidden="true"></div>
       <canvas id="wheel" width="700" height="700"></canvas>
 
       <div class="row" style="width:min(520px,100%);">
         <div style="flex:1; min-width:220px;">
-          <label>Nombre del invitado</label>
+          <label>Nombre</label>
           <input id="guestName" placeholder="Ej: Camila, Juan, etc." />
         </div>
         <div style="display:flex; gap:10px; align-items:flex-end;">
           <button class="btn primary" id="btnSpin">Girar</button>
-          <button class="btn ok" id="btnAccept" disabled>Aceptar</button>
         </div>
       </div>
 
@@ -209,6 +250,12 @@
         <div class="resultGift" id="resultGift">—</div>
         <div class="resultMeta" id="resultMeta"></div>
         <div class="small" id="hint" style="margin-top:8px;"></div>
+
+        <!-- Botones de decisión -->
+        <div class="row" style="margin-top:12px; justify-content:flex-end;">
+          <button class="btn danger" id="btnCancel" disabled>Cancelar</button>
+          <button class="btn ok" id="btnAccept" disabled>Escoger / Aceptar</button>
+        </div>
       </div>
 
       <div class="footerRow" style="width:min(520px,100%);">
@@ -218,12 +265,12 @@
       </div>
     </div>
 
-    <!-- RIGHT: CONFIG -->
+    <!-- RIGHT: CONFIG (para el admin que edita la lista) -->
     <div class="card">
-      <h1>⚙️ Configuración</h1>
+      <h1>⚙️ Configuración (Admin)</h1>
       <p class="sub">
         Pega la lista de regalos (uno por línea) y pulsa <b>Cargar/Actualizar</b>.
-        Se eliminan duplicados exactos y líneas vacías.
+        Se eliminan duplicados exactos y líneas vacías. (Los bloqueos se conservan si el nombre coincide).
       </p>
 
       <label>Lista de regalos (uno por línea)</label>
@@ -252,50 +299,49 @@ Cobija para bebé
       <div class="list" id="giftList"></div>
 
       <p class="small" style="margin:10px 0 0;">
-        <span class="mono">Tip:</span> Si quieres “empezar limpio” para otro evento, usa <b>Reiniciar TODO</b>.
+        <span class="mono">OJO:</span> esto bloquea por navegador/dispositivo.
+        Para bloquear “global” (que todos vean lo mismo), toca usar una base de datos (Sheets/Firebase/Supabase).
       </p>
     </div>
   </div>
 
   <script>
     // -----------------------------
-    // Persistencia
+    // Persistencia (LOCAL: por dispositivo)
     // -----------------------------
-    const LS_KEY = "ruleta_regalos_v1";
+    const LS_KEY = "ruleta_regalos_v2";
     function loadState(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        if(!raw) return null;
-        return JSON.parse(raw);
-      }catch(e){
-        return null;
-      }
+      try{ const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : null; }
+      catch(e){ return null; }
     }
-    function saveState(){
-      localStorage.setItem(LS_KEY, JSON.stringify(state));
-    }
+    function saveState(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
 
     // -----------------------------
     // Estado
     // gifts: [{name, claimedBy|null}]
-    // lastResult: {index, angle, giftName, isClaimed, claimedBy}
+    // lastResult: {index, giftName, isClaimed, claimedBy}
+    // spinAngle en rad
     // -----------------------------
-    let state = loadState() || {
-      gifts: [],
-      lastResult: null,
-      spinAngle: 0, // rad
-    };
+    let state = loadState() || { gifts: [], lastResult: null, spinAngle: 0 };
 
     // -----------------------------
-    // Elementos UI
+    // UI
     // -----------------------------
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
+
+    const startOverlay = document.getElementById("startOverlay");
+    const startName = document.getElementById("startName");
+    const btnStart = document.getElementById("btnStart");
+
     const giftInput = document.getElementById("giftInput");
     const giftList = document.getElementById("giftList");
     const guestName = document.getElementById("guestName");
+
     const btnSpin = document.getElementById("btnSpin");
     const btnAccept = document.getElementById("btnAccept");
+    const btnCancel = document.getElementById("btnCancel");
+
     const btnLoad = document.getElementById("btnLoad");
     const btnReset = document.getElementById("btnReset");
     const btnExport = document.getElementById("btnExport");
@@ -304,37 +350,45 @@ Cobija para bebé
     const resultGift = document.getElementById("resultGift");
     const resultMeta = document.getElementById("resultMeta");
     const hint = document.getElementById("hint");
+
     const countTotal = document.getElementById("countTotal");
     const countFree = document.getElementById("countFree");
     const countUsed = document.getElementById("countUsed");
 
     // -----------------------------
-    // Utilidades
+    // Helpers
     // -----------------------------
-    function normalizeLine(s){
-      return s.replace(/\s+/g," ").trim();
-    }
+    function normalizeLine(s){ return String(s || "").replace(/\s+/g," ").trim(); }
     function uniq(arr){
-      const seen = new Set();
-      const out = [];
+      const seen = new Set(); const out = [];
       for(const x of arr){
         const k = x.toLowerCase();
         if(!k) continue;
         if(seen.has(k)) continue;
-        seen.add(k);
-        out.push(x);
+        seen.add(k); out.push(x);
       }
       return out;
     }
-    function freeCount(){
-      return state.gifts.filter(g => !g.claimedBy).length;
+    function freeCount(){ return state.gifts.filter(g => !g.claimedBy).length; }
+    function usedCount(){ return state.gifts.filter(g => !!g.claimedBy).length; }
+    function truncate(text, max){
+      const t = String(text || "");
+      if(t.length <= max) return t;
+      return t.slice(0, max-1) + "…";
     }
-    function usedCount(){
-      return state.gifts.filter(g => !!g.claimedBy).length;
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
     }
+    function setHint(text, kind){
+      hint.textContent = text || "";
+      hint.style.color = kind === "danger" ? "rgba(255,210,210,.95)"
+                       : kind === "ok" ? "rgba(191,247,223,.95)"
+                       : "rgba(159,176,208,.95)";
+    }
+    function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
     // -----------------------------
-    // Dibujo ruleta
+    // Dibujo
     // -----------------------------
     function drawWheel(){
       const gifts = state.gifts;
@@ -345,11 +399,9 @@ Cobija para bebé
 
       ctx.clearRect(0,0,W,H);
 
-      // Base
       ctx.save();
       ctx.translate(cx,cy);
 
-      // Sombra sutil
       ctx.beginPath();
       ctx.arc(0,0,r+6,0,Math.PI*2);
       ctx.fillStyle = "rgba(0,0,0,.20)";
@@ -364,12 +416,10 @@ Cobija para bebé
         const a0 = i*slice;
         const a1 = a0 + slice;
 
-        // Alternar tonos
         const alt = i%2===0;
         const base = alt ? "rgba(110,231,255,.22)" : "rgba(167,139,250,.20)";
         const claimed = g?.claimedBy ? "rgba(255,107,107,.18)" : base;
 
-        // Sector
         ctx.beginPath();
         ctx.moveTo(0,0);
         ctx.arc(0,0,r,a0,a1);
@@ -377,30 +427,27 @@ Cobija para bebé
         ctx.fillStyle = claimed;
         ctx.fill();
 
-        // Borde
         ctx.strokeStyle = "rgba(255,255,255,.10)";
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Texto
         const label = g ? g.name : "Agrega regalos";
         const mid = (a0+a1)/2;
+
         ctx.save();
         ctx.rotate(mid);
         ctx.translate(r*0.62,0);
         ctx.rotate(Math.PI/2);
 
         ctx.fillStyle = g?.claimedBy ? "rgba(255,210,210,.92)" : "rgba(234,240,255,.92)";
-        ctx.font = "700 18px system-ui, -apple-system, Segoe UI, Roboto";
+        ctx.font = "800 18px system-ui, -apple-system, Segoe UI, Roboto";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        const short = truncate(label, 18);
-        ctx.fillText(short, 0, 0);
+        ctx.fillText(truncate(label, 18), 0, 0);
 
-        // mini indicador (tomado)
         if(g?.claimedBy){
-          ctx.font = "800 12px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.font = "900 12px system-ui, -apple-system, Segoe UI, Roboto";
           ctx.fillText("🔒", 0, 22);
         }
 
@@ -423,27 +470,18 @@ Cobija para bebé
       ctx.fillText("GIRAR", 0, -6);
       ctx.font = "700 12px system-ui, -apple-system, Segoe UI, Roboto";
       ctx.fillStyle = "rgba(159,176,208,.95)";
-      ctx.fillText("sin repetidos", 0, 16);
+      ctx.fillText("baby shower", 0, 16);
 
       ctx.restore();
     }
 
-    function truncate(text, max){
-      const t = String(text || "");
-      if(t.length <= max) return t;
-      return t.slice(0, max-1) + "…";
-    }
-
     // -----------------------------
-    // Lógica de elección (puntero arriba)
-    // Puntero está arriba: ángulo -90° respecto al eje x.
+    // Selección por puntero (arriba)
     // -----------------------------
     function getSelectedIndex(){
       const n = state.gifts.length;
       if(!n) return -1;
 
-      // Convertir el ángulo de giro a un ángulo "puntero"
-      // Puntero arriba => -90° (o 270°). Ajustamos.
       const pointerAngle = (-Math.PI/2 - state.spinAngle) % (Math.PI*2);
       const norm = (pointerAngle + Math.PI*2) % (Math.PI*2);
       const slice = (Math.PI*2) / n;
@@ -453,214 +491,13 @@ Cobija para bebé
     }
 
     // -----------------------------
-    // Spin animado
-    // -----------------------------
-    let spinning = false;
-    function spin(){
-      if(spinning) return;
-
-      const name = normalizeLine(guestName.value);
-      if(!name){
-        setHint("Escribe el nombre del invitado antes de girar.", "danger");
-        guestName.focus();
-        return;
-      }
-      if(state.gifts.length < 2){
-        setHint("Carga al menos 2 regalos para que tenga sentido la ruleta.", "danger");
-        return;
-      }
-      if(freeCount() === 0){
-        setHint("Ya no hay regalos disponibles. Reinicia o agrega más regalos.", "danger");
-        return;
-      }
-
-      spinning = true;
-      btnSpin.disabled = true;
-      btnAccept.disabled = true;
-      state.lastResult = null;
-      renderResult(null);
-
-      // Velocidad y destino aleatorios
-      const extraSpins = randInt(6, 10);                 // vueltas completas
-      const randomOffset = Math.random() * Math.PI*2;    // offset final
-
-      // Para sentir “aleatorio”, sumamos al ángulo actual
-      const start = state.spinAngle;
-      const target = start + extraSpins * Math.PI*2 + randomOffset;
-
-      const duration = randInt(2600, 3800); // ms
-      const t0 = performance.now();
-
-      function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
-
-      function frame(now){
-        const t = Math.min(1, (now - t0) / duration);
-        const e = easeOutCubic(t);
-        state.spinAngle = start + (target - start) * e;
-        drawWheel();
-
-        if(t < 1){
-          requestAnimationFrame(frame);
-        }else{
-          spinning = false;
-          btnSpin.disabled = false;
-
-          // Determinar resultado final
-          const idx = getSelectedIndex();
-          const gift = state.gifts[idx];
-          const isClaimed = !!gift.claimedBy;
-
-          state.lastResult = {
-            index: idx,
-            giftName: gift.name,
-            isClaimed,
-            claimedBy: gift.claimedBy || null
-          };
-          saveState();
-          renderAll();
-
-          if(isClaimed){
-            setHint(`Este regalo ya está tomado por "${gift.claimedBy}". Debe girar otra vez.`, "danger");
-            btnAccept.disabled = true;
-          }else{
-            setHint(`Listo: si "${name}" acepta, el regalo quedará bloqueado.`, "ok");
-            btnAccept.disabled = false;
-          }
-        }
-      }
-      requestAnimationFrame(frame);
-    }
-
-    function randInt(min, max){
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    // -----------------------------
-    // Aceptar / Bloquear regalo
-    // -----------------------------
-    function acceptGift(){
-      const name = normalizeLine(guestName.value);
-      if(!name){
-        setHint("Escribe el nombre del invitado.", "danger");
-        return;
-      }
-      if(!state.lastResult){
-        setHint("Primero gira la ruleta.", "danger");
-        return;
-      }
-      const idx = state.lastResult.index;
-      const g = state.gifts[idx];
-      if(!g){
-        setHint("Error: regalo no encontrado.", "danger");
-        return;
-      }
-      if(g.claimedBy){
-        setHint(`No se puede aceptar: ya lo tomó "${g.claimedBy}". Gira otra vez.`, "danger");
-        btnAccept.disabled = true;
-        return;
-      }
-
-      g.claimedBy = name;
-      state.lastResult.isClaimed = true;
-      state.lastResult.claimedBy = name;
-
-      saveState();
-      renderAll();
-      btnAccept.disabled = true;
-      setHint(`✅ Bloqueado: "${g.name}" para "${name}".`, "ok");
-    }
-
-    // -----------------------------
-    // Cargar regalos desde textarea
-    // Mantiene bloqueos existentes si el nombre del regalo coincide.
-    // -----------------------------
-    function loadGiftsFromTextarea(){
-      const lines = giftInput.value.split("\n").map(normalizeLine).filter(Boolean);
-      const unique = uniq(lines);
-
-      // Mapa de bloqueados actuales por nombre (case-insensitive)
-      const claimedMap = new Map();
-      for(const g of state.gifts){
-        if(g?.name){
-          claimedMap.set(g.name.toLowerCase(), g.claimedBy || null);
-        }
-      }
-
-      state.gifts = unique.map(name => ({
-        name,
-        claimedBy: claimedMap.get(name.toLowerCase()) || null
-      }));
-
-      // reset resultado si ya no existe índice
-      state.lastResult = null;
-
-      saveState();
-      renderAll();
-      setHint("Lista de regalos actualizada.", "ok");
-    }
-
-    // -----------------------------
-    // Reset total
-    // -----------------------------
-    function resetAll(){
-      if(!confirm("¿Seguro que quieres reiniciar TODO? Se borran regalos y bloqueos.")) return;
-      state = { gifts: [], lastResult: null, spinAngle: 0 };
-      localStorage.removeItem(LS_KEY);
-      giftInput.value = "";
-      renderAll();
-      setHint("Se reinició todo.", "ok");
-    }
-
-    // -----------------------------
-    // Export / Import
-    // -----------------------------
-    async function exportState(){
-      try{
-        const data = JSON.stringify(state, null, 2);
-        await navigator.clipboard.writeText(data);
-        setHint("JSON copiado al portapapeles. Pégalo donde lo necesites.", "ok");
-      }catch(e){
-        // fallback: prompt
-        const data = JSON.stringify(state, null, 2);
-        prompt("Copia este JSON:", data);
-      }
-    }
-
-    function importState(){
-      const raw = prompt("Pega aquí el JSON exportado:");
-      if(!raw) return;
-      try{
-        const parsed = JSON.parse(raw);
-        // Validación mínima
-        if(!parsed || !Array.isArray(parsed.gifts)) throw new Error("Formato inválido");
-        state = {
-          gifts: parsed.gifts.map(g => ({
-            name: normalizeLine(g.name || ""),
-            claimedBy: g.claimedBy ? normalizeLine(g.claimedBy) : null
-          })).filter(g => g.name),
-          lastResult: null,
-          spinAngle: Number.isFinite(parsed.spinAngle) ? parsed.spinAngle : 0
-        };
-        saveState();
-        renderAll();
-        setHint("Estado importado correctamente.", "ok");
-      }catch(e){
-        setHint("No se pudo importar. Verifica que el JSON sea válido.", "danger");
-      }
-    }
-
-    // -----------------------------
-    // Render UI
+    // Render
     // -----------------------------
     function renderCounts(){
-      const total = state.gifts.length;
-      const free = freeCount();
-      const used = usedCount();
-      countTotal.textContent = total;
-      countFree.textContent = free;
-      countUsed.textContent = used;
+      countTotal.textContent = state.gifts.length;
+      countFree.textContent = freeCount();
+      countUsed.textContent = usedCount();
     }
-
     function renderGiftList(){
       giftList.innerHTML = "";
       if(state.gifts.length === 0){
@@ -680,7 +517,6 @@ Cobija para bebé
         giftList.appendChild(div);
       }
     }
-
     function renderResult(last){
       if(!last){
         resultGift.textContent = "—";
@@ -696,64 +532,247 @@ Cobija para bebé
         <span class="tag">#${last.index + 1}</span>
       `;
     }
-
-    function setHint(text, kind){
-      hint.textContent = text || "";
-      hint.style.color = kind === "danger" ? "rgba(255,210,210,.95)"
-                       : kind === "ok" ? "rgba(191,247,223,.95)"
-                       : "rgba(159,176,208,.95)";
-    }
-
     function renderAll(){
       renderCounts();
       renderGiftList();
       renderResult(state.lastResult);
       drawWheel();
 
-      // Ajustar botones
+      // botones decisión
       if(spinning){
         btnSpin.disabled = true;
         btnAccept.disabled = true;
+        btnCancel.disabled = true;
       }else{
         btnSpin.disabled = false;
-        if(state.lastResult && !state.lastResult.isClaimed) btnAccept.disabled = false;
-        else btnAccept.disabled = true;
+        const canDecide = !!state.lastResult;
+        btnCancel.disabled = !canDecide;
+        // aceptar solo si el regalo está libre
+        btnAccept.disabled = !(canDecide && !state.lastResult.isClaimed);
       }
     }
 
-    function escapeHtml(str){
-      return String(str).replace(/[&<>"']/g, (m) => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[m]));
+    // -----------------------------
+    // Spin
+    // -----------------------------
+    let spinning = false;
+
+    function spin(){
+      if(spinning) return;
+
+      const name = normalizeLine(guestName.value);
+      if(!name){
+        setHint("Escribe tu nombre antes de girar.", "danger");
+        guestName.focus();
+        return;
+      }
+      if(state.gifts.length < 2){
+        setHint("Faltan regalos. (Admin) carga al menos 2.", "danger");
+        return;
+      }
+      if(freeCount() === 0){
+        setHint("Ya no hay regalos disponibles. (Admin) reinicia o agrega más.", "danger");
+        return;
+      }
+
+      spinning = true;
+      btnSpin.disabled = true;
+      btnAccept.disabled = true;
+      btnCancel.disabled = true;
+
+      state.lastResult = null;
+      renderResult(null);
+      setHint("Girando...", "neutral");
+
+      const extraSpins = randInt(6, 10);
+      const randomOffset = Math.random() * Math.PI*2;
+      const start = state.spinAngle;
+      const target = start + extraSpins * Math.PI*2 + randomOffset;
+
+      const duration = randInt(2600, 3800);
+      const t0 = performance.now();
+      function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+      function frame(now){
+        const t = Math.min(1, (now - t0) / duration);
+        const e = easeOutCubic(t);
+        state.spinAngle = start + (target - start) * e;
+        drawWheel();
+
+        if(t < 1){
+          requestAnimationFrame(frame);
+        }else{
+          spinning = false;
+
+          const idx = getSelectedIndex();
+          const gift = state.gifts[idx];
+          const isClaimed = !!gift.claimedBy;
+
+          state.lastResult = {
+            index: idx,
+            giftName: gift.name,
+            isClaimed,
+            claimedBy: gift.claimedBy || null
+          };
+
+          saveState();
+          renderAll();
+
+          if(isClaimed){
+            setHint(`Este regalo ya lo tomó "${gift.claimedBy}". Debes girar otra vez.`, "danger");
+          }else{
+            setHint(`Si te gusta, pulsa "Escoger/Aceptar". Si no, pulsa "Cancelar" y gira de nuevo.`, "ok");
+          }
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // Cancelar = no bloquea, sólo borra el resultado actual
+    function cancelResult(){
+      if(!state.lastResult) return;
+      state.lastResult = null;
+      saveState();
+      renderAll();
+      setHint("Listo. Puedes girar otra vez.", "neutral");
+    }
+
+    // Aceptar = bloquear
+    function acceptGift(){
+      const name = normalizeLine(guestName.value);
+      if(!name){
+        setHint("Escribe tu nombre.", "danger");
+        return;
+      }
+      if(!state.lastResult){
+        setHint("Primero gira la ruleta.", "danger");
+        return;
+      }
+      const idx = state.lastResult.index;
+      const g = state.gifts[idx];
+      if(!g){
+        setHint("Error: regalo no encontrado.", "danger");
+        return;
+      }
+      if(g.claimedBy){
+        setHint(`No se puede aceptar: ya lo tomó "${g.claimedBy}". Gira otra vez.`, "danger");
+        return;
+      }
+
+      g.claimedBy = name;
+      state.lastResult.isClaimed = true;
+      state.lastResult.claimedBy = name;
+
+      saveState();
+      renderAll();
+      setHint(`✅ Perfecto: "${g.name}" quedó bloqueado para "${name}".`, "ok");
+    }
+
+    // -----------------------------
+    // Admin: cargar regalos
+    // -----------------------------
+    function loadGiftsFromTextarea(){
+      const lines = giftInput.value.split("\n").map(normalizeLine).filter(Boolean);
+      const unique = uniq(lines);
+
+      const claimedMap = new Map();
+      for(const g of state.gifts){
+        if(g?.name) claimedMap.set(g.name.toLowerCase(), g.claimedBy || null);
+      }
+
+      state.gifts = unique.map(name => ({
+        name,
+        claimedBy: claimedMap.get(name.toLowerCase()) || null
+      }));
+
+      state.lastResult = null;
+      saveState();
+      renderAll();
+      setHint("Lista de regalos actualizada.", "ok");
+    }
+
+    function resetAll(){
+      if(!confirm("¿Seguro que quieres reiniciar TODO? Se borran regalos y bloqueos.")) return;
+      state = { gifts: [], lastResult: null, spinAngle: 0 };
+      localStorage.removeItem(LS_KEY);
+      giftInput.value = "";
+      renderAll();
+      setHint("Se reinició todo.", "ok");
+    }
+
+    async function exportState(){
+      try{
+        const data = JSON.stringify(state, null, 2);
+        await navigator.clipboard.writeText(data);
+        setHint("JSON copiado al portapapeles.", "ok");
+      }catch(e){
+        const data = JSON.stringify(state, null, 2);
+        prompt("Copia este JSON:", data);
+      }
+    }
+
+    function importState(){
+      const raw = prompt("Pega aquí el JSON exportado:");
+      if(!raw) return;
+      try{
+        const parsed = JSON.parse(raw);
+        if(!parsed || !Array.isArray(parsed.gifts)) throw new Error("Formato inválido");
+        state = {
+          gifts: parsed.gifts.map(g => ({
+            name: normalizeLine(g.name || ""),
+            claimedBy: g.claimedBy ? normalizeLine(g.claimedBy) : null
+          })).filter(g => g.name),
+          lastResult: null,
+          spinAngle: Number.isFinite(parsed.spinAngle) ? parsed.spinAngle : 0
+        };
+        saveState();
+        renderAll();
+        setHint("Estado importado correctamente.", "ok");
+      }catch(e){
+        setHint("No se pudo importar. Verifica el JSON.", "danger");
+      }
+    }
+
+    // -----------------------------
+    // Pantalla inicial
+    // -----------------------------
+    function start(){
+      const n = normalizeLine(startName.value);
+      if(!n){
+        setHint("Escribe tu nombre para entrar.", "danger");
+        startName.focus();
+        return;
+      }
+      guestName.value = n;
+      startOverlay.style.display = "none";
+      setHint("Ahora gira la ruleta.", "neutral");
+      guestName.blur();
     }
 
     // -----------------------------
     // Eventos
     // -----------------------------
     btnSpin.addEventListener("click", spin);
+    btnCancel.addEventListener("click", cancelResult);
     btnAccept.addEventListener("click", acceptGift);
+
     btnLoad.addEventListener("click", loadGiftsFromTextarea);
     btnReset.addEventListener("click", resetAll);
     btnExport.addEventListener("click", exportState);
     btnImport.addEventListener("click", importState);
 
-    // Enter para girar
-    guestName.addEventListener("keydown", (e) => {
-      if(e.key === "Enter") spin();
-    });
+    btnStart.addEventListener("click", start);
+    startName.addEventListener("keydown", (e)=>{ if(e.key==="Enter") start(); });
+    guestName.addEventListener("keydown", (e)=>{ if(e.key==="Enter") spin(); });
 
-    // -----------------------------
-    // Inicializar textarea con regalos actuales
-    // -----------------------------
-    function initTextarea(){
-      if(state.gifts.length){
-        giftInput.value = state.gifts.map(g => g.name).join("\n");
-      }
+    // Inicial: rellenar textarea
+    if(state.gifts.length){
+      giftInput.value = state.gifts.map(g => g.name).join("\n");
     }
-
-    initTextarea();
     renderAll();
-    setHint("Carga los regalos y empieza a girar.", "neutral");
+    setHint("Carga regalos (admin) y luego prueba la ruleta.", "neutral");
   </script>
 </body>
 </html>
+
+
