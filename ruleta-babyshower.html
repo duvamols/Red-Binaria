@@ -1,900 +1,759 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-  <title>Ruleta Baby Shower (Niño)</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ruleta de Regalos (sin repetidos)</title>
   <style>
     :root{
-      --sky1:#dff3ff;
-      --sky2:#bfe6ff;
-
-      --ink:#102a43;
-      --muted:#3f5f7b;
-
-      --card:#ffffffd6;
-      --border:#ffffffcc;
-
-      --blue:#4fb6ff;
-      --blue2:#2f7bff;
-
-      --ok:#22c55e;
-
-      --shadow: 0 22px 55px rgba(0,0,0,.18);
-      --shadow2: 0 12px 28px rgba(0,0,0,.14);
+      --bg:#0b1220;
+      --card:#121b2f;
+      --muted:#9fb0d0;
+      --text:#eaf0ff;
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --danger:#ff6b6b;
+      --ok:#34d399;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius:16px;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:"Baloo 2", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
-      display:grid;
-      place-items:center;
-      padding:14px;
-      background:
-        radial-gradient(1200px 600px at 15% 10%, rgba(255,255,255,.85), transparent 60%),
-        radial-gradient(900px 520px at 85% 20%, rgba(255,255,255,.75), transparent 55%),
-        linear-gradient(180deg, var(--sky1), var(--sky2));
-      overflow:hidden;
-    }
-
-    /* Nubes suaves + estrellitas discretas */
-    .bg{
-      position:fixed; inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(260px 120px at 18% 20%, rgba(255,255,255,.75), transparent 70%),
-        radial-gradient(280px 130px at 55% 14%, rgba(255,255,255,.70), transparent 72%),
-        radial-gradient(300px 140px at 82% 24%, rgba(255,255,255,.70), transparent 72%),
-
-        radial-gradient(2px 2px at 12% 62%, rgba(255, 214, 102,.65), transparent 60%),
-        radial-gradient(2px 2px at 40% 74%, rgba(255, 214, 102,.65), transparent 60%),
-        radial-gradient(2px 2px at 70% 66%, rgba(255, 214, 102,.65), transparent 60%),
-        radial-gradient(2px 2px at 88% 58%, rgba(255, 214, 102,.65), transparent 60%);
-      opacity:1;
-      animation: floaty 10s ease-in-out infinite;
-    }
-    @keyframes floaty{
-      0%{ transform: translateY(0); }
-      50%{ transform: translateY(-8px); }
-      100%{ transform: translateY(0); }
-    }
-
-    .wrap{
-      width: min(900px, 100%);
-      display:grid;
-      justify-items:center;
-      gap:10px;
-    }
-
-    /* Live title */
-    .liveTitle{
-      width: 100%;
-      text-align:center;
-      padding: 6px 10px 0;
-    }
-    .liveTitle .small{
-      margin:0 0 6px;
-      color: var(--muted);
-      font-size: clamp(12px, 3.2vw, 14px);
-      font-weight: 800;
-    }
-    .liveTitle h1{
-      margin:0;
-      font-size: clamp(20px, 6vw, 44px);
-      line-height:1.05;
-      letter-spacing:.1px;
-      text-shadow: 0 10px 26px rgba(0,0,0,.12);
-    }
-
-    .meta{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(110,231,255,.18), transparent 55%),
+                  radial-gradient(900px 700px at 90% 20%, rgba(167,139,250,.16), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      align-items:stretch;
       justify-content:center;
-      font-size: clamp(12px, 3.2vw, 14px);
-      text-align:center;
-      margin-top: 4px;
+      padding:20px;
     }
-    .pill{
-      border:2px solid var(--border);
-      background: var(--card);
-      border-radius:999px;
-      padding:8px 12px;
-      box-shadow: var(--shadow2);
-      font-weight: 800;
-      color: var(--muted);
-    }
-
-    /* Stage: un poco más grande para que no se vea chiquita */
-    .stage{
-      width: min(96vw, 640px);
-      height: min(96vw, 640px);
-      position:relative;
+    .wrap{
+      width:min(1200px, 100%);
       display:grid;
-      place-items:center;
-      margin-top: 4px;
+      grid-template-columns: 1.05fr .95fr;
+      gap:16px;
     }
-
-    /* Aro exterior más delgado y con contraste */
-    .ring{
-      position:absolute;
-      inset: 0;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.95), rgba(255,255,255,.70));
-      border: 3px solid rgba(16,42,67,.08);
-      box-shadow: var(--shadow);
+    @media (max-width: 980px){
+      .wrap{grid-template-columns:1fr; }
     }
-
-    /* Ruleta: MÁS visible (menos borde blanco, más sombra, más contraste) */
-    canvas#wheel{
-      width: 92%;
-      height: 92%;
-      border-radius: 50%;
-      background: #ffffff;
-      border: 6px solid rgba(255,255,255,.92);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,.12),
-        inset 0 10px 18px rgba(0,0,0,.06),
-        inset 0 -12px 18px rgba(0,0,0,.06);
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
     }
-
-    /* Gloss MUY suave (antes tapaba la ruleta) */
-    .gloss{
-      position:absolute;
-      width:92%;
-      height:92%;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 28% 22%, rgba(255,255,255,.22), transparent 45%),
-        linear-gradient(180deg, rgba(255,255,255,.14), transparent 58%);
-      pointer-events:none;
-      opacity:.55;
-    }
-
-    /* Pin lateral más definido */
-    .pin{
-      position:absolute;
-      right: 1.8%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 70px;
-      height: 70px;
-      pointer-events:none;
-      filter: drop-shadow(0 10px 16px rgba(0,0,0,.18));
-    }
-    .pin .body{
-      position:absolute;
-      right:0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 60px;
-      height: 38px;
-      border-radius: 20px;
-      background: #ffffff;
-      border: 3px solid rgba(16,42,67,.16);
-    }
-    .pin .nose{
-      position:absolute;
-      right: 50px;
-      top: 50%;
-      transform: translateY(-50%);
-      width:0;height:0;
-      border-top: 13px solid transparent;
-      border-bottom:13px solid transparent;
-      border-right: 20px solid #ffffff;
-      filter: drop-shadow(0 2px 0 rgba(16,42,67,.10));
-    }
-    .pin .dot{
-      position:absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(16,42,67,.40);
-    }
-
-    /* Botón central */
-    .hub{
-      position:absolute;
-      width: 28%;
-      aspect-ratio:1/1;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background: #ffffffea;
-      border: 3px solid rgba(16,42,67,.12);
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(6px);
-    }
-    .hub button{
-      width: 78%;
-      height: 78%;
-      border-radius:50%;
-      border:none;
-      cursor:pointer;
-      font-weight: 900;
-      letter-spacing:.6px;
-      color:#fff;
-      background: linear-gradient(135deg, var(--blue), var(--blue2));
-      box-shadow:
-        0 18px 24px rgba(0,0,0,.14),
-        inset 0 10px 14px rgba(255,255,255,.22),
-        inset 0 -12px 14px rgba(0,0,0,.12);
-      transition: transform .10s ease, opacity .2s ease;
-      text-transform: uppercase;
-      display:grid;
-      place-items:center;
-      gap:2px;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-      font-size: clamp(13px, 3.8vw, 16px);
-      font-family: inherit;
-    }
-    .hub button:active{ transform: scale(.98); }
-    .hub button:disabled{ opacity:.6; cursor:not-allowed; }
-    .hub .sub{
-      font-size: clamp(10px, 2.8vw, 11px);
-      font-weight: 800;
-      opacity: .9;
-      text-transform:none;
+    h1{
+      margin:0 0 10px;
+      font-size:20px;
       letter-spacing:.2px;
     }
-
-    /* Modal */
-    .overlay{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.22);
-      display:none;
-      place-items:center;
-      padding:18px;
+    .sub{color:var(--muted); font-size:13px; margin:0 0 14px; line-height:1.35;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    label{font-size:12px; color:var(--muted); display:block; margin:0 0 6px;}
+    input, textarea, select{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
     }
-    .overlay.show{ display:grid; }
-
-    .modal{
-      width:min(560px, 100%);
-      border-radius: 22px;
-      background: #ffffff;
-      border: 3px solid rgba(16,42,67,.10);
-      box-shadow: var(--shadow);
-      padding:16px;
-      animation: pop .16s ease-out;
-    }
-    @keyframes pop{
-      from{ transform: translateY(18px) scale(.98); opacity:.0; }
-      to{ transform: translateY(0) scale(1); opacity:1; }
-    }
-    .modal .top{
-      display:flex;
+    textarea{min-height:140px; resize:vertical;}
+    input::placeholder, textarea::placeholder{color:rgba(159,176,208,.65)}
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .05s ease, background .15s ease;
+      display:inline-flex;
       align-items:center;
+      gap:8px;
+      font-weight:600;
+    }
+    .btn:active{transform: translateY(1px);}
+    .btn.primary{background: linear-gradient(90deg, rgba(110,231,255,.22), rgba(167,139,250,.22)); border-color:rgba(110,231,255,.25);}
+    .btn.ok{background: rgba(52,211,153,.18); border-color:rgba(52,211,153,.28);}
+    .btn.danger{background: rgba(255,107,107,.16); border-color:rgba(255,107,107,.25);}
+    .btn:disabled{opacity:.45; cursor:not-allowed}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .canvasWrap{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+    }
+    canvas{
+      width:min(520px, 100%);
+      height:auto;
+      max-width: 520px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.18);
+      border:1px solid var(--border);
+    }
+    .pointer{
+      width:0; height:0;
+      border-left:18px solid transparent;
+      border-right:18px solid transparent;
+      border-bottom:26px solid var(--accent);
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.45));
+      margin-bottom:-6px;
+    }
+    .resultBox{
+      width:100%;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      padding:12px;
+      min-height:78px;
+    }
+    .resultTitle{font-size:12px; color:var(--muted); margin-bottom:6px;}
+    .resultGift{font-size:16px; font-weight:800; line-height:1.25;}
+    .resultMeta{margin-top:8px; font-size:12px; color:var(--muted); display:flex; gap:10px; flex-wrap:wrap;}
+    .tag{
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+    }
+    .tag.used{border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2;}
+    .tag.free{border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df;}
+    .small{font-size:12px; color:var(--muted);}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+    @media (max-width: 560px){
+      .grid2{grid-template-columns:1fr;}
+    }
+    .list{
+      margin-top:10px;
+      border-top:1px dashed rgba(255,255,255,.12);
+      padding-top:10px;
+      max-height:220px;
+      overflow:auto;
+    }
+    .item{
+      display:flex;
       justify-content:space-between;
       gap:10px;
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      border-radius:12px;
       margin-bottom:8px;
     }
-    .tag{
+    .item b{font-size:13px;}
+    .item span{font-size:12px; color:var(--muted);}
+    .item .status{
       font-size:12px;
-      font-weight:900;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      color: var(--muted);
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      white-space:nowrap;
+      align-self:center;
     }
-    .close{
-      border:none;
-      cursor:pointer;
-      background: rgba(0,0,0,.06);
-      color: var(--ink);
-      border: 2px solid rgba(16,42,67,.12);
-      padding:8px 10px;
-      border-radius: 12px;
-      font-weight:900;
-      font-family: inherit;
-    }
-    .gift{
-      font-size: clamp(18px, 4.8vw, 24px);
-      font-weight: 900;
-      margin: 6px 0 6px;
-    }
-    .desc{
-      margin:0;
-      color: var(--muted);
-      font-size: clamp(12px, 3.4vw, 14px);
-      line-height:1.35;
-      font-weight: 800;
-    }
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:14px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      flex: 1 1 160px;
-      border:none;
-      cursor:pointer;
-      padding:12px 12px;
-      border-radius: 14px;
-      font-weight: 900;
-      letter-spacing:.2px;
-      transition: transform .10s ease, opacity .2s ease;
-      -webkit-tap-highlight-color: transparent;
-      font-size: clamp(13px, 3.8vw, 14px);
-      font-family: inherit;
-    }
-    .btn:active{ transform: translateY(1px) scale(.99); }
-    .btn-accept{
-      background: linear-gradient(135deg, var(--ok), #4ade80);
-      color:#063215;
-      box-shadow: 0 12px 18px rgba(0,0,0,.12);
-    }
-    .btn-again{
-      background: rgba(0,0,0,.06);
-      color: var(--ink);
-      border: 2px solid rgba(16,42,67,.10);
-    }
-
-    .toast{
-      position: fixed;
-      left:50%;
-      bottom:14px;
-      transform: translateX(-50%);
-      background: #ffffff;
-      color: var(--ink);
-      padding:10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight:900;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .25s ease;
-      border:2px solid rgba(16,42,67,.10);
-      box-shadow: var(--shadow2);
-    }
-    .toast.show{ opacity:1; }
-
-    /* Confetti */
-    canvas#confetti{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      display:none;
-    }
-    canvas#confetti.show{ display:block; }
+    .item .status.free{border-color:rgba(52,211,153,.28); background: rgba(52,211,153,.14); color:#bff7df;}
+    .item .status.used{border-color:rgba(255,107,107,.30); background: rgba(255,107,107,.14); color:#ffd2d2;}
+    .footerRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; margin-top:10px;}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
   </style>
 </head>
-
 <body>
-  <div class="bg" aria-hidden="true"></div>
-
   <div class="wrap">
-    <div class="liveTitle">
-      <div class="small">Baby Shower (Niño) 💙 — Va saliendo por la flecha:</div>
-      <h1 id="liveWord">¡Listo!</h1>
-    </div>
 
-    <div class="stage">
-      <div class="ring" aria-hidden="true"></div>
+    <!-- LEFT: RUEDA -->
+    <div class="card canvasWrap">
+      <h1>🎡 Ruleta de regalos (sin repetidos)</h1>
+      <p class="sub">
+        Escribe el <b>nombre del invitado</b>, gira la ruleta y luego pulsa <b>Aceptar</b> para bloquear el regalo.
+        Si sale uno ya tomado, tendrás que girar otra vez.
+      </p>
 
-      <div class="pin" aria-hidden="true">
-        <div class="nose"></div>
-        <div class="body"></div>
-        <div class="dot"></div>
+      <div class="pointer" aria-hidden="true"></div>
+      <canvas id="wheel" width="700" height="700"></canvas>
+
+      <div class="row" style="width:min(520px,100%);">
+        <div style="flex:1; min-width:220px;">
+          <label>Nombre del invitado</label>
+          <input id="guestName" placeholder="Ej: Camila, Juan, etc." />
+        </div>
+        <div style="display:flex; gap:10px; align-items:flex-end;">
+          <button class="btn primary" id="btnSpin">Girar</button>
+          <button class="btn ok" id="btnAccept" disabled>Aceptar</button>
+        </div>
       </div>
 
-      <canvas id="wheel" aria-hidden="true"></canvas>
-      <div class="gloss" aria-hidden="true"></div>
+      <div class="resultBox" style="width:min(520px,100%);">
+        <div class="resultTitle">Resultado</div>
+        <div class="resultGift" id="resultGift">—</div>
+        <div class="resultMeta" id="resultMeta"></div>
+        <div class="small" id="hint" style="margin-top:8px;"></div>
+      </div>
 
-      <div class="hub">
-        <button id="spinBtn">
-          GIRAR
-          <div class="sub" id="subText">Toca para elegir</div>
-        </button>
+      <div class="footerRow" style="width:min(520px,100%);">
+        <span class="pill">🎁 <span id="countTotal">0</span> regalos</span>
+        <span class="pill">✅ Disponibles: <span id="countFree">0</span></span>
+        <span class="pill">🔒 Tomados: <span id="countUsed">0</span></span>
       </div>
     </div>
 
-    <div class="meta">
-      <div class="pill" id="remainPill">Regalos disponibles: 0</div>
-      <div class="pill" id="statePill">Estado: listo</div>
+    <!-- RIGHT: CONFIG -->
+    <div class="card">
+      <h1>⚙️ Configuración</h1>
+      <p class="sub">
+        Pega la lista de regalos (uno por línea) y pulsa <b>Cargar/Actualizar</b>.
+        Se eliminan duplicados exactos y líneas vacías.
+      </p>
+
+      <label>Lista de regalos (uno por línea)</label>
+      <textarea id="giftInput" placeholder="Ej:
+Paca de pañales + toallitas húmedas
+Tetero anticólicos
+Cobija para bebé
+..."></textarea>
+
+      <div class="row" style="margin-top:10px;">
+        <button class="btn primary" id="btnLoad">Cargar / Actualizar</button>
+        <button class="btn danger" id="btnReset">Reiniciar TODO</button>
+      </div>
+
+      <div class="grid2" style="margin-top:12px;">
+        <div>
+          <label>Exportar estado (para pasar a otro dispositivo)</label>
+          <button class="btn" id="btnExport">Exportar (copiar JSON)</button>
+        </div>
+        <div>
+          <label>Importar estado (pega JSON exportado)</label>
+          <button class="btn" id="btnImport">Importar</button>
+        </div>
+      </div>
+
+      <div class="list" id="giftList"></div>
+
+      <p class="small" style="margin:10px 0 0;">
+        <span class="mono">Tip:</span> Si quieres “empezar limpio” para otro evento, usa <b>Reiniciar TODO</b>.
+      </p>
     </div>
   </div>
-
-  <!-- Modal -->
-  <div class="overlay" id="overlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalGift">
-      <div class="top">
-        <div class="tag">Tu regalo asignado</div>
-        <button class="close" id="closeBtn" title="Cerrar">✕</button>
-      </div>
-
-      <div class="gift" id="modalGift">—</div>
-      <p class="desc">Si aceptas, se guardará y se eliminará de tu ruleta en este dispositivo.</p>
-
-      <div class="actions">
-        <button class="btn btn-accept" id="acceptBtn">Aceptar regalo ✅</button>
-        <button class="btn btn-again" id="againBtn">Intentar nuevamente 🔁</button>
-      </div>
-    </div>
-  </div>
-
-  <canvas id="confetti"></canvas>
-  <div class="toast" id="toast">Listo</div>
 
   <script>
-    /***********************
-     * 60 regalos (únicos)
-     ***********************/
-    const STORAGE_KEY = "babyshower_ruleta_kids_60_visible_v2";
-    const DEFAULT_GIFTS = [
-      "Paca pañales RN + toallitas húmedas (paquete grande)",
-      "Paca pañales P + crema antipañalitis",
-      "Paca pañales M + pañitos de tela (set)",
-      "Paca pañales P + biberón anticólicos + tetina extra",
-      "Paca pañales M + aceite bebé + crema hidratante",
-
-      "Pañalera mediana + cambiador portátil",
-      "Pañalera morral + organizador interno",
-      "Organizador de cuna + canasta para pañales",
-      "Cambiador rígido + forros (x2)",
-      "Forros impermeables cambiador (x3) + toallitas extra",
-
-      "Juego sábanas cuna (x3) + protector colchón impermeable",
-      "Muselinas premium (x4) + paños de eructo (x2)",
-      "Toalla con capucha + set toallas bebé (x2)",
-      "Cobija suave premium + sábana ajustable + paños de eructo",
-      "Móvil musical para cuna (básico)",
-
-      "Kit baño: tina plegable + jarrita + termómetro agua",
-      "Tina bebé + soporte antideslizante + esponja suave",
-      "Set higiene: cortauñas + lima + cepillo + aspirador nasal",
-      "Aspirador nasal + solución salina + gasas estériles",
-      "Termómetro digital + kit primeros auxilios bebé (básico)",
-
-      "Jabón líquido + shampoo + crema hidratante (pack)",
-      "Combo piel: crema hidratante + aceite + algodón grande",
-      "Algodón (paquete grande) + gasas + pañitos limpieza",
-      "Detergente hipoalergénico ropa bebé + suavizante baby (pack)",
-      "Crema antipañalitis + toallitas + pañitos de tela (pack)",
-
-      "Ropa 0-3: bodies (x6) + pijamas (x2) + gorritos (x2)",
-      "Ropa 3-6: bodies (x6) + pijamas (x2) + medias (set)",
-      "Set pijamas algodón (x4) + muselinas (x2)",
-      "Kit salida: cobija + gorrito + manoplas + medias",
-      "Manoplas (x4) + medias (x6) + gorritos (x3)",
-
-      "Set biberones anticólicos (x3) + cepillo limpiador",
-      "Esterilizador microondas para teteros + pinzas",
-      "Calientabiberones básico",
-      "Chupetes ortodónticos (x3) + caja esterilizadora",
-      "Tetinas (paquete) + biberón + contenedor leche en polvo",
-
-      "Platos con ventosa (x2) + cucharas silicona (x2)",
-      "Vasitos entrenadores (x2) + cucharas silicona (set)",
-      "Baberos silicona (x2) + plato + cuchara",
-      "Dispensador leche en polvo + biberón anticólicos",
-      "Termo porta tetero + tetero anticólicos",
-
-      "Gimnasio de actividades bebé (básico)",
-      "Tapete de juego acolchado + juguetes colgantes",
-      "Libros sensoriales de tela (x3) + mordedor",
-      "Set juguetes para baño + red organizadora",
-      "Juguetes apilables + sonajero (set)",
-
-      "Pelota sensorial + juguete de agarre + mordedor",
-      "Set maracas suaves + sonajero + mordedor",
-      "Juguete alto contraste + libro estimulación",
-      "Almohadita tummy time + manta de actividades",
-      "Sonajero premium + mordedor (x2) + juguete suave",
-
-      "Kit seguridad hogar: seguros cajón + enchufes + esquineros",
-      "Mosquitero coche + cobertor + ganchos organizadores",
-      "Colchoneta coche + cojín soporte cabeza",
-      "Espejo retrovisor bebé + protector asiento carro",
-      "Fular porteo básico + muselina premium",
-
-      "Canguro ergonómico básico + baberos (x2)",
-      "Bolsa impermeable pañales + neceser viaje",
-      "Luz nocturna bebé + humidificador pequeño",
-      "Combo sueño: cobija premium + luz nocturna + muselina",
-      "Combo pañales: paca + crema antipañalitis + toallitas grande"
-    ];
-
+    // -----------------------------
+    // Persistencia
+    // -----------------------------
+    const LS_KEY = "ruleta_regalos_v1";
     function loadState(){
       try{
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(LS_KEY);
         if(!raw) return null;
         return JSON.parse(raw);
-      }catch{ return null; }
+      }catch(e){
+        return null;
+      }
     }
-    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+    function saveState(){
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    }
 
-    const state = loadState() || {
-      availableGifts: [...DEFAULT_GIFTS],
-      acceptedGift: null
+    // -----------------------------
+    // Estado
+    // gifts: [{name, claimedBy|null}]
+    // lastResult: {index, angle, giftName, isClaimed, claimedBy}
+    // -----------------------------
+    let state = loadState() || {
+      gifts: [],
+      lastResult: null,
+      spinAngle: 0, // rad
     };
 
+    // -----------------------------
+    // Elementos UI
+    // -----------------------------
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
+    const giftInput = document.getElementById("giftInput");
+    const giftList = document.getElementById("giftList");
+    const guestName = document.getElementById("guestName");
+    const btnSpin = document.getElementById("btnSpin");
+    const btnAccept = document.getElementById("btnAccept");
+    const btnLoad = document.getElementById("btnLoad");
+    const btnReset = document.getElementById("btnReset");
+    const btnExport = document.getElementById("btnExport");
+    const btnImport = document.getElementById("btnImport");
 
-    const liveWord = document.getElementById("liveWord");
-    const spinBtn = document.getElementById("spinBtn");
-    const subText = document.getElementById("subText");
-    const remainPill = document.getElementById("remainPill");
-    const statePill = document.getElementById("statePill");
+    const resultGift = document.getElementById("resultGift");
+    const resultMeta = document.getElementById("resultMeta");
+    const hint = document.getElementById("hint");
+    const countTotal = document.getElementById("countTotal");
+    const countFree = document.getElementById("countFree");
+    const countUsed = document.getElementById("countUsed");
 
-    const overlay = document.getElementById("overlay");
-    const modalGift = document.getElementById("modalGift");
-    const acceptBtn = document.getElementById("acceptBtn");
-    const againBtn = document.getElementById("againBtn");
-    const closeBtn = document.getElementById("closeBtn");
-
-    const confettiCanvas = document.getElementById("confetti");
-    const cctx = confettiCanvas.getContext("2d");
-
-    const toast = document.getElementById("toast");
-
-    function toastMsg(msg){
-      toast.textContent = msg;
-      toast.classList.add("show");
-      setTimeout(()=>toast.classList.remove("show"), 1300);
+    // -----------------------------
+    // Utilidades
+    // -----------------------------
+    function normalizeLine(s){
+      return s.replace(/\s+/g," ").trim();
     }
-    function setStatus(text){ statePill.textContent = `Estado: ${text}`; }
-    function updateRemain(){ remainPill.textContent = `Regalos disponibles: ${state.availableGifts.length}`; }
-
-    function resizeCanvas(){
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-
-      const w = Math.floor(rect.width * dpr);
-      const h = Math.floor(rect.height * dpr);
-
-      if(canvas.width !== w || canvas.height !== h){
-        canvas.width = w;
-        canvas.height = h;
+    function uniq(arr){
+      const seen = new Set();
+      const out = [];
+      for(const x of arr){
+        const k = x.toLowerCase();
+        if(!k) continue;
+        if(seen.has(k)) continue;
+        seen.add(k);
+        out.push(x);
       }
-      drawWheel();
-
-      const ww = Math.floor(window.innerWidth * dpr);
-      const hh = Math.floor(window.innerHeight * dpr);
-      confettiCanvas.width = ww;
-      confettiCanvas.height = hh;
-      confettiCanvas.style.width = "100vw";
-      confettiCanvas.style.height = "100vh";
+      return out;
     }
-    window.addEventListener("resize", resizeCanvas, { passive:true });
-
-    let currentAngle = 0;
-    let spinning = false;
-    let selectedIndex = null;
-
-    // Paleta más VIVA para que se vea bien (sin “lavarse”)
-    const KID_COLORS = [
-      "#60a5fa", // blue
-      "#93c5fd", // light blue
-      "#34d399", // mint
-      "#fbbf24", // butter
-      "#fb7185", // pink-peach
-      "#a78bfa"  // lilac
-    ];
-
-    function truncate(s, max){
-      s = String(s);
-      return s.length <= max ? s : s.slice(0, max-1) + "…";
+    function freeCount(){
+      return state.gifts.filter(g => !g.claimedBy).length;
+    }
+    function usedCount(){
+      return state.gifts.filter(g => !!g.claimedBy).length;
     }
 
+    // -----------------------------
+    // Dibujo ruleta
+    // -----------------------------
     function drawWheel(){
-      const gifts = state.availableGifts;
-      const n = gifts.length;
+      const gifts = state.gifts;
+      const n = gifts.length || 1;
+      const W = canvas.width, H = canvas.height;
+      const cx = W/2, cy = H/2;
+      const r = Math.min(cx,cy) - 18;
 
-      const w = canvas.width;
-      const h = canvas.height;
-      ctx.clearRect(0,0,w,h);
+      ctx.clearRect(0,0,W,H);
 
-      const cx = w/2;
-      const cy = h/2;
-      const radius = Math.min(cx, cy) * 0.94;
+      // Base
+      ctx.save();
+      ctx.translate(cx,cy);
 
-      // base
+      // Sombra sutil
       ctx.beginPath();
-      ctx.arc(cx,cy,radius,0,Math.PI*2);
-      ctx.fillStyle = "#ffffff";
+      ctx.arc(0,0,r+6,0,Math.PI*2);
+      ctx.fillStyle = "rgba(0,0,0,.20)";
       ctx.fill();
 
-      if(n === 0){
-        ctx.fillStyle = "#102a43";
-        ctx.font = `900 ${Math.max(18, radius*0.10)}px "Baloo 2", system-ui`;
-        ctx.textAlign = "center";
-        ctx.fillText("Sin regalos", cx, cy);
-        return;
-      }
+      ctx.rotate(state.spinAngle);
 
-      const slice = (Math.PI*2) / n;
+      const slice = (Math.PI*2)/n;
 
       for(let i=0;i<n;i++){
-        const start = currentAngle + i*slice;
-        const end = start + slice;
+        const g = gifts[i];
+        const a0 = i*slice;
+        const a1 = a0 + slice;
 
+        // Alternar tonos
+        const alt = i%2===0;
+        const base = alt ? "rgba(110,231,255,.22)" : "rgba(167,139,250,.20)";
+        const claimed = g?.claimedBy ? "rgba(255,107,107,.18)" : base;
+
+        // Sector
         ctx.beginPath();
-        ctx.moveTo(cx,cy);
-        ctx.arc(cx,cy,radius,start,end);
+        ctx.moveTo(0,0);
+        ctx.arc(0,0,r,a0,a1);
         ctx.closePath();
-
-        ctx.fillStyle = KID_COLORS[i % KID_COLORS.length];
+        ctx.fillStyle = claimed;
         ctx.fill();
 
-        // borde
-        ctx.strokeStyle = "rgba(16,42,67,.14)";
-        ctx.lineWidth = Math.max(2, radius * 0.012);
+        // Borde
+        ctx.strokeStyle = "rgba(255,255,255,.10)";
+        ctx.lineWidth = 2;
         ctx.stroke();
 
-        // texto (más oscuro y legible)
-        const mid = (start+end)/2;
+        // Texto
+        const label = g ? g.name : "Agrega regalos";
+        const mid = (a0+a1)/2;
         ctx.save();
-        ctx.translate(cx,cy);
         ctx.rotate(mid);
+        ctx.translate(r*0.62,0);
+        ctx.rotate(Math.PI/2);
 
-        ctx.textAlign = "right";
-        const fontSize = Math.max(11, radius * 0.055);
-        const label = truncate(gifts[i], 18);
+        ctx.fillStyle = g?.claimedBy ? "rgba(255,210,210,.92)" : "rgba(234,240,255,.92)";
+        ctx.font = "700 18px system-ui, -apple-system, Segoe UI, Roboto";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
 
-        // sombra de texto para legibilidad
-        ctx.fillStyle = "rgba(255,255,255,.75)";
-        ctx.font = `900 ${fontSize}px "Baloo 2", system-ui`;
-        ctx.fillText(label, radius - (radius*0.08) + 2, 2);
+        const short = truncate(label, 18);
+        ctx.fillText(short, 0, 0);
 
-        ctx.fillStyle = "rgba(16,42,67,.92)";
-        ctx.fillText(label, radius - (radius*0.08), 0);
+        // mini indicador (tomado)
+        if(g?.claimedBy){
+          ctx.font = "800 12px system-ui, -apple-system, Segoe UI, Roboto";
+          ctx.fillText("🔒", 0, 22);
+        }
 
         ctx.restore();
       }
 
-      // aro interno para “acabado”
+      // Centro
       ctx.beginPath();
-      ctx.arc(cx,cy,radius*0.18,0,Math.PI*2);
-      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.arc(0,0,70,0,Math.PI*2);
+      ctx.fillStyle = "rgba(0,0,0,.30)";
       ctx.fill();
-      ctx.strokeStyle = "rgba(16,42,67,.10)";
-      ctx.lineWidth = Math.max(2, radius*0.01);
+      ctx.strokeStyle = "rgba(255,255,255,.12)";
+      ctx.lineWidth = 2;
       ctx.stroke();
+
+      ctx.fillStyle = "rgba(234,240,255,.95)";
+      ctx.font = "900 18px system-ui, -apple-system, Segoe UI, Roboto";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("GIRAR", 0, -6);
+      ctx.font = "700 12px system-ui, -apple-system, Segoe UI, Roboto";
+      ctx.fillStyle = "rgba(159,176,208,.95)";
+      ctx.fillText("sin repetidos", 0, 16);
+
+      ctx.restore();
     }
 
-    // Sonido tick
-    let audioCtx = null;
-    function ensureAudio(){
-      if(!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if(audioCtx.state === "suspended") audioCtx.resume();
-    }
-    function tick(){
-      if(!audioCtx) return;
-      const t0 = audioCtx.currentTime;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = "square";
-      osc.frequency.setValueAtTime(900, t0);
-      osc.frequency.exponentialRampToValueAtTime(320, t0 + 0.03);
-
-      gain.gain.setValueAtTime(0.0001, t0);
-      gain.gain.exponentialRampToValueAtTime(0.10, t0 + 0.005);
-      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
-
-      osc.connect(gain).connect(audioCtx.destination);
-      osc.start(t0);
-      osc.stop(t0 + 0.055);
+    function truncate(text, max){
+      const t = String(text || "");
+      if(t.length <= max) return t;
+      return t.slice(0, max-1) + "…";
     }
 
-    // Pointer RIGHT (0 rad)
+    // -----------------------------
+    // Lógica de elección (puntero arriba)
+    // Puntero está arriba: ángulo -90° respecto al eje x.
+    // -----------------------------
     function getSelectedIndex(){
-      const n = state.availableGifts.length;
-      const slice = (Math.PI*2)/n;
-      const normalized = (Math.PI*2 + ((0 - currentAngle) % (Math.PI*2))) % (Math.PI*2);
-      return Math.floor(normalized / slice) % n;
+      const n = state.gifts.length;
+      if(!n) return -1;
+
+      // Convertir el ángulo de giro a un ángulo "puntero"
+      // Puntero arriba => -90° (o 270°). Ajustamos.
+      const pointerAngle = (-Math.PI/2 - state.spinAngle) % (Math.PI*2);
+      const norm = (pointerAngle + Math.PI*2) % (Math.PI*2);
+      const slice = (Math.PI*2) / n;
+      let idx = Math.floor(norm / slice);
+      idx = (idx + n) % n;
+      return idx;
     }
 
-    // Live title
-    let lastLiveIndex = null;
-    function updateLive(){
-      if(state.availableGifts.length === 0){
-        liveWord.textContent = "Sin regalos";
-        return;
-      }
-      const idx = getSelectedIndex();
-      if(idx !== lastLiveIndex){
-        lastLiveIndex = idx;
-        liveWord.textContent = state.availableGifts[idx];
-      }
-    }
-
-    // Spin rápido y aleatorio
-    function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
-
+    // -----------------------------
+    // Spin animado
+    // -----------------------------
+    let spinning = false;
     function spin(){
       if(spinning) return;
-      if(state.availableGifts.length === 0){
-        toastMsg("No quedan regalos");
+
+      const name = normalizeLine(guestName.value);
+      if(!name){
+        setHint("Escribe el nombre del invitado antes de girar.", "danger");
+        guestName.focus();
+        return;
+      }
+      if(state.gifts.length < 2){
+        setHint("Carga al menos 2 regalos para que tenga sentido la ruleta.", "danger");
+        return;
+      }
+      if(freeCount() === 0){
+        setHint("Ya no hay regalos disponibles. Reinicia o agrega más regalos.", "danger");
         return;
       }
 
-      ensureAudio();
-
       spinning = true;
-      setStatus("girando…");
-      subText.textContent = "Suerte 😄";
-      spinBtn.disabled = true;
-      selectedIndex = null;
+      btnSpin.disabled = true;
+      btnAccept.disabled = true;
+      state.lastResult = null;
+      renderResult(null);
 
-      const n = state.availableGifts.length;
-      const slice = (Math.PI*2)/n;
+      // Velocidad y destino aleatorios
+      const extraSpins = randInt(6, 10);                 // vueltas completas
+      const randomOffset = Math.random() * Math.PI*2;    // offset final
 
-      const target = Math.floor(Math.random()*n);
-      const extraTurns = 9 + Math.random()*9;      // 9 a 18 vueltas
-      const durationMs = 1600 + Math.random()*650; // 1.6s a 2.25s
+      // Para sentir “aleatorio”, sumamos al ángulo actual
+      const start = state.spinAngle;
+      const target = start + extraSpins * Math.PI*2 + randomOffset;
 
-      const targetAngle = 0 - (target*slice) - (slice/2);
-      const finalAngle = targetAngle - (extraTurns*Math.PI*2);
+      const duration = randInt(2600, 3800); // ms
+      const t0 = performance.now();
 
-      animateSpin(finalAngle, durationMs, () => {
-        spinning = false;
-        selectedIndex = getSelectedIndex();
-        const gift = state.availableGifts[selectedIndex];
-        liveWord.textContent = gift;
-
-        showModal(gift);
-        spinBtn.disabled = false;
-        subText.textContent = "Toca para girar";
-        setStatus("resultado listo");
-      });
-    }
-
-    function animateSpin(finalAngle, durationMs, done){
-      const start = performance.now();
-      const startAngle = currentAngle;
-      let lastTickBucket = null;
+      function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
 
       function frame(now){
-        const t = Math.min(1, (now-start)/durationMs);
-        const eased = easeOutCubic(t);
-
-        currentAngle = startAngle + (finalAngle - startAngle)*eased;
-
-        const n = state.availableGifts.length;
-        const slice = (Math.PI*2)/n;
-        const bucket = Math.floor(((currentAngle % (Math.PI*2)) + (Math.PI*2)) / slice);
-        if(bucket !== lastTickBucket){
-          tick();
-          lastTickBucket = bucket;
-        }
-
+        const t = Math.min(1, (now - t0) / duration);
+        const e = easeOutCubic(t);
+        state.spinAngle = start + (target - start) * e;
         drawWheel();
-        updateLive();
 
-        if(t < 1) requestAnimationFrame(frame);
-        else done?.();
+        if(t < 1){
+          requestAnimationFrame(frame);
+        }else{
+          spinning = false;
+          btnSpin.disabled = false;
+
+          // Determinar resultado final
+          const idx = getSelectedIndex();
+          const gift = state.gifts[idx];
+          const isClaimed = !!gift.claimedBy;
+
+          state.lastResult = {
+            index: idx,
+            giftName: gift.name,
+            isClaimed,
+            claimedBy: gift.claimedBy || null
+          };
+          saveState();
+          renderAll();
+
+          if(isClaimed){
+            setHint(`Este regalo ya está tomado por "${gift.claimedBy}". Debe girar otra vez.`, "danger");
+            btnAccept.disabled = true;
+          }else{
+            setHint(`Listo: si "${name}" acepta, el regalo quedará bloqueado.`, "ok");
+            btnAccept.disabled = false;
+          }
+        }
       }
       requestAnimationFrame(frame);
     }
 
-    // Modal flow
-    function showModal(gift){
-      modalGift.textContent = gift;
-      overlay.classList.add("show");
+    function randInt(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    function hideModal(){ overlay.classList.remove("show"); }
 
+    // -----------------------------
+    // Aceptar / Bloquear regalo
+    // -----------------------------
     function acceptGift(){
-      if(selectedIndex == null) return;
-      const gift = state.availableGifts[selectedIndex];
+      const name = normalizeLine(guestName.value);
+      if(!name){
+        setHint("Escribe el nombre del invitado.", "danger");
+        return;
+      }
+      if(!state.lastResult){
+        setHint("Primero gira la ruleta.", "danger");
+        return;
+      }
+      const idx = state.lastResult.index;
+      const g = state.gifts[idx];
+      if(!g){
+        setHint("Error: regalo no encontrado.", "danger");
+        return;
+      }
+      if(g.claimedBy){
+        setHint(`No se puede aceptar: ya lo tomó "${g.claimedBy}". Gira otra vez.`, "danger");
+        btnAccept.disabled = true;
+        return;
+      }
 
-      state.acceptedGift = gift;
-      state.availableGifts.splice(selectedIndex, 1);
-      saveState(state);
+      g.claimedBy = name;
+      state.lastResult.isClaimed = true;
+      state.lastResult.claimedBy = name;
 
-      hideModal();
-      updateRemain();
+      saveState();
+      renderAll();
+      btnAccept.disabled = true;
+      setHint(`✅ Bloqueado: "${g.name}" para "${name}".`, "ok");
+    }
+
+    // -----------------------------
+    // Cargar regalos desde textarea
+    // Mantiene bloqueos existentes si el nombre del regalo coincide.
+    // -----------------------------
+    function loadGiftsFromTextarea(){
+      const lines = giftInput.value.split("\n").map(normalizeLine).filter(Boolean);
+      const unique = uniq(lines);
+
+      // Mapa de bloqueados actuales por nombre (case-insensitive)
+      const claimedMap = new Map();
+      for(const g of state.gifts){
+        if(g?.name){
+          claimedMap.set(g.name.toLowerCase(), g.claimedBy || null);
+        }
+      }
+
+      state.gifts = unique.map(name => ({
+        name,
+        claimedBy: claimedMap.get(name.toLowerCase()) || null
+      }));
+
+      // reset resultado si ya no existe índice
+      state.lastResult = null;
+
+      saveState();
+      renderAll();
+      setHint("Lista de regalos actualizada.", "ok");
+    }
+
+    // -----------------------------
+    // Reset total
+    // -----------------------------
+    function resetAll(){
+      if(!confirm("¿Seguro que quieres reiniciar TODO? Se borran regalos y bloqueos.")) return;
+      state = { gifts: [], lastResult: null, spinAngle: 0 };
+      localStorage.removeItem(LS_KEY);
+      giftInput.value = "";
+      renderAll();
+      setHint("Se reinició todo.", "ok");
+    }
+
+    // -----------------------------
+    // Export / Import
+    // -----------------------------
+    async function exportState(){
+      try{
+        const data = JSON.stringify(state, null, 2);
+        await navigator.clipboard.writeText(data);
+        setHint("JSON copiado al portapapeles. Pégalo donde lo necesites.", "ok");
+      }catch(e){
+        // fallback: prompt
+        const data = JSON.stringify(state, null, 2);
+        prompt("Copia este JSON:", data);
+      }
+    }
+
+    function importState(){
+      const raw = prompt("Pega aquí el JSON exportado:");
+      if(!raw) return;
+      try{
+        const parsed = JSON.parse(raw);
+        // Validación mínima
+        if(!parsed || !Array.isArray(parsed.gifts)) throw new Error("Formato inválido");
+        state = {
+          gifts: parsed.gifts.map(g => ({
+            name: normalizeLine(g.name || ""),
+            claimedBy: g.claimedBy ? normalizeLine(g.claimedBy) : null
+          })).filter(g => g.name),
+          lastResult: null,
+          spinAngle: Number.isFinite(parsed.spinAngle) ? parsed.spinAngle : 0
+        };
+        saveState();
+        renderAll();
+        setHint("Estado importado correctamente.", "ok");
+      }catch(e){
+        setHint("No se pudo importar. Verifica que el JSON sea válido.", "danger");
+      }
+    }
+
+    // -----------------------------
+    // Render UI
+    // -----------------------------
+    function renderCounts(){
+      const total = state.gifts.length;
+      const free = freeCount();
+      const used = usedCount();
+      countTotal.textContent = total;
+      countFree.textContent = free;
+      countUsed.textContent = used;
+    }
+
+    function renderGiftList(){
+      giftList.innerHTML = "";
+      if(state.gifts.length === 0){
+        giftList.innerHTML = `<div class="small">No hay regalos cargados aún.</div>`;
+        return;
+      }
+      for(const g of state.gifts){
+        const div = document.createElement("div");
+        div.className = "item";
+        const left = document.createElement("div");
+        left.innerHTML = `<b>${escapeHtml(g.name)}</b><br><span>${g.claimedBy ? "Tomado por: " + escapeHtml(g.claimedBy) : "Disponible"}</span>`;
+        const st = document.createElement("div");
+        st.className = "status " + (g.claimedBy ? "used" : "free");
+        st.textContent = g.claimedBy ? "🔒 Tomado" : "✅ Libre";
+        div.appendChild(left);
+        div.appendChild(st);
+        giftList.appendChild(div);
+      }
+    }
+
+    function renderResult(last){
+      if(!last){
+        resultGift.textContent = "—";
+        resultMeta.innerHTML = "";
+        return;
+      }
+      resultGift.textContent = last.giftName;
+      const status = last.isClaimed ? "used" : "free";
+      const who = last.isClaimed ? `Tomado por: ${last.claimedBy}` : "Disponible";
+      resultMeta.innerHTML = `
+        <span class="tag ${status}">${last.isClaimed ? "🔒 Tomado" : "✅ Libre"}</span>
+        <span class="tag">${escapeHtml(who)}</span>
+        <span class="tag">#${last.index + 1}</span>
+      `;
+    }
+
+    function setHint(text, kind){
+      hint.textContent = text || "";
+      hint.style.color = kind === "danger" ? "rgba(255,210,210,.95)"
+                       : kind === "ok" ? "rgba(191,247,223,.95)"
+                       : "rgba(159,176,208,.95)";
+    }
+
+    function renderAll(){
+      renderCounts();
+      renderGiftList();
+      renderResult(state.lastResult);
       drawWheel();
 
-      setStatus("asignado ✅");
-      toastMsg("¡Regalo asignado! ✅");
-      burstConfetti();
-    }
-
-    function tryAgain(){
-      hideModal();
-      selectedIndex = null;
-      setStatus("listo");
-      toastMsg("Vuelve a girar 🔁");
-    }
-
-    // Confetti (simple)
-    let confetti = [];
-    let confettiAnim = null;
-
-    function burstConfetti(){
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      const W = confettiCanvas.width;
-      const H = confettiCanvas.height;
-
-      confettiCanvas.classList.add("show");
-      confetti = [];
-
-      const count = 130;
-      for(let i=0;i<count;i++){
-        confetti.push({
-          x: (Math.random()*W),
-          y: -20*dpr - Math.random()*H*0.15,
-          vx: (Math.random()*2 - 1) * 2.0 * dpr,
-          vy: (Math.random()*2 + 2.5) * 2.3 * dpr,
-          r: (Math.random()*6 + 3) * dpr,
-          rot: Math.random()*Math.PI*2,
-          vr: (Math.random()*0.2 - 0.1),
-          life: 0,
-          max: 110 + Math.random()*50,
-          color: KID_COLORS[Math.floor(Math.random()*KID_COLORS.length)]
-        });
-      }
-
-      if(confettiAnim) cancelAnimationFrame(confettiAnim);
-      animateConfetti();
-      setTimeout(()=>confettiCanvas.classList.remove("show"), 1600);
-    }
-
-    function animateConfetti(){
-      const W = confettiCanvas.width;
-      const H = confettiCanvas.height;
-
-      cctx.clearRect(0,0,W,H);
-      for(const p of confetti){
-        p.life++;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy *= 0.995;
-        p.rot += p.vr;
-
-        cctx.save();
-        cctx.translate(p.x, p.y);
-        cctx.rotate(p.rot);
-        cctx.fillStyle = p.color;
-        cctx.fillRect(-p.r, -p.r/2, p.r*2, p.r);
-        cctx.restore();
-      }
-
-      confetti = confetti.filter(p => p.life < p.max && p.y < H + 50);
-      if(confetti.length){
-        confettiAnim = requestAnimationFrame(animateConfetti);
+      // Ajustar botones
+      if(spinning){
+        btnSpin.disabled = true;
+        btnAccept.disabled = true;
       }else{
-        cctx.clearRect(0,0,W,H);
+        btnSpin.disabled = false;
+        if(state.lastResult && !state.lastResult.isClaimed) btnAccept.disabled = false;
+        else btnAccept.disabled = true;
       }
     }
 
-    // Events
-    spinBtn.addEventListener("click", spin);
-    acceptBtn.addEventListener("click", acceptGift);
-    againBtn.addEventListener("click", tryAgain);
-    closeBtn.addEventListener("click", hideModal);
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
 
-    overlay.addEventListener("click", (e)=>{
-      if(e.target === overlay) hideModal();
+    // -----------------------------
+    // Eventos
+    // -----------------------------
+    btnSpin.addEventListener("click", spin);
+    btnAccept.addEventListener("click", acceptGift);
+    btnLoad.addEventListener("click", loadGiftsFromTextarea);
+    btnReset.addEventListener("click", resetAll);
+    btnExport.addEventListener("click", exportState);
+    btnImport.addEventListener("click", importState);
+
+    // Enter para girar
+    guestName.addEventListener("keydown", (e) => {
+      if(e.key === "Enter") spin();
     });
 
-    // Init
-    updateRemain();
-    setStatus("listo");
-    requestAnimationFrame(() => {
-      resizeCanvas();
-      drawWheel();
-      if(state.availableGifts.length) liveWord.textContent = state.availableGifts[getSelectedIndex()];
-    });
+    // -----------------------------
+    // Inicializar textarea con regalos actuales
+    // -----------------------------
+    function initTextarea(){
+      if(state.gifts.length){
+        giftInput.value = state.gifts.map(g => g.name).join("\n");
+      }
+    }
+
+    initTextarea();
+    renderAll();
+    setHint("Carga los regalos y empieza a girar.", "neutral");
   </script>
 </body>
 </html>
-
