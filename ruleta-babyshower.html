@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>Ruleta Baby Shower (Niño)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --sky1:#dff3ff;
+      --sky2:#bfe6ff;
+
+      --ink:#102a43;
+      --muted:#3f5f7b;
+
+      --card:#ffffffd6;
+      --border:#ffffffcc;
+
+      --blue:#4fb6ff;
+      --blue2:#2f7bff;
+
+      --ok:#22c55e;
+
+      --shadow: 0 22px 55px rgba(0,0,0,.18);
+      --shadow2: 0 12px 28px rgba(0,0,0,.14);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:"Baloo 2", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      display:grid;
+      place-items:center;
+      padding:14px;
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(900px 520px at 85% 20%, rgba(255,255,255,.75), transparent 55%),
+        linear-gradient(180deg, var(--sky1), var(--sky2));
+      overflow:hidden;
+    }
+
+    /* Nubes suaves + estrellitas discretas */
+    .bg{
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(260px 120px at 18% 20%, rgba(255,255,255,.75), transparent 70%),
+        radial-gradient(280px 130px at 55% 14%, rgba(255,255,255,.70), transparent 72%),
+        radial-gradient(300px 140px at 82% 24%, rgba(255,255,255,.70), transparent 72%),
+
+        radial-gradient(2px 2px at 12% 62%, rgba(255, 214, 102,.65), transparent 60%),
+        radial-gradient(2px 2px at 40% 74%, rgba(255, 214, 102,.65), transparent 60%),
+        radial-gradient(2px 2px at 70% 66%, rgba(255, 214, 102,.65), transparent 60%),
+        radial-gradient(2px 2px at 88% 58%, rgba(255, 214, 102,.65), transparent 60%);
+      opacity:1;
+      animation: floaty 10s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%{ transform: translateY(0); }
+      50%{ transform: translateY(-8px); }
+      100%{ transform: translateY(0); }
+    }
+
+    .wrap{
+      width: min(900px, 100%);
+      display:grid;
+      justify-items:center;
+      gap:10px;
+    }
+
+    /* Live title */
+    .liveTitle{
+      width: 100%;
+      text-align:center;
+      padding: 6px 10px 0;
+    }
+    .liveTitle .small{
+      margin:0 0 6px;
+      color: var(--muted);
+      font-size: clamp(12px, 3.2vw, 14px);
+      font-weight: 800;
+    }
+    .liveTitle h1{
+      margin:0;
+      font-size: clamp(20px, 6vw, 44px);
+      line-height:1.05;
+      letter-spacing:.1px;
+      text-shadow: 0 10px 26px rgba(0,0,0,.12);
+    }
+
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      font-size: clamp(12px, 3.2vw, 14px);
+      text-align:center;
+      margin-top: 4px;
+    }
+    .pill{
+      border:2px solid var(--border);
+      background: var(--card);
+      border-radius:999px;
+      padding:8px 12px;
+      box-shadow: var(--shadow2);
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    /* Stage: un poco más grande para que no se vea chiquita */
+    .stage{
+      width: min(96vw, 640px);
+      height: min(96vw, 640px);
+      position:relative;
+      display:grid;
+      place-items:center;
+      margin-top: 4px;
+    }
+
+    /* Aro exterior más delgado y con contraste */
+    .ring{
+      position:absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.95), rgba(255,255,255,.70));
+      border: 3px solid rgba(16,42,67,.08);
+      box-shadow: var(--shadow);
+    }
+
+    /* Ruleta: MÁS visible (menos borde blanco, más sombra, más contraste) */
+    canvas#wheel{
+      width: 92%;
+      height: 92%;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 6px solid rgba(255,255,255,.92);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.12),
+        inset 0 10px 18px rgba(0,0,0,.06),
+        inset 0 -12px 18px rgba(0,0,0,.06);
+    }
+
+    /* Gloss MUY suave (antes tapaba la ruleta) */
+    .gloss{
+      position:absolute;
+      width:92%;
+      height:92%;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,.22), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,.14), transparent 58%);
+      pointer-events:none;
+      opacity:.55;
+    }
+
+    /* Pin lateral más definido */
+    .pin{
+      position:absolute;
+      right: 1.8%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 70px;
+      pointer-events:none;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,.18));
+    }
+    .pin .body{
+      position:absolute;
+      right:0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 38px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 3px solid rgba(16,42,67,.16);
+    }
+    .pin .nose{
+      position:absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      width:0;height:0;
+      border-top: 13px solid transparent;
+      border-bottom:13px solid transparent;
+      border-right: 20px solid #ffffff;
+      filter: drop-shadow(0 2px 0 rgba(16,42,67,.10));
+    }
+    .pin .dot{
+      position:absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(16,42,67,.40);
+    }
+
+    /* Botón central */
+    .hub{
+      position:absolute;
+      width: 28%;
+      aspect-ratio:1/1;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background: #ffffffea;
+      border: 3px solid rgba(16,42,67,.12);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(6px);
+    }
+    .hub button{
+      width: 78%;
+      height: 78%;
+      border-radius:50%;
+      border:none;
+      cursor:pointer;
+      font-weight: 900;
+      letter-spacing:.6px;
+      color:#fff;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      box-shadow:
+        0 18px 24px rgba(0,0,0,.14),
+        inset 0 10px 14px rgba(255,255,255,.22),
+        inset 0 -12px 14px rgba(0,0,0,.12);
+      transition: transform .10s ease, opacity .2s ease;
+      text-transform: uppercase;
+      display:grid;
+      place-items:center;
+      gap:2px;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      font-size: clamp(13px, 3.8vw, 16px);
+      font-family: inherit;
+    }
+    .hub button:active{ transform: scale(.98); }
+    .hub button:disabled{ opacity:.6; cursor:not-allowed; }
+    .hub .sub{
+      font-size: clamp(10px, 2.8vw, 11px);
+      font-weight: 800;
+      opacity: .9;
+      text-transform:none;
+      letter-spacing:.2px;
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.22);
+      display:none;
+      place-items:center;
+      padding:18px;
+    }
+    .overlay.show{ display:grid; }
+
+    .modal{
+      width:min(560px, 100%);
+      border-radius: 22px;
+      background: #ffffff;
+      border: 3px solid rgba(16,42,67,.10);
+      box-shadow: var(--shadow);
+      padding:16px;
+      animation: pop .16s ease-out;
+    }
+    @keyframes pop{
+      from{ transform: translateY(18px) scale(.98); opacity:.0; }
+      to{ transform: translateY(0) scale(1); opacity:1; }
+    }
+    .modal .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .tag{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+    .close{
+      border:none;
+      cursor:pointer;
+      background: rgba(0,0,0,.06);
+      color: var(--ink);
+      border: 2px solid rgba(16,42,67,.12);
+      padding:8px 10px;
+      border-radius: 12px;
+      font-weight:900;
+      font-family: inherit;
+    }
+    .gift{
+      font-size: clamp(18px, 4.8vw, 24px);
+      font-weight: 900;
+      margin: 6px 0 6px;
+    }
+    .desc{
+      margin:0;
+      color: var(--muted);
+      font-size: clamp(12px, 3.4vw, 14px);
+      line-height:1.35;
+      font-weight: 800;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      flex: 1 1 160px;
+      border:none;
+      cursor:pointer;
+      padding:12px 12px;
+      border-radius: 14px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      transition: transform .10s ease, opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
+      font-size: clamp(13px, 3.8vw, 14px);
+      font-family: inherit;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+    .btn-accept{
+      background: linear-gradient(135deg, var(--ok), #4ade80);
+      color:#063215;
+      box-shadow: 0 12px 18px rgba(0,0,0,.12);
+    }
+    .btn-again{
+      background: rgba(0,0,0,.06);
+      color: var(--ink);
+      border: 2px solid rgba(16,42,67,.10);
+    }
+
+    .toast{
+      position: fixed;
+      left:50%;
+      bottom:14px;
+      transform: translateX(-50%);
+      background: #ffffff;
+      color: var(--ink);
+      padding:10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight:900;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease;
+      border:2px solid rgba(16,42,67,.10);
+      box-shadow: var(--shadow2);
+    }
+    .toast.show{ opacity:1; }
+
+    /* Confetti */
+    canvas#confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      display:none;
+    }
+    canvas#confetti.show{ display:block; }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="liveTitle">
+      <div class="small">Baby Shower (Niño) 💙 — Va saliendo por la flecha:</div>
+      <h1 id="liveWord">¡Listo!</h1>
+    </div>
+
+    <div class="stage">
+      <div class="ring" aria-hidden="true"></div>
+
+      <div class="pin" aria-hidden="true">
+        <div class="nose"></div>
+        <div class="body"></div>
+        <div class="dot"></div>
+      </div>
+
+      <canvas id="wheel" aria-hidden="true"></canvas>
+      <div class="gloss" aria-hidden="true"></div>
+
+      <div class="hub">
+        <button id="spinBtn">
+          GIRAR
+          <div class="sub" id="subText">Toca para elegir</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="pill" id="remainPill">Regalos disponibles: 0</div>
+      <div class="pill" id="statePill">Estado: listo</div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalGift">
+      <div class="top">
+        <div class="tag">Tu regalo asignado</div>
+        <button class="close" id="closeBtn" title="Cerrar">✕</button>
+      </div>
+
+      <div class="gift" id="modalGift">—</div>
+      <p class="desc">Si aceptas, se guardará y se eliminará de tu ruleta en este dispositivo.</p>
+
+      <div class="actions">
+        <button class="btn btn-accept" id="acceptBtn">Aceptar regalo ✅</button>
+        <button class="btn btn-again" id="againBtn">Intentar nuevamente 🔁</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <div class="toast" id="toast">Listo</div>
+
+  <script>
+    /***********************
+     * 60 regalos (únicos)
+     ***********************/
+    const STORAGE_KEY = "babyshower_ruleta_kids_60_visible_v2";
+    const DEFAULT_GIFTS = [
+      "Paca pañales RN + toallitas húmedas (paquete grande)",
+      "Paca pañales P + crema antipañalitis",
+      "Paca pañales M + pañitos de tela (set)",
+      "Paca pañales P + biberón anticólicos + tetina extra",
+      "Paca pañales M + aceite bebé + crema hidratante",
+
+      "Pañalera mediana + cambiador portátil",
+      "Pañalera morral + organizador interno",
+      "Organizador de cuna + canasta para pañales",
+      "Cambiador rígido + forros (x2)",
+      "Forros impermeables cambiador (x3) + toallitas extra",
+
+      "Juego sábanas cuna (x3) + protector colchón impermeable",
+      "Muselinas premium (x4) + paños de eructo (x2)",
+      "Toalla con capucha + set toallas bebé (x2)",
+      "Cobija suave premium + sábana ajustable + paños de eructo",
+      "Móvil musical para cuna (básico)",
+
+      "Kit baño: tina plegable + jarrita + termómetro agua",
+      "Tina bebé + soporte antideslizante + esponja suave",
+      "Set higiene: cortauñas + lima + cepillo + aspirador nasal",
+      "Aspirador nasal + solución salina + gasas estériles",
+      "Termómetro digital + kit primeros auxilios bebé (básico)",
+
+      "Jabón líquido + shampoo + crema hidratante (pack)",
+      "Combo piel: crema hidratante + aceite + algodón grande",
+      "Algodón (paquete grande) + gasas + pañitos limpieza",
+      "Detergente hipoalergénico ropa bebé + suavizante baby (pack)",
+      "Crema antipañalitis + toallitas + pañitos de tela (pack)",
+
+      "Ropa 0-3: bodies (x6) + pijamas (x2) + gorritos (x2)",
+      "Ropa 3-6: bodies (x6) + pijamas (x2) + medias (set)",
+      "Set pijamas algodón (x4) + muselinas (x2)",
+      "Kit salida: cobija + gorrito + manoplas + medias",
+      "Manoplas (x4) + medias (x6) + gorritos (x3)",
+
+      "Set biberones anticólicos (x3) + cepillo limpiador",
+      "Esterilizador microondas para teteros + pinzas",
+      "Calientabiberones básico",
+      "Chupetes ortodónticos (x3) + caja esterilizadora",
+      "Tetinas (paquete) + biberón + contenedor leche en polvo",
+
+      "Platos con ventosa (x2) + cucharas silicona (x2)",
+      "Vasitos entrenadores (x2) + cucharas silicona (set)",
+      "Baberos silicona (x2) + plato + cuchara",
+      "Dispensador leche en polvo + biberón anticólicos",
+      "Termo porta tetero + tetero anticólicos",
+
+      "Gimnasio de actividades bebé (básico)",
+      "Tapete de juego acolchado + juguetes colgantes",
+      "Libros sensoriales de tela (x3) + mordedor",
+      "Set juguetes para baño + red organizadora",
+      "Juguetes apilables + sonajero (set)",
+
+      "Pelota sensorial + juguete de agarre + mordedor",
+      "Set maracas suaves + sonajero + mordedor",
+      "Juguete alto contraste + libro estimulación",
+      "Almohadita tummy time + manta de actividades",
+      "Sonajero premium + mordedor (x2) + juguete suave",
+
+      "Kit seguridad hogar: seguros cajón + enchufes + esquineros",
+      "Mosquitero coche + cobertor + ganchos organizadores",
+      "Colchoneta coche + cojín soporte cabeza",
+      "Espejo retrovisor bebé + protector asiento carro",
+      "Fular porteo básico + muselina premium",
+
+      "Canguro ergonómico básico + baberos (x2)",
+      "Bolsa impermeable pañales + neceser viaje",
+      "Luz nocturna bebé + humidificador pequeño",
+      "Combo sueño: cobija premium + luz nocturna + muselina",
+      "Combo pañales: paca + crema antipañalitis + toallitas grande"
+    ];
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return null;
+        return JSON.parse(raw);
+      }catch{ return null; }
+    }
+    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+    const state = loadState() || {
+      availableGifts: [...DEFAULT_GIFTS],
+      acceptedGift: null
+    };
+
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+
+    const liveWord = document.getElementById("liveWord");
+    const spinBtn = document.getElementById("spinBtn");
+    const subText = document.getElementById("subText");
+    const remainPill = document.getElementById("remainPill");
+    const statePill = document.getElementById("statePill");
+
+    const overlay = document.getElementById("overlay");
+    const modalGift = document.getElementById("modalGift");
+    const acceptBtn = document.getElementById("acceptBtn");
+    const againBtn = document.getElementById("againBtn");
+    const closeBtn = document.getElementById("closeBtn");
+
+    const confettiCanvas = document.getElementById("confetti");
+    const cctx = confettiCanvas.getContext("2d");
+
+    const toast = document.getElementById("toast");
+
+    function toastMsg(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(()=>toast.classList.remove("show"), 1300);
+    }
+    function setStatus(text){ statePill.textContent = `Estado: ${text}`; }
+    function updateRemain(){ remainPill.textContent = `Regalos disponibles: ${state.availableGifts.length}`; }
+
+    function resizeCanvas(){
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+      const w = Math.floor(rect.width * dpr);
+      const h = Math.floor(rect.height * dpr);
+
+      if(canvas.width !== w || canvas.height !== h){
+        canvas.width = w;
+        canvas.height = h;
+      }
+      drawWheel();
+
+      const ww = Math.floor(window.innerWidth * dpr);
+      const hh = Math.floor(window.innerHeight * dpr);
+      confettiCanvas.width = ww;
+      confettiCanvas.height = hh;
+      confettiCanvas.style.width = "100vw";
+      confettiCanvas.style.height = "100vh";
+    }
+    window.addEventListener("resize", resizeCanvas, { passive:true });
+
+    let currentAngle = 0;
+    let spinning = false;
+    let selectedIndex = null;
+
+    // Paleta más VIVA para que se vea bien (sin “lavarse”)
+    const KID_COLORS = [
+      "#60a5fa", // blue
+      "#93c5fd", // light blue
+      "#34d399", // mint
+      "#fbbf24", // butter
+      "#fb7185", // pink-peach
+      "#a78bfa"  // lilac
+    ];
+
+    function truncate(s, max){
+      s = String(s);
+      return s.length <= max ? s : s.slice(0, max-1) + "…";
+    }
+
+    function drawWheel(){
+      const gifts = state.availableGifts;
+      const n = gifts.length;
+
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0,0,w,h);
+
+      const cx = w/2;
+      const cy = h/2;
+      const radius = Math.min(cx, cy) * 0.94;
+
+      // base
+      ctx.beginPath();
+      ctx.arc(cx,cy,radius,0,Math.PI*2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+
+      if(n === 0){
+        ctx.fillStyle = "#102a43";
+        ctx.font = `900 ${Math.max(18, radius*0.10)}px "Baloo 2", system-ui`;
+        ctx.textAlign = "center";
+        ctx.fillText("Sin regalos", cx, cy);
+        return;
+      }
+
+      const slice = (Math.PI*2) / n;
+
+      for(let i=0;i<n;i++){
+        const start = currentAngle + i*slice;
+        const end = start + slice;
+
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,radius,start,end);
+        ctx.closePath();
+
+        ctx.fillStyle = KID_COLORS[i % KID_COLORS.length];
+        ctx.fill();
+
+        // borde
+        ctx.strokeStyle = "rgba(16,42,67,.14)";
+        ctx.lineWidth = Math.max(2, radius * 0.012);
+        ctx.stroke();
+
+        // texto (más oscuro y legible)
+        const mid = (start+end)/2;
+        ctx.save();
+        ctx.translate(cx,cy);
+        ctx.rotate(mid);
+
+        ctx.textAlign = "right";
+        const fontSize = Math.max(11, radius * 0.055);
+        const label = truncate(gifts[i], 18);
+
+        // sombra de texto para legibilidad
+        ctx.fillStyle = "rgba(255,255,255,.75)";
+        ctx.font = `900 ${fontSize}px "Baloo 2", system-ui`;
+        ctx.fillText(label, radius - (radius*0.08) + 2, 2);
+
+        ctx.fillStyle = "rgba(16,42,67,.92)";
+        ctx.fillText(label, radius - (radius*0.08), 0);
+
+        ctx.restore();
+      }
+
+      // aro interno para “acabado”
+      ctx.beginPath();
+      ctx.arc(cx,cy,radius*0.18,0,Math.PI*2);
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(16,42,67,.10)";
+      ctx.lineWidth = Math.max(2, radius*0.01);
+      ctx.stroke();
+    }
+
+    // Sonido tick
+    let audioCtx = null;
+    function ensureAudio(){
+      if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if(audioCtx.state === "suspended") audioCtx.resume();
+    }
+    function tick(){
+      if(!audioCtx) return;
+      const t0 = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = "square";
+      osc.frequency.setValueAtTime(900, t0);
+      osc.frequency.exponentialRampToValueAtTime(320, t0 + 0.03);
+
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(0.10, t0 + 0.005);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.05);
+
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t0);
+      osc.stop(t0 + 0.055);
+    }
+
+    // Pointer RIGHT (0 rad)
+    function getSelectedIndex(){
+      const n = state.availableGifts.length;
+      const slice = (Math.PI*2)/n;
+      const normalized = (Math.PI*2 + ((0 - currentAngle) % (Math.PI*2))) % (Math.PI*2);
+      return Math.floor(normalized / slice) % n;
+    }
+
+    // Live title
+    let lastLiveIndex = null;
+    function updateLive(){
+      if(state.availableGifts.length === 0){
+        liveWord.textContent = "Sin regalos";
+        return;
+      }
+      const idx = getSelectedIndex();
+      if(idx !== lastLiveIndex){
+        lastLiveIndex = idx;
+        liveWord.textContent = state.availableGifts[idx];
+      }
+    }
+
+    // Spin rápido y aleatorio
+    function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+
+    function spin(){
+      if(spinning) return;
+      if(state.availableGifts.length === 0){
+        toastMsg("No quedan regalos");
+        return;
+      }
+
+      ensureAudio();
+
+      spinning = true;
+      setStatus("girando…");
+      subText.textContent = "Suerte 😄";
+      spinBtn.disabled = true;
+      selectedIndex = null;
+
+      const n = state.availableGifts.length;
+      const slice = (Math.PI*2)/n;
+
+      const target = Math.floor(Math.random()*n);
+      const extraTurns = 9 + Math.random()*9;      // 9 a 18 vueltas
+      const durationMs = 1600 + Math.random()*650; // 1.6s a 2.25s
+
+      const targetAngle = 0 - (target*slice) - (slice/2);
+      const finalAngle = targetAngle - (extraTurns*Math.PI*2);
+
+      animateSpin(finalAngle, durationMs, () => {
+        spinning = false;
+        selectedIndex = getSelectedIndex();
+        const gift = state.availableGifts[selectedIndex];
+        liveWord.textContent = gift;
+
+        showModal(gift);
+        spinBtn.disabled = false;
+        subText.textContent = "Toca para girar";
+        setStatus("resultado listo");
+      });
+    }
+
+    function animateSpin(finalAngle, durationMs, done){
+      const start = performance.now();
+      const startAngle = currentAngle;
+      let lastTickBucket = null;
+
+      function frame(now){
+        const t = Math.min(1, (now-start)/durationMs);
+        const eased = easeOutCubic(t);
+
+        currentAngle = startAngle + (finalAngle - startAngle)*eased;
+
+        const n = state.availableGifts.length;
+        const slice = (Math.PI*2)/n;
+        const bucket = Math.floor(((currentAngle % (Math.PI*2)) + (Math.PI*2)) / slice);
+        if(bucket !== lastTickBucket){
+          tick();
+          lastTickBucket = bucket;
+        }
+
+        drawWheel();
+        updateLive();
+
+        if(t < 1) requestAnimationFrame(frame);
+        else done?.();
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // Modal flow
+    function showModal(gift){
+      modalGift.textContent = gift;
+      overlay.classList.add("show");
+    }
+    function hideModal(){ overlay.classList.remove("show"); }
+
+    function acceptGift(){
+      if(selectedIndex == null) return;
+      const gift = state.availableGifts[selectedIndex];
+
+      state.acceptedGift = gift;
+      state.availableGifts.splice(selectedIndex, 1);
+      saveState(state);
+
+      hideModal();
+      updateRemain();
+      drawWheel();
+
+      setStatus("asignado ✅");
+      toastMsg("¡Regalo asignado! ✅");
+      burstConfetti();
+    }
+
+    function tryAgain(){
+      hideModal();
+      selectedIndex = null;
+      setStatus("listo");
+      toastMsg("Vuelve a girar 🔁");
+    }
+
+    // Confetti (simple)
+    let confetti = [];
+    let confettiAnim = null;
+
+    function burstConfetti(){
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+      const W = confettiCanvas.width;
+      const H = confettiCanvas.height;
+
+      confettiCanvas.classList.add("show");
+      confetti = [];
+
+      const count = 130;
+      for(let i=0;i<count;i++){
+        confetti.push({
+          x: (Math.random()*W),
+          y: -20*dpr - Math.random()*H*0.15,
+          vx: (Math.random()*2 - 1) * 2.0 * dpr,
+          vy: (Math.random()*2 + 2.5) * 2.3 * dpr,
+          r: (Math.random()*6 + 3) * dpr,
+          rot: Math.random()*Math.PI*2,
+          vr: (Math.random()*0.2 - 0.1),
+          life: 0,
+          max: 110 + Math.random()*50,
+          color: KID_COLORS[Math.floor(Math.random()*KID_COLORS.length)]
+        });
+      }
+
+      if(confettiAnim) cancelAnimationFrame(confettiAnim);
+      animateConfetti();
+      setTimeout(()=>confettiCanvas.classList.remove("show"), 1600);
+    }
+
+    function animateConfetti(){
+      const W = confettiCanvas.width;
+      const H = confettiCanvas.height;
+
+      cctx.clearRect(0,0,W,H);
+      for(const p of confetti){
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy *= 0.995;
+        p.rot += p.vr;
+
+        cctx.save();
+        cctx.translate(p.x, p.y);
+        cctx.rotate(p.rot);
+        cctx.fillStyle = p.color;
+        cctx.fillRect(-p.r, -p.r/2, p.r*2, p.r);
+        cctx.restore();
+      }
+
+      confetti = confetti.filter(p => p.life < p.max && p.y < H + 50);
+      if(confetti.length){
+        confettiAnim = requestAnimationFrame(animateConfetti);
+      }else{
+        cctx.clearRect(0,0,W,H);
+      }
+    }
+
+    // Events
+    spinBtn.addEventListener("click", spin);
+    acceptBtn.addEventListener("click", acceptGift);
+    againBtn.addEventListener("click", tryAgain);
+    closeBtn.addEventListener("click", hideModal);
+
+    overlay.addEventListener("click", (e)=>{
+      if(e.target === overlay) hideModal();
+    });
+
+    // Init
+    updateRemain();
+    setStatus("listo");
+    requestAnimationFrame(() => {
+      resizeCanvas();
+      drawWheel();
+      if(state.availableGifts.length) liveWord.textContent = state.availableGifts[getSelectedIndex()];
+    });
+  </script>
+</body>
+</html>
+
