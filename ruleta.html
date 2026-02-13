@@ -3,230 +3,743 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ruleta Baby Shower (Global)</title>
+  <title>Ruleta de regalos (Baby Shower)</title>
   <style>
-    :root{--bg:#0b1220;--border:rgba(255,255,255,.10);--shadow:0 18px 50px rgba(0,0,0,.35);
-      --text:#eaf0ff;--muted:#9fb0d0;--ok:#34d399;--danger:#ff6b6b;--accent:#6ee7ff;--accent2:#a78bfa;}
+    :root{
+      --bg:#0b1220;
+      --card:#121b2f;
+      --muted:#9fb0d0;
+      --text:#eaf0ff;
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --danger:#ff6b6b;
+      --ok:#34d399;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius:16px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--text);padding:16px;display:flex;justify-content:center}
-    .card{width:min(720px,100%);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));padding:14px}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(110,231,255,.18), transparent 55%),
+        radial-gradient(900px 700px at 90% 20%, rgba(167,139,250,.16), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:18px;
+    }
+    .wrap{
+      width:min(980px,100%);
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    @media(max-width:900px){ .wrap{grid-template-columns:1fr;} }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:14px;
+    }
     h1{margin:0 0 8px;font-size:20px}
-    p{margin:0 0 10px;color:var(--muted);font-size:13px;line-height:1.35}
-    label{font-size:12px;color:var(--muted);display:block;margin:10px 0 6px}
-    input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.25);color:var(--text)}
-    .btn{border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;font-weight:800}
-    .btn.primary{background:linear-gradient(90deg, rgba(110,231,255,.22), rgba(167,139,250,.22));border-color:rgba(110,231,255,.25)}
-    .btn.ok{background:rgba(52,211,153,.18);border-color:rgba(52,211,153,.28)}
-    .btn.danger{background:rgba(255,107,107,.16);border-color:rgba(255,107,107,.25)}
-    .btn:disabled{opacity:.45;cursor:not-allowed}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .box{margin-top:12px;border-radius:14px;border:1px solid var(--border);background:rgba(0,0,0,.25);padding:12px}
-    .big{font-size:18px;font-weight:900}
+    .sub{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.35}
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:12px}
+    input{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
+    }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      user-select:none;
+      font-weight:800;
+      transition: transform .05s ease, opacity .15s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(110,231,255,.22), rgba(167,139,250,.22));
+      border-color:rgba(110,231,255,.25);
+    }
+    .btn.ok{
+      background: rgba(52,211,153,.18);
+      border-color:rgba(52,211,153,.28);
+    }
+    .btn.danger{
+      background: rgba(255,107,107,.16);
+      border-color:rgba(255,107,107,.25);
+    }
+    .btn:disabled{opacity:.45; cursor:not-allowed}
+
+    /* Ruleta */
+    .wheelWrap{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+    }
+    .pointer{
+      width:0;height:0;
+      border-left:18px solid transparent;
+      border-right:18px solid transparent;
+      border-bottom:26px solid var(--accent);
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.45));
+      margin-bottom:-4px;
+    }
+    canvas{
+      width:min(520px, 100%);
+      height:auto;
+      max-width: 520px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.18);
+      border:1px solid var(--border);
+    }
+
+    .box{
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      padding:12px;
+      margin-top:10px;
+    }
+    .big{font-size:16px;font-weight:900;line-height:1.25}
     .hint{margin-top:8px;font-size:12px;color:var(--muted)}
     .tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);margin-right:6px}
     .tag.ok{border-color:rgba(52,211,153,.28);background:rgba(52,211,153,.14);color:#bff7df}
     .tag.bad{border-color:rgba(255,107,107,.30);background:rgba(255,107,107,.14);color:#ffd2d2}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      color:var(--muted);font-size:12px;white-space:nowrap;
+    }
+    .footerRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px}
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      width:min(520px, calc(100% - 32px));
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(18,27,47,.92);
+      box-shadow: var(--shadow);
+      padding:12px 12px 12px 14px;
+      transform: translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index:9999;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateY(0);
+      pointer-events:auto;
+    }
+    .toast h3{margin:0 0 6px;font-size:14px}
+    .toast p{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
+    .toast .close{
+      position:absolute;
+      right:10px;
+      top:10px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:10px;
+      padding:4px 8px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:12px;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>🎁 Ruleta de regalos (Baby Shower)</h1>
-    <p>
-      Escribe tu nombre y presiona <b>Girar</b>. Si no te gusta, presiona <b>Cancelar</b> y gira otra vez.
-      Si presionas <b>Escoger/Aceptar</b>, el regalo se <b>bloquea</b> para todos.
-    </p>
+  <div class="wrap">
 
-    <label>Tu nombre</label>
-    <input id="name" placeholder="Escribe tu nombre" />
+    <!-- IZQ: Ruleta -->
+    <div class="card">
+      <h1>🎁 Ruleta de regalos (Baby Shower)</h1>
+      <p class="sub">
+        Escribe tu nombre y presiona <b>Girar</b>. Si no te gusta, presiona <b>No escoger este regalo</b> y vuelve a girar.
+        Si presionas <b>Escoger regalo</b>, el regalo se bloquea para todos.
+      </p>
 
-    <div class="row" style="margin-top:12px">
-      <button class="btn primary" id="btnSpin">Girar</button>
-      <button class="btn danger" id="btnCancel" disabled>Cancelar</button>
-      <button class="btn ok" id="btnAccept" disabled>Escoger / Aceptar</button>
+      <label>Tu nombre</label>
+      <input id="name" placeholder="Escribe tu nombre" />
+
+      <div class="wheelWrap" style="margin-top:12px;">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" width="700" height="700"></canvas>
+      </div>
+
+      <div class="row" style="margin-top:12px;">
+        <button class="btn primary" id="btnSpin">Girar</button>
+        <button class="btn danger" id="btnNoPick" disabled>No escoger este regalo</button>
+        <button class="btn ok" id="btnPick" disabled>Escoger regalo</button>
+      </div>
+
+      <div class="box">
+        <div class="big" id="gift">—</div>
+        <div style="margin-top:8px" id="meta"></div>
+        <div class="hint" id="hint">Cargando regalos...</div>
+      </div>
+
+      <div class="footerRow">
+        <span class="pill">🎁 Total: <span id="tTotal">0</span></span>
+        <span class="pill">✅ Disponibles: <span id="tFree">0</span></span>
+        <span class="pill">🔒 Tomados: <span id="tUsed">0</span></span>
+      </div>
     </div>
 
-    <div class="box">
-      <div class="big" id="gift">—</div>
-      <div style="margin-top:8px" id="meta"></div>
-      <div class="hint" id="hint">Cargando estado...</div>
+    <!-- DER: Info / ayuda -->
+    <div class="card">
+      <h1>ℹ️ ¿Cómo funciona?</h1>
+      <p class="sub">
+        1) Escribes tu nombre<br>
+        2) Giras la ruleta<br>
+        3) Si no te gusta, <b>No escoger este regalo</b> y giras otra vez<br>
+        4) Si te gusta, <b>Escoger regalo</b> y queda bloqueado para todos ✅
+      </p>
+
+      <div class="box">
+        <div class="big">🧠 Regla importante</div>
+        <div class="hint">
+          Después de girar, debes elegir uno de los dos botones:
+          <b>No escoger este regalo</b> o <b>Escoger regalo</b>.
+          Hasta que elijas, no podrás volver a girar.
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="big">✅ Confirmación final</div>
+        <div class="hint">
+          Al escoger regalo, se mostrará un mensaje con tu nombre y el regalo asignado,
+          y el sistema ya no permitirá girar nuevamente desde ese dispositivo.
+        </div>
+      </div>
     </div>
 
-    <div class="hint" id="counts"></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <button class="close" id="toastClose">X</button>
+    <h3 id="toastTitle">✅ Listo</h3>
+    <p id="toastBody"></p>
   </div>
 
 <script>
-  // 1) Pega tu URL del Web App de Apps Script aquí:
-  const API_URL = "https://script.google.com/macros/s/AKfycbxabBPFNJ-jMysCEOvVOUBk6ClP4B4LB2WSxsvuzsvPPoKtk9-ufNwDOMTw6GZLNQvHeA/exec";
+  // =========================
+  // CONFIG
+  // =========================
+  const API_URL = "PEGAR_AQUI_TU_URL_EXEC"; // <-- Pega aquí tu /exec
 
+  // =========================
+  // DOM
+  // =========================
   const $ = (id)=>document.getElementById(id);
   const elGift = $("gift");
   const elMeta = $("meta");
   const elHint = $("hint");
-  const elCounts = $("counts");
+
   const btnSpin = $("btnSpin");
-  const btnCancel = $("btnCancel");
-  const btnAccept = $("btnAccept");
+  const btnNoPick = $("btnNoPick");
+  const btnPick = $("btnPick");
 
-  let lastPick = null; // {id, regalo, estado, asignado_a}
+  const tTotal = $("tTotal");
+  const tFree  = $("tFree");
+  const tUsed  = $("tUsed");
 
-  function setHint(msg, kind){
-    elHint.textContent = msg;
-    elHint.style.color = kind==="bad" ? "rgba(255,210,210,.95)"
-                     : kind==="ok" ? "rgba(191,247,223,.95)"
-                     : "rgba(159,176,208,.95)";
+  const canvas = $("wheel");
+  const ctx = canvas.getContext("2d");
+
+  const toast = $("toast");
+  const toastTitle = $("toastTitle");
+  const toastBody = $("toastBody");
+  const toastClose = $("toastClose");
+
+  // =========================
+  // STATE
+  // =========================
+  let gifts = []; // {id, regalo, estado, asignado_a}
+  let spinning = false;
+
+  // Después de girar, bloqueamos el botón girar hasta que elijan NoPick o Pick.
+  let mustDecide = false;
+
+  // pick actual
+  let lastPick = null;
+
+  // para bloquear “no girar más” tras escoger
+  const LS_DONE = "baby_ruleta_done_v1";
+  const LS_DONE_NAME = "baby_ruleta_done_name_v1";
+  const LS_DONE_GIFT = "baby_ruleta_done_gift_v1";
+
+  // ángulo rueda
+  let wheelAngle = 0;
+
+  // =========================
+  // JSONP (sin CORS)
+  // =========================
+  function jsonpCall(params){
+    return new Promise((resolve, reject) => {
+      const cbName = "cb_" + Math.random().toString(36).slice(2);
+      const url = new URL(API_URL);
+      Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
+      url.searchParams.set("callback", cbName);
+
+      const s = document.createElement("script");
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error("Timeout JSONP"));
+      }, 12000);
+
+      window[cbName] = (data) => {
+        cleanup();
+        resolve(data);
+      };
+
+      function cleanup(){
+        clearTimeout(timeout);
+        delete window[cbName];
+        s.remove();
+      }
+
+      s.onerror = () => {
+        cleanup();
+        reject(new Error("JSONP error"));
+      };
+
+      s.src = url.toString();
+      document.body.appendChild(s);
+    });
   }
 
-  function jsonpCall(params){
-  return new Promise((resolve, reject) => {
-    const cbName = "cb_" + Math.random().toString(36).slice(2);
-    const url = new URL(API_URL);
-    Object.entries(params).forEach(([k,v]) => url.searchParams.set(k, v));
-    url.searchParams.set("callback", cbName);
+  async function apiStatus(){ return jsonpCall({ action:"status" }); }
+  async function apiSpin(name){ return jsonpCall({ action:"spin", name }); }
+  async function apiAccept(name, id){ return jsonpCall({ action:"accept", name, id:String(id) }); }
 
-    const s = document.createElement("script");
-    const timeout = setTimeout(() => {
-      cleanup();
-      reject(new Error("Timeout JSONP"));
-    }, 12000);
+  // =========================
+  // UI helpers
+  // =========================
+  function setHint(msg, kind){
+    elHint.textContent = msg;
+    elHint.style.color =
+      kind==="bad" ? "rgba(255,210,210,.95)" :
+      kind==="ok"  ? "rgba(191,247,223,.95)" :
+      "rgba(159,176,208,.95)";
+  }
 
-    window[cbName] = (data) => {
-      cleanup();
-      resolve(data);
-    };
-
-    function cleanup(){
-      clearTimeout(timeout);
-      delete window[cbName];
-      s.remove();
-    }
-
-    s.onerror = () => {
-      cleanup();
-      reject(new Error("JSONP error"));
-    };
-
-    s.src = url.toString();
-    document.body.appendChild(s);
-  });
-}
-
-async function apiGetStatus(){
-  return jsonpCall({ action:"status" });
-}
-async function apiSpin(name){
-  return jsonpCall({ action:"spin", name });
-}
-async function apiAccept(name, id){
-  return jsonpCall({ action:"accept", name, id:String(id) });
-}
-  function renderPick(pick){
-    lastPick = pick;
-    elGift.textContent = pick.regalo;
-
+  function setMeta(pick){
     elMeta.innerHTML = "";
-    const statusTag = document.createElement("span");
-    statusTag.className = "tag " + (pick.estado === "LIBRE" ? "ok" : "bad");
-    statusTag.textContent = pick.estado === "LIBRE" ? "✅ Libre" : "🔒 Tomado";
-    elMeta.appendChild(statusTag);
+    if(!pick) return;
+
+    const st = document.createElement("span");
+    st.className = "tag " + (pick.estado === "LIBRE" ? "ok" : "bad");
+    st.textContent = pick.estado === "LIBRE" ? "✅ Libre" : "🔒 Tomado";
+    elMeta.appendChild(st);
+
+    const idTag = document.createElement("span");
+    idTag.className = "tag";
+    idTag.textContent = "#" + pick.id;
+    elMeta.appendChild(idTag);
 
     if(pick.estado !== "LIBRE"){
       const who = document.createElement("span");
       who.className = "tag bad";
       who.textContent = "Por: " + (pick.asignado_a || "—");
       elMeta.appendChild(who);
-    } else {
-      const idTag = document.createElement("span");
-      idTag.className = "tag";
-      idTag.textContent = "#" + pick.id;
-      elMeta.appendChild(idTag);
     }
-
-    btnCancel.disabled = false;
-    btnAccept.disabled = (pick.estado !== "LIBRE");
   }
 
-  function resetDecisionUI(){
+  function resetPick(){
     lastPick = null;
     elGift.textContent = "—";
     elMeta.innerHTML = "";
-    btnCancel.disabled = true;
-    btnAccept.disabled = true;
   }
 
-  async function refreshCounts(){
+  function setCounts(total, libres, tomados){
+    tTotal.textContent = total;
+    tFree.textContent = libres;
+    tUsed.textContent = tomados;
+  }
+
+  function showToast(title, body){
+    toastTitle.textContent = title;
+    toastBody.innerHTML = body;
+    toast.classList.add("show");
+  }
+  function hideToast(){
+    toast.classList.remove("show");
+  }
+
+  toastClose.addEventListener("click", hideToast);
+
+  // =========================
+  // Wheel drawing
+  // =========================
+  function drawWheel(){
+    const W = canvas.width, H = canvas.height;
+    const cx = W/2, cy = H/2;
+    const r = Math.min(cx,cy) - 18;
+
+    ctx.clearRect(0,0,W,H);
+
+    ctx.save();
+    ctx.translate(cx,cy);
+
+    // sombra base
+    ctx.beginPath();
+    ctx.arc(0,0,r+6,0,Math.PI*2);
+    ctx.fillStyle = "rgba(0,0,0,.20)";
+    ctx.fill();
+
+    const n = Math.max(gifts.length, 1);
+    const slice = (Math.PI*2) / n;
+
+    ctx.rotate(wheelAngle);
+
+    for(let i=0;i<n;i++){
+      const g = gifts[i];
+      const a0 = i*slice;
+      const a1 = a0 + slice;
+
+      const alt = i%2===0;
+      const base = alt ? "rgba(110,231,255,.22)" : "rgba(167,139,250,.20)";
+      const fill = (g && g.estado === "TOMADO") ? "rgba(255,107,107,.18)" : base;
+
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0,r,a0,a1);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(255,255,255,.10)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // texto
+      const label = g ? g.regalo : "Cargando...";
+      const mid = (a0+a1)/2;
+
+      ctx.save();
+      ctx.rotate(mid);
+      ctx.translate(r*0.62,0);
+      ctx.rotate(Math.PI/2);
+
+      ctx.fillStyle = (g && g.estado === "TOMADO") ? "rgba(255,210,210,.92)" : "rgba(234,240,255,.92)";
+      ctx.font = "800 18px system-ui, -apple-system, Segoe UI, Roboto";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const short = label.length <= 18 ? label : label.slice(0,17) + "…";
+      ctx.fillText(short, 0, 0);
+
+      if(g && g.estado === "TOMADO"){
+        ctx.font = "900 12px system-ui, -apple-system, Segoe UI, Roboto";
+        ctx.fillText("🔒", 0, 22);
+      }
+      ctx.restore();
+    }
+
+    // centro
+    ctx.beginPath();
+    ctx.arc(0,0,70,0,Math.PI*2);
+    ctx.fillStyle = "rgba(0,0,0,.30)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,.12)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = "rgba(234,240,255,.95)";
+    ctx.font = "900 18px system-ui, -apple-system, Segoe UI, Roboto";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("BABY", 0, -6);
+    ctx.font = "700 12px system-ui, -apple-system, Segoe UI, Roboto";
+    ctx.fillStyle = "rgba(159,176,208,.95)";
+    ctx.fillText("Shower", 0, 16);
+
+    ctx.restore();
+  }
+
+  // puntero arriba => -90°
+  function getIndexFromAngle(angle){
+    const n = gifts.length;
+    if(!n) return -1;
+    const pointerAngle = (-Math.PI/2 - angle) % (Math.PI*2);
+    const norm = (pointerAngle + Math.PI*2) % (Math.PI*2);
+    const slice = (Math.PI*2) / n;
+    let idx = Math.floor(norm / slice);
+    idx = (idx + n) % n;
+    return idx;
+  }
+
+  // =========================
+  // Flow rules:
+  // - Solo se permite girar si mustDecide=false
+  // - Después de girar => mustDecide=true y se habilitan los 2 botones
+  // - NoPick => limpia pick y mustDecide=false (puede girar)
+  // - Pick => asigna y bloquea todo (no más giros)
+  // =========================
+  function lockAfterAccepted(name, gift){
+    localStorage.setItem(LS_DONE, "1");
+    localStorage.setItem(LS_DONE_NAME, name);
+    localStorage.setItem(LS_DONE_GIFT, gift);
+  }
+
+  function alreadyAccepted(){
+    return localStorage.getItem(LS_DONE) === "1";
+  }
+
+  function setButtons(){
+    const done = alreadyAccepted();
+
+    if(done){
+      btnSpin.disabled = true;
+      btnNoPick.disabled = true;
+      btnPick.disabled = true;
+      return;
+    }
+
+    // si está girando, bloquea todo
+    if(spinning){
+      btnSpin.disabled = true;
+      btnNoPick.disabled = true;
+      btnPick.disabled = true;
+      return;
+    }
+
+    // si debe decidir, no puede girar
+    btnSpin.disabled = mustDecide;
+
+    // botones decisión
+    btnNoPick.disabled = !mustDecide;
+    // Pick solo si el último pick está libre
+    btnPick.disabled = !(mustDecide && lastPick && lastPick.estado === "LIBRE");
+  }
+
+  // =========================
+  // Load status (gifts + counts)
+  // =========================
+  async function refreshAll(){
     try{
-      const st = await apiGetStatus();
-      if(!st.ok) throw new Error(st.error || "No ok");
-      elCounts.textContent = `🎁 Total: ${st.total} | ✅ Disponibles: ${st.libres} | 🔒 Tomados: ${st.tomados}`;
-      setHint("Listo. Ahora gira la ruleta.", "neutral");
+      const st = await apiStatus();
+      if(!st.ok) throw new Error(st.error || "Status error");
+      gifts = st.regalos || [];
+      setCounts(st.total||0, st.libres||0, st.tomados||0);
+      drawWheel();
+
+      if(alreadyAccepted()){
+        const n = localStorage.getItem(LS_DONE_NAME) || "—";
+        const g = localStorage.getItem(LS_DONE_GIFT) || "—";
+        setHint("Ya escogiste un regalo. ¡Gracias por participar!", "ok");
+        elGift.textContent = g;
+        setMeta({id:"—", estado:"TOMADO", asignado_a:n});
+        showToast(
+          "✅ Regalo confirmado",
+          `<b>${escapeHtml(n)}</b>, tu regalo es: <b>${escapeHtml(g)}</b>.<br><br>
+           ¡Gracias por aceptar nuestra invitación! Te esperamos con muchas ansias. 💙<br>
+           Recuerda: <b>domingo 22 de febrero</b> en el <b>salón comunal del conjunto Remansos de Funza</b>,
+           a las <b>2:00 pm</b>, en <b>Funza, Cundinamarca</b>.`
+        );
+      } else {
+        setHint("Listo. Escribe tu nombre y gira la ruleta.", "neutral");
+      }
+
+      setButtons();
     }catch(e){
-      setHint("No se pudo cargar el estado. Revisa la URL del API.", "bad");
+      setHint("Error cargando datos: " + e.message, "bad");
+      gifts = [];
+      setCounts(0,0,0);
+      drawWheel();
+      setButtons();
     }
   }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
+  }
+
+  // =========================
+  // Spin animation (visual)
+  // =========================
+  function easeOutCubic(t){ return 1 - Math.pow(1-t, 3); }
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
   btnSpin.addEventListener("click", async ()=>{
     const name = $("name").value.trim();
     if(!name){ setHint("Escribe tu nombre antes de girar.", "bad"); $("name").focus(); return; }
+    if(alreadyAccepted()){ setHint("Ya escogiste un regalo. ¡Gracias!", "ok"); return; }
+    if(mustDecide){ setHint("Debes elegir: No escoger este regalo / Escoger regalo.", "bad"); return; }
+    if(spinning) return;
 
-    btnSpin.disabled = true;
-    resetDecisionUI();
-    setHint("Sorteando...", "neutral");
+    // pedimos un pick libre del servidor
+    spinning = true;
+    mustDecide = false;
+    resetPick();
+    setHint("Sorteando y girando la ruleta...", "neutral");
+    setButtons();
 
     try{
       const r = await apiSpin(name);
-      if(!r.ok) throw new Error(r.error || "Error en spin");
-      renderPick(r.pick);
-      if(r.pick.estado !== "LIBRE"){
-        setHint("Te salió uno tomado. Pulsa Cancelar y gira otra vez.", "bad");
-      } else {
-        setHint("Si te gusta, pulsa Aceptar. Si no, Cancelar y vuelves a girar.", "ok");
+      if(!r.ok) throw new Error(r.error || "No se pudo sortear");
+      const pick = r.pick; // {id, regalo, estado, asignado_a} - debería venir LIBRE
+
+      // aseguramos wheel index según lista local
+      // buscamos en gifts por id; si no está, refrescamos
+      let targetIndex = gifts.findIndex(g => Number(g.id) === Number(pick.id));
+      if(targetIndex === -1){
+        await refreshAll();
+        targetIndex = gifts.findIndex(g => Number(g.id) === Number(pick.id));
       }
-      await refreshCounts();
+      if(targetIndex === -1) throw new Error("No se encontró el regalo en la ruleta (id).");
+
+      const n = gifts.length;
+      const slice = (Math.PI*2)/n;
+
+      // ángulo que debe quedar para que el índice targetIndex quede bajo el puntero
+      // Queremos: getIndexFromAngle(finalAngle) (según puntero arriba) = targetIndex
+      // Tomamos el centro del sector:
+      const centerAngleForIndex = (targetIndex + 0.5) * slice; // en coords de rueda
+      // pointerAngle = -pi/2 - angle ; idx = floor(norm/slice)
+      // Para que norm ~ centerAngleForIndex => (-pi/2 - angle) mod 2pi = centerAngleForIndex
+      // => angle = -pi/2 - centerAngleForIndex (mod 2pi)
+      const desired = -Math.PI/2 - centerAngleForIndex;
+
+      // Animación: varias vueltas + llegar al desired
+      const extraSpins = randInt(6, 10);
+      const start = wheelAngle;
+
+      // Normalizamos para que el final esté "cerca" pero sumando vueltas
+      let endBase = desired;
+      // Ajustar endBase al mismo “ciclo” que start para evitar saltos raros
+      while(endBase < start) endBase += Math.PI*2;
+      // final: endBase + vueltas adicionales
+      const target = endBase + extraSpins * Math.PI*2;
+
+      const duration = randInt(2600, 3800);
+      const t0 = performance.now();
+
+      function frame(now){
+        const t = Math.min(1, (now - t0) / duration);
+        const e = easeOutCubic(t);
+        wheelAngle = start + (target - start) * e;
+        drawWheel();
+        if(t < 1){
+          requestAnimationFrame(frame);
+        }else{
+          // Fin
+          spinning = false;
+
+          // set pick UI
+          lastPick = { ...pick, estado:"LIBRE" };
+          elGift.textContent = pick.regalo;
+          setMeta(lastPick);
+
+          // ahora debe decidir
+          mustDecide = true;
+
+          setHint('Ahora decide: "No escoger este regalo" o "Escoger regalo".', "ok");
+          setButtons();
+        }
+      }
+      requestAnimationFrame(frame);
+
     }catch(e){
+      spinning = false;
+      mustDecide = false;
       setHint("Error: " + e.message, "bad");
-    }finally{
-      btnSpin.disabled = false;
+      setButtons();
     }
   });
 
-  btnCancel.addEventListener("click", ()=>{
-    resetDecisionUI();
-    setHint("Cancelado. Puedes girar otra vez.", "neutral");
+  // No escoger => no asigna nada, solo permite girar de nuevo
+  btnNoPick.addEventListener("click", ()=>{
+    if(alreadyAccepted()) return;
+    if(!mustDecide) return;
+
+    resetPick();
+    mustDecide = false;
+    setHint("Perfecto. Puedes girar otra vez.", "neutral");
+    setButtons();
   });
 
-  btnAccept.addEventListener("click", async ()=>{
+  // Escoger => asigna en Sheets y bloquea futuras acciones
+  btnPick.addEventListener("click", async ()=>{
     const name = $("name").value.trim();
     if(!name){ setHint("Escribe tu nombre.", "bad"); return; }
-    if(!lastPick){ setHint("Primero gira.", "bad"); return; }
-    if(lastPick.estado !== "LIBRE"){ setHint("Ese regalo ya está tomado. Gira otra vez.", "bad"); return; }
+    if(alreadyAccepted()) return;
+    if(!mustDecide || !lastPick){ setHint("Primero gira y luego decide.", "bad"); return; }
 
-    btnAccept.disabled = true;
-    btnSpin.disabled = true;
-    btnCancel.disabled = true;
-    setHint("Bloqueando regalo...", "neutral");
+    if(lastPick.estado !== "LIBRE"){
+      setHint("Ese regalo ya está tomado. Elige 'No escoger...' y vuelve a girar.", "bad");
+      return;
+    }
+
+    spinning = true; // para bloquear botones mientras asigna
+    setHint("Bloqueando tu regalo...", "neutral");
+    setButtons();
 
     try{
       const r = await apiAccept(name, lastPick.id);
       if(!r.ok){
-        // Si alguien alcanzó a aceptarlo antes
-        setHint(r.error || "No se pudo bloquear. Vuelve a girar.", "bad");
-        resetDecisionUI();
-        await refreshCounts();
+        // alguien alcanzó a tomarlo antes (caso raro)
+        spinning = false;
+        mustDecide = false;
+        resetPick();
+        await refreshAll();
+        setHint((r.error || "No se pudo bloquear") + ". Vuelve a girar.", "bad");
         return;
       }
-      setHint("✅ Listo: tu regalo quedó bloqueado para todos.", "ok");
-      await refreshCounts();
+
+      // éxito
+      const giftName = lastPick.regalo;
+      lockAfterAccepted(name, giftName);
+
+      mustDecide = false;
+      spinning = false;
+
+      // refrescar para pintar la ruleta con sector tomado
+      await refreshAll();
+
+      showToast(
+        "✅ Regalo escogido y bloqueado",
+        `<b>${escapeHtml(name)}</b>, tu regalo es: <b>${escapeHtml(giftName)}</b>.<br><br>
+         ¡Gracias por haber participado y aceptado nuestra invitación! Te esperamos con gran ansias. 💙<br>
+         Recuerda que los esperamos el <b>domingo 22 de febrero</b> en el <b>salón comunal del conjunto Remansos de Funza</b>,
+         a las <b>2:00 pm</b>, en <b>Funza, Cundinamarca</b>.`
+      );
+
+      setHint("✅ Tu regalo quedó confirmado. ¡Gracias!", "ok");
+      setButtons();
+
     }catch(e){
+      spinning = false;
       setHint("Error: " + e.message, "bad");
-    }finally{
-      btnSpin.disabled = false;
-      btnCancel.disabled = true; // ya aceptó: no cancela
+      setButtons();
     }
   });
 
   // init
-  refreshCounts();
+  refreshAll();
 </script>
 </body>
 </html>
